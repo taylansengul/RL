@@ -1,21 +1,45 @@
+from objects.player import Player
+from objects.basic_object import Game_Object
+import data
+
+
 class Objects_Handler():
-    def __init__(self):
+    def __init__(self, game):
+        self.game = game
         self.player = None
         self.NPCs = []
         self.game_items = []
         self.all_objects = []
 
-    def add_player(self, player):
+    def create_player(self):
+        starting_coordinates = self.game.game_world.dungeon.player_starting_coordinates
+        player = Player(self.game, key='fighter', coordinates=starting_coordinates)
         self.player = player
-        self.all_objects.append(player)
+        self.game.game_world.get_tile(starting_coordinates).add_object(player)
+        player.vision_update()
 
-    def add_NPC(self, NPC):
-        self.NPCs.append(NPC)
-        self.all_objects.append(NPC)
+    def populate_game_items(self):
+        item_list = data.Level_Design.game_items
+        for item in item_list:
+            name = item['item']
+            kwargs = dict(data.game_items.dictionary[name].items() + item.items())
+            for _ in range(item['total']):
+                kwargs['coordinates'] = self.game.game_world.dungeon.get_random_room_floor()
+                new_item = Game_Object(self.game, **kwargs)
+                tile = self.game.game_world.get_tile(kwargs['coordinates'])
+                tile.add_object(new_item)
 
-    def add_game_item(self, item_):
-        self.game_items.append(item_)
-        self.all_objects.append(item_)
+    def populate_NPCs(self):
+        NPC_list = data.Level_Design.NPCs
+        for _ in range(0, 20):
+            for NPC in NPC_list:
+                coordinates = self.game.game_world.dungeon.get_random_room_floor()
+                race = data.NPCs.dict_[NPC['item']]
+
+                NPC = Game_Object(self.game, coordinates=coordinates, **race)
+                self.NPCs.append(NPC)
+                tile = self.game.game_world.get_tile(coordinates)
+                tile.add_object(NPC)
 
     def remove_NPC(self, NPC):
         self.NPCs.remove(NPC)
@@ -28,7 +52,6 @@ class Objects_Handler():
 
 def main():
     o = Objects_Handler()
-    print o.game_items
 
 if __name__ == '__main__':
     main()

@@ -2,10 +2,15 @@ import data
 
 
 class Time(object):
-    def __init__(self):
+    def __init__(self, game):
+        self.game = game
         self.turn = 1
 
     def new_turn(self):
+        # update player status
+        self.game.objects_handler.player.update_status()
+        # ai action
+        # do not need ai: self.game.ai.determine_total_action()
         self.turn += 1
 
     def get_display_info(self):

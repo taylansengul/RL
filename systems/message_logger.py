@@ -1,5 +1,6 @@
 class MessageLogger(object):
-    def __init__(self):
+    def __init__(self, game):
+        self.game = game
         self.message_archive = []
         self.unhandled_messages = []
         self.max_number_of_messages = 4

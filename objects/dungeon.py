@@ -1,10 +1,13 @@
 from tile import Tile
-from random import randint
+from random import randint, choice
+from rectangle import Rectangle
 
 
 class Dungeon(object):
-    def __init__(self, **kwargs):
+    def __init__(self, game, **kwargs):
+        self.game = game
         self.rooms = []
+        self.room_number = 0  # to be set in self.create._dungeon
         self.min_room_number = kwargs['min_room_number']
         self.max_room_number = kwargs['max_room_number']
         self.min_room_width = kwargs['min room width']
@@ -13,95 +16,162 @@ class Dungeon(object):
         self.max_room_height = kwargs['max room height']
         self.dungeon_width = kwargs['dungeon width']
         self.dungeon_height = kwargs['dungeon height']
-        self.map2D_tip = [[None for _ in range(self.dungeon_height)] for _ in range(self.dungeon_width)]
+        self.pre_map2D = [[None for _ in range(self.dungeon_height)] for _ in range(self.dungeon_width)]
         self.map2D = [[None for _ in range(self.dungeon_height)] for _ in range(self.dungeon_width)]
+        self.tiles = []
 
-        # number of rooms
-        self.room_number = randint(self.min_room_number, self.max_room_number)
+    def add_room(self, rectangle):
+        """ 1. Make each coordinate of the pre map which coincide with those given in rectangle a floor tile
+            2. Add the rectangle to dungeon rooms"""
+        for c in rectangle.get_all():  # gets every coordinate in the rectangle
+            self.pre_map2D[c[0]][c[1]] = 'floor'
+        self.rooms.append(rectangle)
 
-        # create dungeon
-        self.create_dungeon()
-
-    def carve_room(self, rectangle):
-        for m in range(rectangle.x, rectangle.x + rectangle.w):
-            for n in range(rectangle.y, rectangle.y + rectangle.h):
-                self.map2D_tip[m][n] = 'floor'
-
-    def carve_tunnel(self, (x1, y1), (x2, y2), method='horizontal first'):
-        if method == 'horizontal first':
-            for x in range(min(x1, x2), max(x1, x2) + 1):
-                self.map2D_tip[x][y1] == 'floor'
-            for y in range(min(y1, y2), max(y1, y2) + 1):
-                self.map2D_tip[x2][y] == 'floor'
-
-    def carve_all_rooms(self):
-        for room in range(self.room_number):
+    def build_random_room(self):
+        """Get a random room, if it does not intersect other rooms inside the dungeon, add it to dungeon rooms"""
+        def get_random_rectangle():
+            """returns a random rectangle inside the dungeon grid which has distance >= 1 from the borders"""
             w = randint(self.min_room_width, self.max_room_width)
             h = randint(self.min_room_height, self.max_room_height)
-            x = randint(0, self.dungeon_width - w)
-            y = randint(0, self.dungeon_height - h)
-            new_room = Rectangle(x, y, w, h)
-            failed = False
-            if len(self.rooms) == 0:
-                pass
-            else:
-                for other_room in self.rooms:
-                    if new_room.intersect(other_room):
-                        failed = True
-                        break
-            if failed:
-                pass
-            else:
-                self.rooms.append(new_room)
-                self.carve_room(new_room)
+            # do not put it next to the dungeon borders
+            x = randint(1, self.dungeon_width - w - 2)
+            y = randint(1, self.dungeon_height - h - 2)
+            return Rectangle(x, y, w, h)
 
+        # get a random rectangle
+        new_room = get_random_rectangle()
+        # add it to dungeon rooms if it does not intersect existing rooms in the dungeon
+        if not new_room.intersect(self.rooms):
+            self.add_room(new_room)
 
+    def set_map_from_pre_map(self):
+        """Transfer from self.pre_map2D to self.map2D"""
+        for m in range(0, self.dungeon_width):
+            for n in range(0, self.dungeon_height):
+                self.map2D[m][n] = Tile(self.game, coordinates=(m, n), tip=self.pre_map2D[m][n])
 
+    def build_walls(self):
+        """Convert dirt tiles neighboring floor tiles to wall tiles"""
+        def get_neighbors(x, y):
+            """Returns coordinates which are neighbors of given x, y and lies in the dungeon grid"""
+            coordinates = [(m, n) for m in range(x-1, x+2) for n in range(y-1, y+2) if (m, n) != (x, y)]
+            return [c for c in coordinates if 0 <= c[0] < self.dungeon_width and 0 <= c[1] < self.dungeon_height]
 
-    def create_dungeon(self):
-        # initialize map2D with walls everywhere
+        for m in range(0, self.dungeon_width):
+            for n in range(0, self.dungeon_height):
+                if self.pre_map2D[m][n] == 'floor':  # if tile is floor
+                    for c in get_neighbors(m, n):  # look for its neighbors
+                        x, y = c
+                        if self.pre_map2D[x][y] == 'dirt':  # if there is a dirt tile as its neighbor
+                            self.pre_map2D[x][y] = 'wall'  # make it a wall tile.
+
+    def get_closest_room(self, room):
+        """Returns X1, Y1, X2, Y2, distance, closest_room
+        X1, Y1 coordinates in current room
+        X2, Y2 coordinates in the closest room
+        distance = Manhattan distance between these two coordinates
+        """
+        distance = float('inf')  # set the distance to infinity
+        X1, Y1, X2, Y2, closest_room = None, None, None, None, None  # initialize
+        for another_room in self.rooms:
+            x1, y1, x2, y2, d = room.get_distance(another_room)
+            if 0 < d < distance:  # ignore the room itself by ignoring d = 0
+                X1, Y1, X2, Y2, distance, closest_room = x1, y1, x2, y2, d, another_room
+        return X1, Y1, X2, Y2, distance, closest_room
+
+    def get_random_room_floor(self):
+        return choice(choice(self.rooms).get_all())
+
+    def connect_rooms(self):
+        """ first connect every room to the closest one, then connect the unconnected components"""
+
+        def find_component(room):
+            """ return the component if room belongs to one, otherwise return False."""
+            try:  # if the room belongs to a component
+                return [component for component in connected_components if room in component][0]
+            except IndexError:  # otherwise
+                return False
+
+        def carve_tunnel(x1, y1, x2, y2):
+            """ connect (x1, y1) with (x2, y2) by floor tiles."""
+            if x2 < x1:  # make sure x1 < x2
+                x1, y1, x2, y2 = x2, y2, x1, y1
+            tunnel = [(m, y1) for m in range(x1, x2)] + [(x2, n) for n in range(min(y1, y2), max(y1, y2) + 1)]
+            for x, y in tunnel:
+                self.pre_map2D[x][y] = 'floor'
+
+        unconnected_rooms = list(self.rooms)  # initially all rooms are unconnected
+        connected_components = []  # initially there is no connected component
+        for room1 in unconnected_rooms:
+            # connect every room to the closest one
+            x1, y1, x2, y2, d, room2 = self.get_closest_room(room1)
+
+            # put the connected rooms into the same component
+            carve_tunnel(x1, y1, x2, y2)
+            comp1 = find_component(room1)
+            comp2 = find_component(room2)
+            if not comp1 and not comp2:  # if room1, room2 do not belong to any component
+                connected_components.append({room1, room2})  # put them into same component
+            elif comp1 and not comp2:  # if room1 belongs to a component but not room2
+                comp1.add(room2)  # put room2 into the component of room1
+            elif not comp1 and comp2:  # similar
+                comp2.add(room1)
+            elif comp1 and comp2 and comp1 != comp2:  # if both rooms belong to different components
+                connected_components.remove(comp2)  # remove the second component
+                comp1.union(comp2)  # merge components
+            assert None not in connected_components
+
+        # Finally if there are unconnected components, connect them.
+        if len(connected_components) > 1:  # there are unconnected components
+            still_unconnected_rooms = []
+            for component in connected_components:  # from each unconnected component
+                still_unconnected_rooms.append(choice(list(component)))  # pick a random room
+
+            for j, room in enumerate(still_unconnected_rooms):  # for each room in still unconnected rooms
+                if j != len(still_unconnected_rooms) - 1:  # except the last one
+                    other = still_unconnected_rooms[j + 1]
+                    x1, y1, x2, y2 = room.x, room.y, other.x, other.y
+                    carve_tunnel(x1, y1, x2, y2)  # connect it with the next room in the unconnected rooms list
+
+    def create_map(self):
+        """Populate dungeon with rooms, connecting tunnels and starting place"""
+        # initialize map2D with dirt everywhere
         for m in range(self.dungeon_width):
             for n in range(self.dungeon_height):
-                self.map2D_tip[m][n] = 'wall'
+                self.pre_map2D[m][n] = 'dirt'
 
-        self.carve_all_rooms()
+        # set a random number of rooms
+        self.room_number = randint(self.min_room_number, self.max_room_number)
 
-        for m in range(self.dungeon_width):
-            for n in range(self.dungeon_height):
-                self.map2D[m][n] = Tile(coordinates=(m, n), tip=self.map2D_tip[m][n])
+        # build rooms
+        co = 0
+        while len(self.rooms) < self.room_number and co < 10000:  # build rooms until enough rooms or enough tries
+            co += 1
+            self.build_random_room()
 
-        print len(self.rooms)
-        self.player_starting_coordinates = self.rooms[0].get_center()
+        # connect the rooms by tunnels
+        self.connect_rooms()
+
+        # build walls: Convert dirt tiles neighboring floor tiles to wall tiles
+        self.build_walls()
+
+        # set the player starting coordinates
+        m, n = self.rooms[0].get_random()
+        self.pre_map2D[m][n] = 'entrance'
+        self.player_starting_coordinates = (m, n)
+
+        # set the exit coordinates
+        m, n = self.player_starting_coordinates
+        possible_exits = []
+        for room in self.rooms:  # append all coordinates in all rooms in to possible_exits
+            possible_exits.extend(room.get_all())
+        # sort possible_exits with respect to their distance from the entrance
+        possible_exits = sorted(possible_exits, key=lambda (x, y): (abs(x - m) + abs(y - n)), reverse=True)
+        # choose one from the last 10 farthest coordinates
+        m1, n1 = choice(possible_exits[:10])
+        self.pre_map2D[m1][n1] = 'exit'
+
+        # set tiles from tile tips
+        self.set_map_from_pre_map()
 
 
-class Rectangle(object):
-    def __init__(self, x, y, w, h):
-        self.x = x
-        self.y = y
-        self.w = w
-        self.h = h
-
-    def intersect(self, other):
-        r1 = self
-        r2 = other
-        if ((r2.x <= r1.x <= r2.x + r2.w) or (r2.x <= r1.x + r1.w <= r2.x + r2.w)) and \
-            ((r2.y <= r1.y + r1.h <= r2.y + r2.h) or (r2.y <= r1.y + r1.h <= r2.y + r2.y)):
-            return True
-        else:
-            return False
-
-    def get_center(self):
-        x = (self.x + self.w)/2
-        y = (self.y + self.h)/2
-        return x, y
-
-if __name__ == '__main__':
-    dungeon_level_1 = {'dungeon width': 100,
-                       'dungeon height': 100,
-                       'min_room_number': 4,
-                       'max_room_number': 10,
-                       'min room width': 4,
-                       'max room width': 6,
-                       'min room height': 5,
-                       'max room height': 9}
-    d = Dungeon(**dungeon_level_1)

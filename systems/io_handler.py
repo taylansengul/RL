@@ -4,7 +4,8 @@ import data
 
 
 class Io_Handler(object):
-    def __init__(self):
+    def __init__(self, game):
+        self.game = game
         self.previous_event = None
         self.active_event = None
         self.click_coordinates = (-1, -1)
@@ -12,8 +13,10 @@ class Io_Handler(object):
         self.keyboard_commands_dictionary = {'map state': {pgl.K_i: 'inventory',
                                                            pgl.K_m: 'make door',
                                                            pgl.K_c: 'close door',
+                                                           pgl.K_e: 'eat item',
                                                            pgl.K_g: 'pick up item',
                                                            pgl.K_d: 'drop item',
+                                                           pgl.K_SPACE: 'descend',
                                                            pgl.K_RIGHT: 'move right',
                                                            pgl.K_LEFT: 'move left',
                                                            pgl.K_DOWN: 'move down',
@@ -22,10 +25,11 @@ class Io_Handler(object):
                                              'main menu state': {pgl.K_DOWN: 'down',
                                                                  pgl.K_UP: 'up',
                                                                  pgl.K_RETURN: 'select'},
+                                             'game over state': {pgl.K_SPACE: 'pass'},
                                              'initializing state': {},
                                              'inventory state': {pgl.K_ESCAPE: 'quit'}}
 
-    def compute_active_event(self, sys):
+    def compute_active_event(self):
         """compute the active event"""
         # reset variables
         self.previous_event = self.active_event  # previous event = previous active event
@@ -43,9 +47,9 @@ class Io_Handler(object):
             self.hover_coordinates = event.pos
         elif event.type == pgl.QUIT:
             self.active_event = 'quit'
-        elif event.type == pgl.KEYUP:  # pressed keyboard key
+        elif event.type == pgl.KEYDOWN:  # pressed keyboard key
             # find out the active event from keyboard commands dictionary
-            keyboard = sys.stateManager.currentState.name
+            keyboard = self.game.state_manager.current_state.name
             for key in self.keyboard_commands_dictionary[keyboard]:
                 if event.key == key:
                     self.active_event = self.keyboard_commands_dictionary[keyboard][key]

@@ -1,6 +1,11 @@
 class NPCs:
-    dict_ = {'orc':{'icon': 'o',
-                    'name': 'an Orc',
+    dict_ = {'rat':{'name': 'rat',
+                    'icon': 'r',
                     'color': 'green',
-                    'hp': 4,
-                    'can_open_doors': False}}
+                    'properties': 'NPC, movable, is alive',
+                    'hp': 1},
+             'orc':{'name': 'orc',
+                    'icon': 'o',
+                    'color': 'green',
+                    'properties': 'NPC, is alive',
+                    'hp': 2}}
