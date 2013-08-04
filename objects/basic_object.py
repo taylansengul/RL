@@ -48,6 +48,14 @@ class Game_Object(object):
                 self.hunger.change_current(effect['amount'])
                 self.remove_object(item)
 
+    def has_an_object_which_is(self, a_property):
+        if self.has_objects():
+            for an_object in self.objects:
+                if a_property in an_object.properties:
+                    return True
+            else:
+                return False
+
     def transfer_to(self, other, item):
         self.remove_object(item)
         other.add_object(item)
@@ -62,7 +70,11 @@ class Game_Object(object):
     # MOVEMENT HANDLING
     #----- start ------
     def move(self, tile):
-        if 'movable' in self.properties and not 'blocks movement' in tile.properties:
+        b1 = 'movable' in self.properties
+        b2 = not 'blocks movement' in tile.properties
+        b3 = not tile.has_an_object_which_is('blocks movement')
+
+        if b1 and b2 and b3 and b3:
             self.game.game_world.change_position_of(self, tile.coordinates)
             self.game.time.new_turn()
 
