@@ -21,8 +21,7 @@ class Map_State(object):
         if event in move_keys.keys():
             x, y = player.coordinates[0] + move_keys[event][0], player.coordinates[1] + move_keys[event][1]
             target_tile = game_world.get_tile((x, y))
-
-            if not target_tile or 'blocks movement' in target_tile.properties:  # target tile not valid or blocks movement
+            if not target_tile or 'blocks movement' in target_tile.properties:  # target not valid or blocks movement
                 self.game.io_handler.set_active_event(None)
             elif self.game.event_log[-2] == 'close door':
                 player.close_door(event)
@@ -61,7 +60,7 @@ class Map_State(object):
         graphics.screens['map'].fill(data.Colors.palette['black'])
         # add game map to render list
         for tile in game_world.tiles_list:
-            if not tile.isVisible:
+            if not tile.is_explored:
                 continue
             coordinates = graphics.get_screen_position_of(tile.coordinates)
             color = tile.color

@@ -13,22 +13,22 @@ class Player(Game_Object):
         kwargs['color'] = 'red'
         kwargs['name'] = 'Numan'
         super(Player, self).__init__(game, **kwargs)
-        self.hunger = Rechargeable(capacity=10)
+        self.hunger = Rechargeable(capacity=100)
         self.money = 1000
-        self.visibility_radius = 6
+        self.visibility_radius = 2
         self.damage = 3
 
     def vision_update(self):
         # todo: optimize later (takes 1/1000~2/1000 secs)
         game_world = self.game.game_world
         x, y = self.coordinates
-        tiles = game_world.get_neighbors(game_world.get_tile((x, y)), self.visibility_radius)
-        for t in game_world.tiles_list:
-            t.isVisible = False
 
+        for tile in game_world.tiles_list:
+            tile.set_visibility(False)
+
+        non_visible_tiles = []
+        tiles = game_world.get_neighbors(game_world.get_tile((x, y)), self.visibility_radius)
         for t in tiles:
-            if t.isVisible:
-                continue
             x1, y1 = t.coordinates
             line_coordinates = get_line(x, y, x1, y1)
             line_tiles = [game_world.get_tile(c) for c in line_coordinates]
@@ -36,10 +36,15 @@ class Player(Game_Object):
             for j, b in enumerate(line_blocking_status):
                 if b:  # blocks light
                     for t in line_tiles[j+1:]:
-                        t.isVisible = False
+                        non_visible_tiles.append(t)
                     break
-                else:
-                    t.isVisible = True
+
+        for t in tiles:
+            if t in non_visible_tiles:
+                t.set_visibility(False)
+            else:
+                t.set_visibility(True)
+
 
     def move(self, event):
         moved = super(Player, self).move(event)  # moves and returns True/False if move is successful

@@ -1,4 +1,5 @@
 from basic_object import Game_Object
+import inspect
 
 
 class Tile(Game_Object):
@@ -22,11 +23,18 @@ class Tile(Game_Object):
                   'name': tip}
         super(Tile, self).__init__(game, **kwargs)
         self.tip = tip
-        self.explored = False
-        self.isVisible = False
+        self.is_explored = False
+        self.is_visible = False
         self.active = False
 
     def set_tip(self, tip):
         self.tip = tip
         self.icon = Tile.tiles[tip]['icon']
         self.color = Tile.tiles[tip]['color']
+
+    def set_visibility(self, b):
+        if b:
+            self.is_visible = True
+            self.is_explored = True
+        else:
+            self.is_visible = False
