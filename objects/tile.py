@@ -5,7 +5,7 @@ import inspect
 class Tile(Game_Object):
     # todo: walkable tiles.
     floor_properties = 'has inventory'
-    wall_properties = 'blocks movement, blocks light'
+    wall_properties = 'movement blocking, light blocking'
     tiles = {'': {'icon': '', 'color': 'white'},
              'wall': {'icon': '#', 'color': 'red', 'properties': wall_properties},
              'entrance': {'icon': '>', 'color': 'yellow', 'properties': floor_properties},

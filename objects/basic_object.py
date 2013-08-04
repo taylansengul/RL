@@ -71,8 +71,8 @@ class Game_Object(object):
     #----- start ------
     def move(self, tile):
         b1 = 'movable' in self.properties
-        b2 = not 'blocks movement' in tile.properties
-        b3 = not tile.has_an_object_which_is('blocks movement')
+        b2 = not 'movement blocking' in tile.properties
+        b3 = not tile.has_an_object_which_is('movement blocking')
 
         if b1 and b2 and b3 and b3:
             self.game.game_world.change_position_of(self, tile.coordinates)

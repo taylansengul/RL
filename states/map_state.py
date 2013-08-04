@@ -21,7 +21,7 @@ class Map_State(object):
         if event in move_keys.keys():
             x, y = player.coordinates[0] + move_keys[event][0], player.coordinates[1] + move_keys[event][1]
             target_tile = game_world.get_tile((x, y))
-            if not target_tile or 'blocks movement' in target_tile.properties:  # target not valid or blocks movement
+            if not target_tile or 'movement blocking' in target_tile.properties:  # target not valid or movement blocking
                 self.game.io_handler.set_active_event(None)
             elif self.game.event_log[-2] == 'close door':
                 player.close_door(event)

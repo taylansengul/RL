@@ -13,7 +13,7 @@ class AI(object):
             event = random.choice(move_keys.keys())
             x, y = npc.coordinates[0] + move_keys[event][0], npc.coordinates[1] + move_keys[event][1]
             target_tile = self.game.game_world.get_tile((x, y))
-            if not target_tile or 'blocks movement' in target_tile.properties:  # tile not valid or blocks movement
+            if not target_tile or 'movement blocking' in target_tile.properties:  # tile not valid or movement blocking
                 self.game.io_handler.set_active_event(None)
             elif self.game.event_log[-2] == 'close door':
                 npc.close_door(event)

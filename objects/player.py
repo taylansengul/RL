@@ -33,7 +33,7 @@ class Player(Game_Object):
             x1, y1 = tile.coordinates
             vision_ray_coordinates = get_line(x, y, x1, y1)
             vision_ray_tiles = [game_world.get_tile(_) for _ in vision_ray_coordinates]
-            line_blocking_status = ['blocks light' in _.properties for _ in vision_ray_tiles]
+            line_blocking_status = ['light blocking' in _.properties for _ in vision_ray_tiles]
             for j, b in enumerate(line_blocking_status):
                 if b:  # if found a light blocking tile t
                     for _ in vision_ray_tiles[j+1:]:  # tiles after that tile
