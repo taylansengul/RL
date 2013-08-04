@@ -23,8 +23,8 @@ class Tile(Game_Object):
                   'name': tip}
         super(Tile, self).__init__(game, **kwargs)
         self.tip = tip
-        self.is_explored = False
-        self.is_visible = False
+        self.is_explored = False  # tiles which are currently or previously visible . once explored, always explored.
+        self.is_visible = False  # tiles which are currently visible. this is set to False every turn.
 
     def set_tip(self, tip):
         self.tip = tip

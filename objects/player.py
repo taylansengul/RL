@@ -64,10 +64,6 @@ class Player(Game_Object):
             target_tile.set_tip('closed door')
             self.game.logger.add_message('Door closed.')
 
-    def make_door(self, game_world):
-        tile = game_world.get_tile(self.coordinates)
-        tile.set_tip('closed door')
-
     def update_status(self):
         self.game.objects_handler.player.hunger.change_current(-1)
         if self.hunger.is_zero():

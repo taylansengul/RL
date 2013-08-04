@@ -46,8 +46,6 @@ class Map_State(object):
             if player.has_objects():
                 item = player.objects[0]
                 player.transfer_to(tile, item)
-        elif event == 'make door':
-            player.make_door(game_world)
         elif event == 'quit':
             self.game.state_manager.change_state(self.game.state_manager.main_menu_state)
 

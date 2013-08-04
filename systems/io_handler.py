@@ -11,7 +11,6 @@ class Io_Handler(object):
         self.click_coordinates = (-1, -1)
         self.hover_coordinates = (-1, -1)
         self.keyboard_commands_dictionary = {'map state': {pgl.K_i: 'inventory',
-                                                           pgl.K_m: 'make door',
                                                            pgl.K_c: 'close door',
                                                            pgl.K_e: 'eat item',
                                                            pgl.K_g: 'pick up item',
