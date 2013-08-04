@@ -25,7 +25,6 @@ class Tile(Game_Object):
         self.tip = tip
         self.is_explored = False
         self.is_visible = False
-        self.active = False
 
     def set_tip(self, tip):
         self.tip = tip
