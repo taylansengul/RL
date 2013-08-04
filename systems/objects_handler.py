@@ -16,7 +16,7 @@ class Objects_Handler():
         player = Player(self.game, key='fighter', coordinates=starting_coordinates)
         self.player = player
         self.game.game_world.get_tile(starting_coordinates).add_object(player)
-        player.vision_update()
+        player.update_vision()
 
     def populate_game_items(self):
         item_list = data.Level_Design.game_items

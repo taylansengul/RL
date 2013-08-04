@@ -18,38 +18,30 @@ class Player(Game_Object):
         self.visibility_radius = 2
         self.damage = 3
 
-    def vision_update(self):
+    def update_vision(self):
         # todo: optimize later (takes 1/1000~2/1000 secs)
         game_world = self.game.game_world
         x, y = self.coordinates
+        player_tile = game_world.get_tile((x, y))
 
-        for tile in game_world.tiles_list:
-            tile.set_visibility(False)
+        for tile in game_world.tiles_list:  # make every tile
+            tile.set_visibility(False)      # invisible
 
         non_visible_tiles = []
-        tiles = game_world.get_neighbors(game_world.get_tile((x, y)), self.visibility_radius)
-        for t in tiles:
-            x1, y1 = t.coordinates
-            line_coordinates = get_line(x, y, x1, y1)
-            line_tiles = [game_world.get_tile(c) for c in line_coordinates]
-            line_blocking_status = ['blocks light' in t.properties for t in line_tiles]
+        tiles_in_visibility_radius = game_world.get_neighbors(player_tile, self.visibility_radius)
+        for tile in tiles_in_visibility_radius:
+            x1, y1 = tile.coordinates
+            vision_ray_coordinates = get_line(x, y, x1, y1)
+            vision_ray_tiles = [game_world.get_tile(_) for _ in vision_ray_coordinates]
+            line_blocking_status = ['blocks light' in _.properties for _ in vision_ray_tiles]
             for j, b in enumerate(line_blocking_status):
-                if b:  # blocks light
-                    for t in line_tiles[j+1:]:
-                        non_visible_tiles.append(t)
+                if b:  # if found a light blocking tile t
+                    for _ in vision_ray_tiles[j+1:]:  # tiles after that tile
+                        non_visible_tiles.append(_)  # are appended to non_visible_tiles list
                     break
 
-        for t in tiles:
-            if t in non_visible_tiles:
-                t.set_visibility(False)
-            else:
-                t.set_visibility(True)
-
-
-    def move(self, event):
-        moved = super(Player, self).move(event)  # moves and returns True/False if move is successful
-        if moved:
-            self.vision_update()
+        for _ in tiles_in_visibility_radius:  # go over
+            _.set_visibility(False) if _ in non_visible_tiles else _.set_visibility(True)
 
     def close_door(self, event):
         move_key = {'move left': (-1, 0), 'move right': (1, 0), 'move up': (0, -1), 'move down': (0, 1)}
@@ -65,7 +57,11 @@ class Player(Game_Object):
             self.game.logger.add_message('Door closed.')
 
     def update_status(self):
+        # player vision changes
+        self.game.objects_handler.player.update_vision()
+        # player hunger changes
         self.game.objects_handler.player.hunger.change_current(-1)
+
         if self.hunger.is_zero():
             self.is_alive = False
             self.game.logger.add_message('You died of hunger.')

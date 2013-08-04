@@ -29,7 +29,6 @@ class Map_State(object):
                 player.open_door()
             else:  # if the target tile is a valid tile.
                 player.move(target_tile)  # move
-            self.game.time.new_turn()
         elif event == 'descend' and tile.tip == 'exit':
             self.game.state_manager.change_state(self.game.state_manager.game_over_state)
         elif event == 'inventory':

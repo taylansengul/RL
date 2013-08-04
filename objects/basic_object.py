@@ -62,14 +62,9 @@ class Game_Object(object):
     # MOVEMENT HANDLING
     #----- start ------
     def move(self, tile):
-        if 'movable' not in self.properties:
-            return False
-        elif 'blocks movement' in tile.properties:
-            return False
-        else:  # if the target tile is a valid tile.
-            # move
+        if 'movable' in self.properties and not 'blocks movement' in tile.properties:
             self.game.game_world.change_position_of(self, tile.coordinates)
-            return True
+            self.game.time.new_turn()
 
     def open_door(self, tile):
         if 'can open doors' in self.properties:  # self can open doors
