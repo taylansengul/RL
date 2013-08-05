@@ -27,7 +27,7 @@ class Objects_Handler():
                 kwargs['coordinates'] = self.game.game_world.dungeon.get_random_room_floor()
                 new_item = Game_Object(self.game, **kwargs)
                 tile = self.game.game_world.get_tile(kwargs['coordinates'])
-                tile.add_object(new_item)
+                self.add_game_item(new_item, tile)
 
     def populate_NPCs(self):
         NPC_list = data.Level_Design.NPCs
@@ -35,19 +35,30 @@ class Objects_Handler():
             for NPC in NPC_list:
                 coordinates = self.game.game_world.dungeon.get_random_room_floor()
                 race = data.NPCs.dict_[NPC['item']]
-
-                NPC = Game_Object(self.game, coordinates=coordinates, **race)
-                self.NPCs.append(NPC)
+                new_NPC = Game_Object(self.game, coordinates=coordinates, **race)
+                self.NPCs.append(new_NPC)
                 tile = self.game.game_world.get_tile(coordinates)
-                tile.add_object(NPC)
+                self.add_game_item(new_NPC, tile)
 
-    def remove_NPC(self, NPC):
+    def add_NPC(self, NPC, game_object):
+        self.NPCs.append(NPC)
+        self.all_objects.append(NPC)
+        game_object.add_object(NPC)
+
+    def remove_NPC(self, NPC, game_object):
         self.NPCs.remove(NPC)
         self.all_objects.remove(NPC)
+        game_object.remove_object(NPC)
 
-    def remove_game_item(self, item_):
-        self.game_items.remove(item_)
-        self.all_objects.remove(item_)
+    def add_game_item(self, item, game_object):
+        self.game_items.append(item)
+        self.all_objects.append(item)
+        game_object.add_object(item)
+
+    def remove_game_item(self, item, game_object):
+        self.game_items.remove(item)
+        self.all_objects.remove(item)
+        game_object.remove_object(item)
 
 
 def main():
