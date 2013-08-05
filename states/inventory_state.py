@@ -4,7 +4,7 @@ import data
 
 class Inventory_State(object):
     def __init__(self, game):
-        self.name = 'inventory state'
+        self.id = 'inventory state'
         self.game = game
         self.inventory = None  # to be initialized later
 
@@ -19,10 +19,10 @@ class Inventory_State(object):
         if self.inventory:
             for j, item in enumerate(self.inventory):
                 if 'stackable' in item.properties:
-                    gE.fontMgr.Draw(screen, 'arial', 36, item.name + ' ' + str(item.quantity),
+                    gE.fontMgr.Draw(screen, 'arial', 36, item.id + ' ' + str(item.quantity),
                                     (0, j*st), data.colors.palette['white'], 'center', 'center', True)
                 else:
-                    gE.fontMgr.Draw(screen, 'arial', 36, item.name,
+                    gE.fontMgr.Draw(screen, 'arial', 36, item.id,
                                     (0, j*st), data.colors.palette['white'], 'center', 'center', True)
         else:
             gE.fontMgr.Draw(screen, 'arial', 36, 'Empty Inventory',

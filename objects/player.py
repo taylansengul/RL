@@ -9,9 +9,10 @@ class Player(Game_Object):
         kwargs['icon'] = '@'
         kwargs['coordinates'] = coordinates
         kwargs['color'] = 'red'
-        kwargs['name'] = 'Numan'
+        kwargs['id'] = 'player'
         super(Player, self).__init__(game, **kwargs)
         self.player_class = key
+        self.name = 'Numan'
 
     def update_vision(self):
         # todo: optimize later (takes 1/1000~2/1000 secs)

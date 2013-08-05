@@ -20,7 +20,7 @@ class Tile(Game_Object):
                   'icon': Tile.tiles[tip]['icon'],
                   'color': Tile.tiles[tip]['color'],
                   'properties': Tile.tiles[tip].get('properties', ''),
-                  'name': tip}
+                  'id': tip}
         super(Tile, self).__init__(game, **kwargs)
         self.tip = tip
         self.is_explored = False  # tiles which are currently or previously visible . once explored, always explored.

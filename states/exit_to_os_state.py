@@ -1,7 +1,7 @@
 class Exit_To_OS_State(object):
     def __init__(self, game):
         self.game = game
-        self.name = 'exit to OS state'
+        self.id = 'exit to OS state'
 
     def init(self):
         # delete game engines

@@ -5,7 +5,7 @@ from rechargeable import Rechargeable
 class Game_Object(object):
     def __init__(self, game, **kwargs):
         self.game = game
-        self.name = kwargs['name']
+        self.id = kwargs['id']
         self.coordinates = kwargs['coordinates']
         self.icon = kwargs['icon']
         self.color = colors.palette[kwargs['color']]
@@ -13,7 +13,7 @@ class Game_Object(object):
         self.effects = kwargs.get('effects', {})
         if 'has inventory' in self.properties:
             self.objects = []
-            for name in kwargs.get('objects', []):
+            for id in kwargs.get('objects', []):
                 pass
         if 'stackable' in self.properties:
             self.quantity = kwargs.get('quantity', 1)
@@ -32,15 +32,17 @@ class Game_Object(object):
 
     # OBJECTS HANDLING
     # ---- start -----
-    def get_item_by_name(self, name):
+    def get_item_by_id(self, id):
         for item in self.objects:
-            if item.name == name:
+            if item.id == id:
                 return item
         else:
             return None
 
     def add_object(self, item):
         assert 'has inventory' in self.properties  # only applies if self has inventory
+        if 'stackable' in item.properties:
+            inventory_item = self.get_item_by_id(item.id)
         self.objects.append(item)
 
     def remove_object(self, item):

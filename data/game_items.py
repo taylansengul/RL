@@ -1,12 +1,12 @@
 dictionary = {'apple': {'type': 'game item',
-                        'name': 'apple',
+                        'id': 'apple',
                         'icon': 'f',
                         'color': 'green',
                         'properties': 'pickable, edible, consumable, stackable',
                         'effects': [{'type': 'satiate hunger', 'amount': 30}]
                         },
               'lantern': {'type': 'game item',
-                          'name': 'lantern',
+                          'id': 'lantern',
                           'icon': 'L',
                           'color': 'green',
                           'properties': 'pickable'}}

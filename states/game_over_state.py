@@ -5,7 +5,7 @@ import pygame as pg
 class Game_Over_State(object):
     def __init__(self, game):
         self.game = game
-        self.name = 'game over state'
+        self.id = 'game over state'
 
     def init(self):
         pass
