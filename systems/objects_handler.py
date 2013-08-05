@@ -26,9 +26,12 @@ class Objects_Handler():
             number_of_items = randint(item['number'][0], item['number'][1])
             kwargs = dict(data.game_items.dictionary[name].items() + item.items())
             for _ in range(number_of_items):
-                kwargs['coordinates'] = self.game.game_world.dungeon.get_random_room_floor()
-                new_item = Game_Object(self.game, **kwargs)
-                tile = self.game.game_world.get_tile(kwargs['coordinates'])
+                while True:
+                    coordinates = self.game.game_world.dungeon.get_random_room_floor()
+                    tile = self.game.game_world.get_tile(coordinates)
+                    if not tile.has_objects():
+                        break
+                new_item = Game_Object(self.game, coordinates=coordinates, **kwargs)
                 self.add_game_item(new_item, tile)
 
     def populate_NPCs(self):
@@ -36,10 +39,13 @@ class Objects_Handler():
         for creature in NPC_list:
             number_of_creatures = randint(creature['number'][0], creature['number'][1])
             for _ in range(number_of_creatures):
-                coordinates = self.game.game_world.dungeon.get_random_room_floor()
+                while True:
+                    coordinates = self.game.game_world.dungeon.get_random_room_floor()
+                    tile = self.game.game_world.get_tile(coordinates)
+                    if not tile.has_objects():
+                        break
                 kwargs = data.NPCs.dict_[creature['race']]
                 new_NPC = Game_Object(self.game, coordinates=coordinates, **kwargs)
-                tile = self.game.game_world.get_tile(coordinates)
                 self.add_NPC(new_NPC, tile)
 
     def add_NPC(self, NPC, game_object):
