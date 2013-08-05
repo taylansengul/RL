@@ -18,6 +18,10 @@ class Game_Over_State(object):
     def updateScreen(self):
         graphics = self.game.graphics_engine
         graphics.screens['main'].fill(data.Colors.palette['black'])
-        graphics.fontMgr.Draw(graphics.screens['main'], 'arial', 36, 'Game is over. Press Space.',
+        graphics.fontMgr.Draw(graphics.screens['main'], 'arial', 36, 'Game is over.',
             (0, 0), data.Colors.palette['white'], 'center', 'center', True)
+        graphics.fontMgr.Draw(graphics.screens['main'], 'arial', 36, self.game.logger.game_over_message,
+            (0, 40), data.Colors.palette['white'], 'center', 'center', True)
+        graphics.fontMgr.Draw(graphics.screens['main'], 'arial', 36, 'Press Space.',
+            (0, 80), data.Colors.palette['white'], 'center', 'center', True)
         pg.display.flip()

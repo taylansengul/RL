@@ -15,11 +15,17 @@ class Game_Object(object):
             self.objects = []
             for name in kwargs.get('objects', []):
                 pass
-        if 'is alive' in self.properties:
-            self.is_alive = True
-            self.hp = Rechargeable(capacity=kwargs['hp'])
         if 'stackable' in self.properties:
             self.quantity = kwargs.get('quantity', 1)
+        if 'NPC' in self.properties or 'player' in self.properties:
+            self.attack = kwargs['attack']
+            self.defense = kwargs['defense']
+            self.hp = Rechargeable(capacity=kwargs['hp'])
+            self.is_alive = True
+        if 'player' in self.properties:
+            self.hunger = Rechargeable(capacity=100)
+            self.money = 1000
+            self.visibility_radius = 2
 
         # add self to game objects
         self.game.objects_handler.all_objects.append(self)
@@ -86,3 +92,27 @@ class Game_Object(object):
         else:
             return False
     #----- end -----
+
+    # ATTACK - TAKE HIT - DIE
+    # ---- start ----
+
+    def attack_to(self, other):
+        damage = max(self.attack - other.defense, 0)
+        other.take_hit(damage)
+
+    def take_hit(self, damage):
+        self.hp.change_current(-damage)
+        self.update_status()
+
+    def update_status(self):
+        assert 'NPC' in self.properties or 'player' in self.properties
+        # hit points
+        if self.hp.is_zero():
+            self.is_alive = False
+            if 'player' in self.properties:
+                self.game.logger.game_over_message = 'You died of bleeding.'
+        # is self dead
+        if 'NPC' in self.properties:
+            if not self.is_alive:
+                tile = self.game.game_world.get_tile(self.coordinates)
+                self.game.objects_handler.remove_NPC(self, tile)

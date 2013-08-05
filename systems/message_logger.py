@@ -4,6 +4,7 @@ class MessageLogger(object):
         self.message_archive = []
         self.unhandled_messages = []
         self.max_number_of_messages = 4
+        self.game_over_message = None
 
     def add_message(self, message):
         self.unhandled_messages.append(message)

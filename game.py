@@ -28,9 +28,6 @@ class Game(object):
                 # update graphics
                 self.graphics_engine.update_screen()
 
-                print len(self.objects_handler.NPCs)
-                print len(self.objects_handler.game_items)
-
 
 def main():
     game = Game()

@@ -13,10 +13,6 @@ class Player(Game_Object):
         kwargs['color'] = 'red'
         kwargs['name'] = 'Numan'
         super(Player, self).__init__(game, **kwargs)
-        self.hunger = Rechargeable(capacity=100)
-        self.money = 1000
-        self.visibility_radius = 2
-        self.damage = 3
 
     def update_vision(self):
         # todo: optimize later (takes 1/1000~2/1000 secs)
@@ -57,18 +53,18 @@ class Player(Game_Object):
             self.game.logger.add_message('Door closed.')
 
     def update_status(self):
-        # player vision changes
-        self.game.objects_handler.player.update_vision()
         # player hunger changes
-        self.game.objects_handler.player.hunger.change_current(-1)
-
+        super(Player, self).update_status()
+        self.hunger.change_current(-1)
         if self.hunger.is_zero():
             self.is_alive = False
-            self.game.logger.add_message('You died of hunger.')
+            self.game.logger.add_game_over_message = 'You died of hunger.'
+        # player vision changes
+        self.game.objects_handler.player.update_vision()
 
-        if not self.is_alive:
+        if not self.is_alive:  # player dead
             sM = self.game.state_manager
-            sM.change_state(sM.main_menu_state)
+            sM.change_state(sM.game_over_state)
 
     def get_display_info(self):
         from data import Colors

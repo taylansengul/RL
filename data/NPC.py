@@ -3,9 +3,13 @@ class NPCs:
                     'icon': 'r',
                     'color': 'green',
                     'properties': 'NPC, movable, is alive, movement blocking',
-                    'hp': 1},
+                    'hp': 1,
+                    'attack': 3,
+                    'defense': 1},
              'orc':{'name': 'orc',
                     'icon': 'o',
                     'color': 'green',
                     'properties': 'NPC, is alive, movement blocking',
-                    'hp': 2}}
+                    'hp': 3,
+                    'attack': 3,
+                    'defense': 2}}

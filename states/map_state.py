@@ -27,6 +27,10 @@ class Map_State(object):
                 player.close_door(event)
             elif target_tile.tip == 'closed door':  # target tile = closed door
                 player.open_door()
+            elif target_tile.has_an_object_which_is('NPC'):
+                NPC = target_tile.objects[0]
+                player.attack_to(NPC)
+                NPC.attack_to(player)
             else:  # if the target tile is a valid tile.
                 player.move(target_tile)  # move
         elif event == 'descend' and tile.tip == 'exit':
