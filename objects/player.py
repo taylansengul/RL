@@ -11,6 +11,7 @@ class Player(Game_Object):
         kwargs['color'] = 'red'
         kwargs['name'] = 'Numan'
         super(Player, self).__init__(game, **kwargs)
+        self.player_class = key
 
     def update_vision(self):
         # todo: optimize later (takes 1/1000~2/1000 secs)

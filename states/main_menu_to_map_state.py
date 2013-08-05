@@ -25,6 +25,7 @@ class Main_Menu_To_Map_State(object):
 
         # objects
         self.game.objects_handler.create_player()  # create player
+        self.game.objects_handler.create_player_items()  # create player items
         self.game.objects_handler.populate_game_items()  # populate game world with game items
         self.game.objects_handler.populate_NPCs()  # populate game world with NPCS
 

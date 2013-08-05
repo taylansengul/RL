@@ -34,6 +34,13 @@ class Objects_Handler():
                 new_item = Game_Object(self.game, coordinates=coordinates, **kwargs)
                 self.add_game_item(new_item, tile)
 
+    def create_player_items(self):
+        inventory = data.classes.dictionary[self.game.objects_handler.player.player_class]['objects']
+        for item in inventory:
+            kwargs = dict(data.game_items.dictionary[item].items())
+            new_item = Game_Object(self.game, coordinates=None, **kwargs)
+            self.add_game_item(new_item, self.player)
+
     def populate_NPCs(self):
         NPC_list = data.level_design.NPCs
         for creature in NPC_list:
