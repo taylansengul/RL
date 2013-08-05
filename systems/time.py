@@ -19,5 +19,5 @@ class Time(object):
         st = [{'screen': 'game info',
                'info': [{'item': 'turn: %d' % self.turn,
                          'coordinates': (0, 0),
-                         'color': data.Colors.palette['white']}]}]
+                         'color': data.colors.palette['white']}]}]
         return st

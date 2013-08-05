@@ -19,7 +19,7 @@ class Enter_Main_Game_Loop_State(object):
         # setup pygame
         pg.init()
         # initialize main screen
-        self.game.graphics_engine.screens['main'] = pg.display.set_mode(data.Screens.screen_size['main'], 0, 32)
+        self.game.graphics_engine.screens['main'] = pg.display.set_mode(data.screens.screen_size['main'], 0, 32)
         # Setup fonts and font manager
         # avail_fonts = pg.font.get_fonts()
         # avail_fonts = ['arial']

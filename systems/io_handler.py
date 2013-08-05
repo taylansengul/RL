@@ -38,9 +38,10 @@ class Io_Handler(object):
         # wait for input
         event = pg.event.wait()
         if event.type == pg.MOUSEBUTTONDOWN:  # mouse click coordinates
-            self.click_coordinates = event.pos
-            if self.click_coordinates[0] < data.Screens.screen_size['main'][0] and self.click_coordinates[1] < data.Screens.screen_size['main'][1]:
+            x, y = event.pos
+            if x < data.screens.screen_size['main'][0] and y < data.screens.screen_size['main'][1]:
                 self.active_event = 'moving'
+                self.click_coordinates = (x, y)
         elif event.type == pg.MOUSEMOTION:
             self.input = 'mouse motion'
             self.hover_coordinates = event.pos

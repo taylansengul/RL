@@ -58,7 +58,7 @@ class Map_State(object):
 
         # game world
         # clear game world
-        graphics.screens['map'].fill(data.Colors.palette['black'])
+        graphics.screens['map'].fill(data.colors.palette['black'])
         # add game map to render list
         for tile in game_world.tiles_list:
             if not tile.is_explored:
@@ -66,7 +66,7 @@ class Map_State(object):
             coordinates = graphics.get_screen_position_of(tile.coordinates)
             color = tile.color
             pg.draw.rect(graphics.screens['map'], color, coordinates)
-            pg.draw.rect(graphics.screens['map'], data.Colors.palette['white'], coordinates, 1)
+            pg.draw.rect(graphics.screens['map'], data.colors.palette['white'], coordinates, 1)
 
             if 'has inventory' in tile.properties:
                 for item in tile.objects:

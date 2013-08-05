@@ -15,18 +15,18 @@ class Inventory_State(object):
     def updateScreen(self):
         gE = self.game.graphics_engine
         screen = gE.screens['inventory state']
-        screen.fill(data.Colors.palette['black'])
+        screen.fill(data.colors.palette['black'])
         if self.inventory:
             for item in self.inventory:
                 if 'stackable' in item.properties:
                     gE.fontMgr.Draw(screen, 'arial', 36, item.name + str(item.quantity),
-                                    (0, 0), data.Colors.palette['white'], 'center', 'center', True)
+                                    (0, 0), data.colors.palette['white'], 'center', 'center', True)
                 else:
                     gE.fontMgr.Draw(screen, 'arial', 36, item.name,
-                                    (0, 0), data.Colors.palette['white'], 'center', 'center', True)
+                                    (0, 0), data.colors.palette['white'], 'center', 'center', True)
         else:
             gE.fontMgr.Draw(screen, 'arial', 36, 'Empty Inventory',
-                            (0, 0), data.Colors.palette['white'], 'center', 'center', True)
+                            (0, 0), data.colors.palette['white'], 'center', 'center', True)
 
         gE.screens['main'].blit(screen, (0, 0))
         pg.display.flip()

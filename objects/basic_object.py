@@ -1,4 +1,4 @@
-from data import Colors, game_items
+from data import colors
 from rechargeable import Rechargeable
 
 
@@ -8,7 +8,7 @@ class Game_Object(object):
         self.name = kwargs['name']
         self.coordinates = kwargs['coordinates']
         self.icon = kwargs['icon']
-        self.color = Colors.palette[kwargs['color']]
+        self.color = colors.palette[kwargs['color']]
         self.properties = kwargs.get('properties', '')
         self.effects = kwargs.get('effects', {})
         if 'has inventory' in self.properties:

@@ -1,13 +1,11 @@
-from data import Classes
-from rechargeable import Rechargeable
+from data import classes, colors
 from basic_object import Game_Object
 from systems.utils import get_line
 
 
 class Player(Game_Object):
     def __init__(self, game, key='Fighter', coordinates=None):
-        kwargs = dict(Classes.classes[key].items())
-        kwargs['properties'] = Classes.common_player_properties
+        kwargs = dict(classes.dictionary[key].items())
         kwargs['icon'] = '@'
         kwargs['coordinates'] = coordinates
         kwargs['color'] = 'red'
@@ -67,19 +65,18 @@ class Player(Game_Object):
             sM.change_state(sM.game_over_state)
 
     def get_display_info(self):
-        from data import Colors
         new_line_height = 16
         st = {'screen': 'player',
               'info': [{'item': self.name,
                         'coordinates': (0, 0),
-                        'color': Colors.palette['white']},
+                        'color': colors.palette['white']},
                        {'item': 'hp: %d/%d' % (self.hp.current, self.hp.capacity),
                         'coordinates': (0, new_line_height),
-                        'color': Colors.palette['white']},
+                        'color': colors.palette['white']},
                        {'item': 'hunger: %d/%d' % (self.hunger.current, self.hunger.capacity),
                         'coordinates': (0, 2*new_line_height),
-                        'color': Colors.palette['white']},
+                        'color': colors.palette['white']},
                        {'item': 'money: %d' % self.money,
                         'coordinates': (0, 3*new_line_height),
-                        'color': Colors.palette['white']}]}
+                        'color': colors.palette['white']}]}
         return st

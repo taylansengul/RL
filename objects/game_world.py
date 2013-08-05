@@ -10,7 +10,7 @@ class Game_World(object):
         self.tiles_list = []
 
     def set_current_dungeon(self):
-        kwargs = data.Level_Design.dungeon_level_1
+        kwargs = data.level_design.dungeon_level_1
         self.dungeon = Dungeon(self.game, **kwargs)
         self.dungeon.create_map()
         for m in range(self.dungeon.dungeon_width):

@@ -10,8 +10,8 @@ class Main_Menu_State(object):
 
     def init(self):
         gE = self.game.graphics_engine
-        gE.screens['main'].fill(data.Colors.palette['black'])
-        gE.screens['menu'] = pg.Surface(data.Screens.screen_size['main menu state'])
+        gE.screens['main'].fill(data.colors.palette['black'])
+        gE.screens['menu'] = pg.Surface(data.screens.screen_size['main menu state'])
         font = gE.font_18
         self.newGameOption = Menu_Option("NEW GAME", (140, 105), font, isHovered=True)
         self.loadGameOption = Menu_Option("LOAD GAME", (140, 155), font)
@@ -25,7 +25,7 @@ class Main_Menu_State(object):
     def updateScreen(self):
         gE = self.game.graphics_engine
         self.menu.draw()
-        gE.screens['main'].blit(gE.screens['menu'], data.Screens.screen_coordinates['main menu state'])
+        gE.screens['main'].blit(gE.screens['menu'], data.screens.screen_coordinates['main menu state'])
         pg.display.update()
 
     def determineAction(self):

@@ -32,11 +32,11 @@ class Main_Menu_To_Map_State(object):
         # self.game.ai = AI(self.game)
 
         # initialize game screens
-        for name, size in data.Screens.screen_size[self.game.state_manager.current_state.name].iteritems():
+        for name, size in data.screens.screen_size[self.game.state_manager.current_state.name].iteritems():
                 self.game.graphics_engine.screens[name] = pg.Surface(size)
 
         # initialize inventory screen
-        self.game.graphics_engine.screens['inventory state'] = pg.Surface(data.Screens.screen_size['inventory state'])
+        self.game.graphics_engine.screens['inventory state'] = pg.Surface(data.screens.screen_size['inventory state'])
 
         self.game.logger.add_message('Starting New Game.')
 
