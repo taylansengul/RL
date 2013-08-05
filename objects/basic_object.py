@@ -71,6 +71,13 @@ class Game_Object(object):
 
     def get_objects_info(self):
         return str(self.objects)
+
+    def get_objects(self, key):
+        return_list = []
+        for item in self.objects:
+            if key in item.properties:
+                return_list.append(item)
+        return return_list
     #----- end ------
 
     # MOVEMENT HANDLING

@@ -1,6 +1,5 @@
 import pygame as pg
 import data
-from systems.cFontManager import cFontManager
 
 
 class Inventory_State(object):
@@ -16,14 +15,15 @@ class Inventory_State(object):
         gE = self.game.graphics_engine
         screen = gE.screens['inventory state']
         screen.fill(data.colors.palette['black'])
+        st = 30
         if self.inventory:
-            for item in self.inventory:
+            for j, item in enumerate(self.inventory):
                 if 'stackable' in item.properties:
-                    gE.fontMgr.Draw(screen, 'arial', 36, item.name + str(item.quantity),
-                                    (0, 0), data.colors.palette['white'], 'center', 'center', True)
+                    gE.fontMgr.Draw(screen, 'arial', 36, item.name + ' ' + str(item.quantity),
+                                    (0, j*st), data.colors.palette['white'], 'center', 'center', True)
                 else:
                     gE.fontMgr.Draw(screen, 'arial', 36, item.name,
-                                    (0, 0), data.colors.palette['white'], 'center', 'center', True)
+                                    (0, j*st), data.colors.palette['white'], 'center', 'center', True)
         else:
             gE.fontMgr.Draw(screen, 'arial', 36, 'Empty Inventory',
                             (0, 0), data.colors.palette['white'], 'center', 'center', True)
@@ -35,3 +35,5 @@ class Inventory_State(object):
         event = self.game.io_handler.get_active_event()
         if event == 'quit':
             self.game.state_manager.change_state(self.game.state_manager.map_state)
+        if event == 'eat item':
+            self.inventory = self.game.objects_handler.player.get_objects('edible')

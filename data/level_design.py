@@ -2,7 +2,7 @@ import screens
 
 NPCs = [{'race': 'orc', 'number': (5, 10)}, {'race': 'rat', 'number': (10, 15)}]
 
-game_items = [{'item': 'apple', 'number': (3, 6)}]
+game_items = [{'item': 'apple', 'number': (10, 14)}]
 
 dungeon_level_1 = {'dungeon width': screens.tile_no_x,
                    'dungeon height': screens.tile_no_y,
