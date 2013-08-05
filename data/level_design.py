@@ -2,9 +2,9 @@ import screens
 
 
 class Level_Design(object):
-    NPCs = [{'item': 'orc'}]
+    NPCs = [{'race': 'orc', 'number': (5, 10)}, {'race': 'rat', 'number': (10, 15)}]
 
-    game_items = [{'item': 'apple', 'total': 5}]
+    game_items = [{'item': 'apple', 'number': (3, 6)}]
 
     dungeon_level_1 = {'dungeon width': screens.Screens.tile_no_x,
                        'dungeon height': screens.Screens.tile_no_y,
