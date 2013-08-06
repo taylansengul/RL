@@ -75,8 +75,13 @@ class Dungeon(object):
         X1, Y1, X2, Y2, closest_room = None, None, None, None, None  # initialize
         for another_room in self.rooms:
             x1, y1, x2, y2, d = room.get_distance(another_room)
+            # print 'x1 =', x1, 'x2 =', x2, 'y1 =', y1, 'y2 =', y2
             if 0 < d < distance:  # ignore the room itself by ignoring d = 0
                 X1, Y1, X2, Y2, distance, closest_room = x1, y1, x2, y2, d, another_room
+
+        # print X1, Y1, X2, Y2, closest_room
+        # assert X1 is not None and Y1 is not None and X2 is not None and Y2 is not None and closest_room is not None
+
         return X1, Y1, X2, Y2, distance, closest_room
 
     def get_random_room_floor(self):
@@ -96,6 +101,7 @@ class Dungeon(object):
             """ connect (x1, y1) with (x2, y2) by floor tiles."""
             if x2 < x1:  # make sure x1 < x2
                 x1, y1, x2, y2 = x2, y2, x1, y1
+
             tunnel = [(m, y1) for m in range(x1, x2)] + [(x2, n) for n in range(min(y1, y2), max(y1, y2) + 1)]
             for x, y in tunnel:
                 self.pre_map2D[x][y] = 'floor'
@@ -144,23 +150,28 @@ class Dungeon(object):
         self.room_number = randint(self.min_room_number, self.max_room_number)
 
         # build rooms
+        print 'building rooms'
         co = 0
         while len(self.rooms) < self.room_number and co < 10000:  # build rooms until enough rooms or enough tries
             co += 1
             self.build_random_room()
 
         # connect the rooms by tunnels
+        print 'connecting rooms'
         self.connect_rooms()
 
         # build walls: Convert dirt tiles neighboring floor tiles to wall tiles
+        print 'building walls'
         self.build_walls()
 
         # set the player starting coordinates
+        print 'setting player starting coordinates'
         m, n = self.rooms[0].get_random()
         self.pre_map2D[m][n] = 'entrance'
         self.player_starting_coordinates = (m, n)
 
         # set the exit coordinates
+        print 'setting the dungeon exit coordinates'
         m, n = self.player_starting_coordinates
         possible_exits = []
         for room in self.rooms:  # append all coordinates in all rooms in to possible_exits
@@ -173,5 +184,4 @@ class Dungeon(object):
 
         # set tiles from tile tips
         self.set_map_from_pre_map()
-
-
+        print 'level map initialized'

@@ -20,6 +20,7 @@ class Objects_Handler():
         player.update_vision()
 
     def populate_game_items(self):
+        print 'populating game items'
         item_list = data.level_design.game_items
         for item in item_list:
             id = item['item']
@@ -35,6 +36,7 @@ class Objects_Handler():
                 self.add_game_item(new_item, tile)
 
     def create_player_items(self):
+        print 'creating player items'
         inventory = data.classes.dictionary[self.game.objects_handler.player.player_class]['objects']
         for item in inventory:
             kwargs = dict(data.game_items.dictionary[item].items())
@@ -42,6 +44,7 @@ class Objects_Handler():
             self.add_game_item(new_item, self.player)
 
     def populate_NPCs(self):
+        print 'populating NPCs'
         NPC_list = data.level_design.NPCs
         for creature in NPC_list:
             number_of_creatures = randint(creature['number'][0], creature['number'][1])

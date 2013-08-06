@@ -33,7 +33,7 @@ class Rectangle(object):
         return choice(self.get_all())
 
     def get_boundary(self):
-        """Returns coordinates of boundary of self"""
+        """Returns a set of coordinates of boundary of self"""
         boundary = []
         for x in range(self.x, self.x + self.w + 1):
             boundary.append((x, self.y))
@@ -41,12 +41,12 @@ class Rectangle(object):
         for y in range(self.y, self.y + self.h + 1):
             boundary.append((self.x, y))
             boundary.append((self.x + self.w, y))
-        return boundary
+        return set(boundary)
 
     def get_corners(self):
-        """Returns coordinates of boundary of self"""
-        return [(self.x, self.y), (self.x + self.w, self.y),
-                (self.x, self.y + self.h), (self.x + self.w, self.y + self.h)]
+        """Returns a set of coordinates of boundary of self"""
+        return {(self.x, self.y), (self.x + self.w, self.y),
+                (self.x, self.y + self.h), (self.x + self.w, self.y + self.h)}
 
     def get_interior(self):
         """Returns coordinates of interior of self"""
@@ -57,19 +57,33 @@ class Rectangle(object):
         return [(x, y) for x in range(self.x, self.x + self.w) for y in range(self.y, self.y + self.h)]
 
     def get_distance(self, other):
-        """ returns x1, y1, x2, y2, d """
+        """ returns x1, y1, x2, y2, d where (x1, y1), (x2, y2) are coordinates in room1, room2 resp. with distance d
+        and this is closest possible distance between two points belonging to room1 and room2. For aesthetic reason,
+        we want these points not to lie on the corners. But this is not possible if the room boundary consists only of
+        corner points (ex: room is i*j tiles where i, j = 1, 2)"""
         distance = float('inf')  # infinity
         X1, X2, Y1, Y2 = None, None, None, None
-        corners1 = self.get_corners()
-        corners2 = other.get_corners()
-        for x1, y1 in self.get_boundary():
-            for x2, y2 in other.get_boundary():
-                if (x1, y1) in corners1 or (x2, y2) in corners2:
-                    continue
-                else:
-                    d = abs(x1 - x2) + abs(y1 - y2)
-                    if d < distance:
-                        X1, X2, Y1, Y2, distance = x1, x2, y1, y2, d
+
+        # reminder: boundary contains corners
+        corners1 = self.get_corners()       # corners of room self
+        boundary1 = self.get_boundary()     # boundary of room self
+        corners2 = other.get_corners()      # corners of room other
+        boundary2 = other.get_boundary()    # boundary of room other
+
+        if corners1 == boundary1:  # if room1 boundary consists only of corner points
+            search_list1 = boundary1  # search through all the boundary
+        else:
+            search_list1 = [c for c in boundary1 if c not in corners1]  # search through boundary but not corners
+        if corners2 == boundary2:  # same as above
+            search_list2 = boundary2
+        else:
+            search_list2 = [c for c in boundary2 if c not in corners2]
+
+        for x1, y1 in search_list1:
+            for x2, y2 in search_list2:
+                d = abs(x1 - x2) + abs(y1 - y2)
+                if d < distance:
+                    X1, X2, Y1, Y2, distance = x1, x2, y1, y2, d
         return X1, Y1, X2, Y2, distance
 
     def __str__(self):
