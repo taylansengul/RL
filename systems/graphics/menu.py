@@ -33,6 +33,8 @@ class Menu(object):
         for option in self.options:
             if option.isHovered:
                 return option
+        else:  # if there are no options
+            return None
 
 
 class Menu_Option:

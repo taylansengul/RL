@@ -3,5 +3,5 @@ common_player_properties = 'player, can open doors, has inventory, movable, is a
 dictionary = {'fighter': {'hp': 5,
                           'attack': 3,
                           'defense': 2,
-                          'objects': ['lantern'],
+                          'objects': ['lantern', 'apple'],
                           'properties': common_player_properties}}

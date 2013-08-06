@@ -9,11 +9,14 @@ class Inventory_State(object):
         self.game = game
         self.inventory = None  # to be initialized later
         self.selected_item = None
+        self.menu_options = []
+        self.key = ''
 
     def init(self):
-        self.inventory = self.game.objects_handler.player.objects
-        font = self.game.graphics_engine.font_18
+        self.inventory = self.game.objects_handler.player.get_objects(self.key)
+        self.selected_item = None
         self.menu_options = []
+        font = self.game.graphics_engine.font_18
         st = 18
         for j, item in enumerate(self.inventory):
             if 'stackable' in item.properties:
@@ -44,18 +47,27 @@ class Inventory_State(object):
         pg.display.flip()
 
     def determineAction(self):
+        self.selected_item = None
         event = self.game.io_handler.get_active_event()
-        if event == 'down':
-            self.menu.select_next()
-        elif event == 'up':
-            self.menu.select_prev()
-        elif event == 'select':
-            option = self.menu.get_active_option()
-            j = self.menu_options.index(option)
-            self.selected_item = self.inventory[j]
+        if self.inventory:
+            if event == 'down':
+                self.menu.select_next()
+            elif event == 'up':
+                self.menu.select_prev()
+            elif event == 'select':
+                option = self.menu.get_active_option()
+                if option:  # if an option is hovered
+                    item_index = self.menu_options.index(option)
+                    self.selected_item = self.inventory[item_index]
+            elif event == 'show edible items':
+                self.key = 'edible'
+                self.init()
+            elif event == 'quit':
+                self.game.state_manager.change_state(self.game.state_manager.map_state)
+        else:
+            if event == 'quit':
+                self.game.state_manager.change_state(self.game.state_manager.map_state)
+
+        if self.key == 'edible' and self.selected_item:
+            self.game.objects_handler.player.consume(self.selected_item)
             self.game.state_manager.change_state(self.game.state_manager.map_state)
-        elif event == 'quit':
-            self.game.state_manager.change_state(self.game.state_manager.map_state)
-        elif event == 'eat item':
-            self.inventory = self.game.objects_handler.player.get_objects('edible')
-            self.init()

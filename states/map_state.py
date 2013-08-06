@@ -36,10 +36,14 @@ class Map_State(object):
         elif event == 'descend' and tile.tip == 'exit':
             self.game.state_manager.change_state(self.game.state_manager.game_over_state)
         elif event == 'inventory':
+            self.game.state_manager.inventory_state.key = ''
             self.game.state_manager.change_state(self.game.state_manager.inventory_state)
         elif event == 'eat item':
-            if player.has_an_object_which_is('edible'):
-                player.consume(player.objects[0])
+            self.game.state_manager.inventory_state.key = 'edible'
+            self.game.state_manager.change_state(self.game.state_manager.inventory_state)
+            item = self.game.state_manager.inventory_state.selected_item
+            if item:
+                player.consume(item)
         elif event == 'pick up item':
             if tile.has_objects():  # if there is an item on the tile
                 for item in tile.objects:

@@ -68,12 +68,12 @@ class Objects_Handler():
     def add_game_item(self, item, game_object):
         self.game_items.append(item)
         self.all_objects.append(item)
-        game_object.add_object(item)
+        game_object.objects.append(item)
 
     def remove_game_item(self, item, game_object):
         self.game_items.remove(item)
         self.all_objects.remove(item)
-        game_object.remove_object(item)
+        game_object.objects.remove(item)
 
 
 def main():
