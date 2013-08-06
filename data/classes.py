@@ -1,4 +1,4 @@
-common_player_properties = 'player, can open doors, has inventory, movable, is alive'
+common_player_properties = 'player, can open doors, container, movable, is alive, '
 
 dictionary = {'fighter': {'hp': 5,
                           'attack': 3,

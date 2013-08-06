@@ -11,7 +11,7 @@ class Game_Object(object):
         self.color = data.colors.palette[kwargs['color']]
         self.properties = kwargs.get('properties', '')
         self.effects = kwargs.get('effects', {})
-        if 'has inventory' in self.properties:
+        if 'container' in self.properties:
             self.objects = []
             for ID in kwargs.get('objects', []):
                 pass
@@ -40,7 +40,7 @@ class Game_Object(object):
             return None
 
     def add_object(self, item):
-        assert 'has inventory' in self.properties  # only applies if self has inventory
+        assert 'container' in self.properties  # only applies if self container
         self_item = self.get_item_by_id(item.ID)
         if 'stackable' in item.properties:
             if self_item:
@@ -52,11 +52,11 @@ class Game_Object(object):
             self.objects.append(item)
 
     def remove_object(self, item):
-        assert 'has inventory' in self.properties and item in self.objects
+        assert 'container' in self.properties and item in self.objects
         self.objects.remove(item)
 
     def add_object(self, item):
-        assert 'has inventory' in self.properties  # only applies if self has inventory
+        assert 'container' in self.properties  # only applies if self container
         if 'stackable' in item.properties:
             # add item
             self_item = self.get_item_by_id(item.ID)
@@ -69,7 +69,7 @@ class Game_Object(object):
             self.objects.append(item)
 
     def remove_object(self, item):
-        assert 'has inventory' in self.properties and item in self.objects
+        assert 'container' in self.properties and item in self.objects
         # remove item
         if 'stackable' in item.properties:
             if item.quantity > 1:       # if more than 1
@@ -103,9 +103,6 @@ class Game_Object(object):
 
     def has_objects(self):
         return self.objects != []
-
-    def get_objects_info(self):
-        return str(self.objects)
 
     def get_objects(self, key):
         return_list = []

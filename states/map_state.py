@@ -34,6 +34,7 @@ class Map_State(object):
             else:  # if the target tile is a valid tile.
                 player.move(target_tile)  # move
         elif event == 'descend' and tile.tip == 'exit':
+            self.game.logger.game_over_message = 'Congratulations. You found the way out.'
             self.game.state_manager.change_state(self.game.state_manager.game_over_state)
         elif event == 'inventory':
             self.game.state_manager.inventory_state.key = ''
@@ -73,7 +74,7 @@ class Map_State(object):
             pg.draw.rect(graphics.screens['map'], color, coordinates)
             pg.draw.rect(graphics.screens['map'], data.colors.palette['white'], coordinates, 1)
 
-            if 'has inventory' in tile.properties:
+            if 'container' in tile.properties:
                 for item in tile.objects:
                     graphics.fontMgr.Draw(graphics.screens['map'], 'arial', 36, item.icon,
                                           coordinates, item.color, 'center', 'center', True)

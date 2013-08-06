@@ -4,13 +4,13 @@ import inspect
 
 class Tile(Game_Object):
     # todo: walkable tiles.
-    floor_properties = 'has inventory'
+    floor_properties = 'container'
     wall_properties = 'movement blocking, light blocking'
     tiles = {'': {'icon': '', 'color': 'white'},
              'wall': {'icon': '#', 'color': 'red', 'properties': wall_properties},
              'entrance': {'icon': '>', 'color': 'yellow', 'properties': floor_properties},
              'exit': {'icon': '<', 'color': 'yellow', 'properties': floor_properties},
-             'floor': {'icon': ' ', 'color': 'blue', 'properties': 'has inventory'},
+             'floor': {'icon': ' ', 'color': 'blue', 'properties': 'container'},
              'open door': {'icon': '-', 'color': 'red'},
              'closed door': {'icon': '+', 'color': 'red'},
              'dirt': {'icon': ' ', 'color': 'black', 'properties': wall_properties}}

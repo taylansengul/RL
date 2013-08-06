@@ -58,7 +58,7 @@ class Player(Game_Object):
         self.hunger.change_current(-1)
         if self.hunger.is_zero():
             self.is_alive = False
-            self.game.logger.add_game_over_message = 'You died of hunger.'
+            self.game.logger.game_over_message = 'You died of hunger.'
         # player vision changes
         self.game.objects_handler.player.update_vision()
 
