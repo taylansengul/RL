@@ -6,7 +6,12 @@ class Game_Object(object):
     def __init__(self, game, **kwargs):
         self.game = game
         self.ID = kwargs['ID']
-        self.coordinates = kwargs['coordinates']
+        self.tile = kwargs.get('tile', self)  # if no tile it must be a tile and hence it points to itself
+        c = kwargs.get('coordinates', None)
+        if c:                                          # if coordinates are given
+            self.coordinates = c                       # then assign it
+        else:                                          # if NO coordinates given
+            self.coordinates = self.tile.coordinates   # it points to its tile's coordinates
         self.icon = kwargs['icon']
         self.color = data.colors.palette[kwargs['color']]
         self.properties = kwargs.get('properties', '')

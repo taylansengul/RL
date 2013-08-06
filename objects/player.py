@@ -4,10 +4,10 @@ from systems.utils import get_line
 
 
 class Player(Game_Object):
-    def __init__(self, game, key='Fighter', coordinates=None):
+    def __init__(self, game, key='Fighter', tile=None):
         kwargs = dict(classes.dictionary[key].items())
         kwargs['icon'] = '@'
-        kwargs['coordinates'] = coordinates
+        kwargs['tile'] = tile
         kwargs['color'] = 'red'
         kwargs['ID'] = 'player'
         super(Player, self).__init__(game, **kwargs)

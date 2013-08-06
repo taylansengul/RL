@@ -14,7 +14,8 @@ class Objects_Handler():
 
     def create_player(self):
         starting_coordinates = self.game.game_world.dungeon.player_starting_coordinates
-        player = Player(self.game, key='fighter', coordinates=starting_coordinates)
+        player_tile = self.game.game_world.get_tile(starting_coordinates)
+        player = Player(self.game, key='fighter', tile=player_tile)
         self.player = player
         self.game.game_world.get_tile(starting_coordinates).add_object(player)
         player.update_vision()
@@ -32,7 +33,7 @@ class Objects_Handler():
                     tile = self.game.game_world.get_tile(coordinates)
                     if not tile.has_objects():
                         break
-                new_item = Game_Object(self.game, coordinates=coordinates, **kwargs)
+                new_item = Game_Object(self.game, tile=tile, **kwargs)
                 self.add_game_item(new_item, tile)
 
     def create_player_items(self):
@@ -40,7 +41,7 @@ class Objects_Handler():
         inventory = data.classes.dictionary[self.game.objects_handler.player.player_class]['objects']
         for item in inventory:
             kwargs = dict(data.game_items.dictionary[item].items())
-            new_item = Game_Object(self.game, coordinates=None, **kwargs)
+            new_item = Game_Object(self.game, tile=self.player.tile, **kwargs)
             self.add_game_item(new_item, self.player)
 
     def populate_NPCs(self):
@@ -55,7 +56,7 @@ class Objects_Handler():
                     if not tile.has_objects():
                         break
                 kwargs = data.NPC.dictionary[creature['race']]
-                new_NPC = Game_Object(self.game, coordinates=coordinates, **kwargs)
+                new_NPC = Game_Object(self.game, tile=tile, **kwargs)
                 self.add_NPC(new_NPC, tile)
 
     def add_NPC(self, NPC, game_object):
