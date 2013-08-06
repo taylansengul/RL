@@ -12,3 +12,5 @@ dungeon_level_1 = {'dungeon width': screens.tile_no_x,
                    'max room width': 2,
                    'min room height': 1,
                    'max room height': 2}
+
+# todo: assert that there is enough room in the dungeon for all the game items.

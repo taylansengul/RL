@@ -54,7 +54,7 @@ class Io_Handler(object):
             self.active_event = 'quit'
         elif event.type == pgl.KEYDOWN:  # pressed keyboard key
             # find out the active event from keyboard commands dictionary
-            keyboard = self.game.state_manager.current_state.id
+            keyboard = self.game.state_manager.current_state.ID
             for key in self.keyboard_commands_dictionary[keyboard]:
                 if event.key == key:
                     self.active_event = self.keyboard_commands_dictionary[keyboard][key]

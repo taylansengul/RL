@@ -1,7 +1,7 @@
 class Map_To_Main_Menu_State(object):
     def __init__(self, game):
         self.game = game
-        self.id = 'map to main state'
+        self.ID = 'map to main state'
 
     def init(self):
         # delete game info

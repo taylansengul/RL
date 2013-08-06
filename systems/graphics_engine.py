@@ -21,7 +21,7 @@ class Graphics_Engine(object):
     def display_messages(self):
         new_line_height = 12
         screen = self.screens['messages']
-        coordinates = data.screens.screen_coordinates[self.game.state_manager.current_state.id]['messages']
+        coordinates = data.screens.screen_coordinates[self.game.state_manager.current_state.ID]['messages']
         while self.game.logger.has_unhandled_messages():
             self.game.logger.handle_message()
 
@@ -36,7 +36,7 @@ class Graphics_Engine(object):
         for a_dict in info_list:
             s_id = a_dict['screen']
             screen = self.screens[s_id]
-            coordinates = data.screens.screen_coordinates[self.game.state_manager.current_state.id][s_id]
+            coordinates = data.screens.screen_coordinates[self.game.state_manager.current_state.ID][s_id]
             screen.fill(data.colors.palette['black'])
             for i in a_dict['info']:
                 c = i['coordinates'] + (coordinates[0], coordinates[1])

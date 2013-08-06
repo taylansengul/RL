@@ -6,7 +6,7 @@ import data
 class Main_Menu_State(object):
     def __init__(self, game):
         self.game = game
-        self.id = 'main menu state'
+        self.ID = 'main menu state'
 
     def init(self):
         gE = self.game.graphics_engine

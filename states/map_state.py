@@ -5,7 +5,7 @@ import data
 class Map_State(object):
     def __init__(self, game):
         self.game = game
-        self.id = 'map state'
+        self.ID = 'map state'
 
     def init(self):
         self.updateScreen()

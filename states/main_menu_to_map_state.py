@@ -10,7 +10,7 @@ from systems import AI
 class Main_Menu_To_Map_State(object):
     def __init__(self, game):
         self.game = game
-        self.id = 'map state'
+        self.ID = 'map state'
 
     def init(self):
         # initialize dungeon-run related things
@@ -33,8 +33,8 @@ class Main_Menu_To_Map_State(object):
         # self.game.ai = AI(self.game)
 
         # initialize game screens
-        for id, size in data.screens.screen_size[self.game.state_manager.current_state.id].iteritems():
-                self.game.graphics_engine.screens[id] = pg.Surface(size)
+        for ID, size in data.screens.screen_size[self.game.state_manager.current_state.ID].iteritems():
+                self.game.graphics_engine.screens[ID] = pg.Surface(size)
 
         # initialize inventory screen
         self.game.graphics_engine.screens['inventory state'] = pg.Surface(data.screens.screen_size['inventory state'])

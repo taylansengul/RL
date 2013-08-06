@@ -5,7 +5,7 @@ from rechargeable import Rechargeable
 class Game_Object(object):
     def __init__(self, game, **kwargs):
         self.game = game
-        self.id = kwargs['id']
+        self.ID = kwargs['ID']
         self.coordinates = kwargs['coordinates']
         self.icon = kwargs['icon']
         self.color = data.colors.palette[kwargs['color']]
@@ -13,7 +13,7 @@ class Game_Object(object):
         self.effects = kwargs.get('effects', {})
         if 'has inventory' in self.properties:
             self.objects = []
-            for id in kwargs.get('objects', []):
+            for ID in kwargs.get('objects', []):
                 pass
         if 'stackable' in self.properties:
             self.quantity = kwargs.get('quantity', 1)
@@ -32,21 +32,21 @@ class Game_Object(object):
 
     # OBJECTS HANDLING
     # ---- start -----
-    def get_item_by_id(self, id):
+    def get_item_by_id(self, ID):
         for item in self.objects:
-            if item.id == id:
+            if item.ID == ID:
                 return item
         else:
             return None
 
     def add_object(self, item):
         assert 'has inventory' in self.properties  # only applies if self has inventory
-        self_item = self.get_item_by_id(item.id)
+        self_item = self.get_item_by_id(item.ID)
         if 'stackable' in item.properties:
             if self_item:
                 self_item.quantity += 1
             else:
-                self_item = Game_Object(self.game, coordinates=self.coordinates, **data.game_items.dictionary[item.id])
+                self_item = Game_Object(self.game, coordinates=self.coordinates, **data.game_items.dictionary[item.ID])
                 self.objects.append(self_item)
         else:
             self.objects.append(item)
@@ -59,11 +59,11 @@ class Game_Object(object):
         assert 'has inventory' in self.properties  # only applies if self has inventory
         if 'stackable' in item.properties:
             # add item
-            self_item = self.get_item_by_id(item.id)
+            self_item = self.get_item_by_id(item.ID)
             if self_item:  # if self has the item
                 self_item.quantity += 1  # increase quanitity
             else:
-                new_item = Game_Object(self.game, coordinates=self.coordinates, **data.game_items.dictionary[item.id])
+                new_item = Game_Object(self.game, coordinates=self.coordinates, **data.game_items.dictionary[item.ID])
                 self.game.objects_handler.add_game_item(new_item, self)  # create and add item
         else:  # if item is not stackable
             self.objects.append(item)

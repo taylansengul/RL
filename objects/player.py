@@ -9,7 +9,7 @@ class Player(Game_Object):
         kwargs['icon'] = '@'
         kwargs['coordinates'] = coordinates
         kwargs['color'] = 'red'
-        kwargs['id'] = 'player'
+        kwargs['ID'] = 'player'
         super(Player, self).__init__(game, **kwargs)
         self.player_class = key
         self.name = 'Numan'

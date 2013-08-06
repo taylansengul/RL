@@ -9,7 +9,7 @@ class Enter_Main_Game_Loop_State(object):
     """Initialize graphics handler, main screen, game fonts and i/o handler"""
     def __init__(self, game):
         self.game = game
-        self.id = 'initializing state'
+        self.ID = 'initializing state'
 
     def init(self):
         print 'initializing graphics'  # initialize graphics engine handler

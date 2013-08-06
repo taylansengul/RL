@@ -5,7 +5,7 @@ from systems.graphics.menu import Menu, Menu_Option
 
 class Inventory_State(object):
     def __init__(self, game):
-        self.id = 'inventory state'
+        self.ID = 'inventory state'
         self.game = game
         self.inventory = None  # to be initialized later
         self.selected_item = None
@@ -20,9 +20,9 @@ class Inventory_State(object):
         st = 18
         for j, item in enumerate(self.inventory):
             if 'stackable' in item.properties:
-                label = str(item.quantity) + ' ' + item.id
+                label = str(item.quantity) + ' ' + item.ID
             else:
-                label = item.id
+                label = item.ID
             if j == 0:
                 self.menu_options.append(Menu_Option(label, (0, j * st), font, isHovered=True))
             else:

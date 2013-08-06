@@ -23,9 +23,9 @@ class Objects_Handler():
         print 'populating game items'
         item_list = data.level_design.game_items
         for item in item_list:
-            id = item['item']
+            ID = item['item']
             number_of_items = randint(item['number'][0], item['number'][1])
-            kwargs = dict(data.game_items.dictionary[id].items() + item.items())
+            kwargs = dict(data.game_items.dictionary[ID].items() + item.items())
             for _ in range(number_of_items):
                 while True:
                     coordinates = self.game.game_world.dungeon.get_random_room_floor()
