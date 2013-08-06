@@ -26,7 +26,10 @@ class Io_Handler(object):
                                                                  pgl.K_RETURN: 'select'},
                                              'game over state': {pgl.K_SPACE: 'pass'},
                                              'initializing state': {},
-                                             'inventory state': {pgl.K_ESCAPE: 'quit',
+                                             'inventory state': {pgl.K_DOWN: 'down',
+                                                                 pgl.K_UP: 'up',
+                                                                 pgl.K_RETURN: 'select',
+                                                                 pgl.K_ESCAPE: 'quit',
                                                                  pgl.K_e: 'eat item'}}
 
     def compute_active_event(self):
