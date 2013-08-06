@@ -38,7 +38,8 @@ class Map_State(object):
         elif event == 'inventory':
             self.game.state_manager.change_state(self.game.state_manager.inventory_state)
         elif event == 'eat item':
-            player.consume(player.objects[0])
+            if player.has_an_object_which_is('edible'):
+                player.consume(player.objects[0])
         elif event == 'pick up item':
             if tile.has_objects():  # if there is an item on the tile
                 for item in tile.objects:

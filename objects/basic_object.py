@@ -1,4 +1,4 @@
-from data import colors
+import data
 from rechargeable import Rechargeable
 
 
@@ -8,7 +8,7 @@ class Game_Object(object):
         self.id = kwargs['id']
         self.coordinates = kwargs['coordinates']
         self.icon = kwargs['icon']
-        self.color = colors.palette[kwargs['color']]
+        self.color = data.colors.palette[kwargs['color']]
         self.properties = kwargs.get('properties', '')
         self.effects = kwargs.get('effects', {})
         if 'has inventory' in self.properties:
@@ -41,8 +41,22 @@ class Game_Object(object):
 
     def add_object(self, item):
         assert 'has inventory' in self.properties  # only applies if self has inventory
+        self_item = self.get_item_by_id(item.id)
         if 'stackable' in item.properties:
-            inventory_item = self.get_item_by_id(item.id)
+            if self_item:
+                self_item.quantity += 1
+            else:
+                self_item = Game_Object(self.game, coordinates=self.coordinates, **data.game_items.dictionary[item.id])
+                self.objects.append(self_item)
+        else:
+            self.objects.append(item)
+
+    def remove_object(self, item):
+        assert 'has inventory' in self.properties and item in self.objects
+        self.objects.remove(item)
+
+    def add_object(self, item):
+        assert 'has inventory' in self.properties  # only applies if self has inventory
         self.objects.append(item)
 
     def remove_object(self, item):
@@ -65,8 +79,23 @@ class Game_Object(object):
                 return False
 
     def transfer_to(self, other, item):
-        self.remove_object(item)
-        other.add_object(item)
+        # remove item
+        if 'stackable' in item.properties:
+            item_at_other = other.get_item_by_id(item.id)
+            # remove item
+            if item.quantity > 1:       # if more than 1
+                item.quantity -= 1      # decrease quantity
+            elif item.quantity == 1:    # if 1
+                self.game.objects_handler.remove_game_item(item, self)  # destroy and remove item
+            # add item
+            if item_at_other:  # if other has the item
+                item_at_other.quantity += 1  # increase quanitity
+            else:
+                new_item = Game_Object(self.game, coordinates=other.coordinates, **data.game_items.dictionary[item.id])
+                self.game.objects_handler.add_game_item(new_item, other)  # create and add item
+        else:  # if item is not stackable
+            self.remove_object(item)  # remove it from inventory
+            other.add_object(item)
 
     def has_objects(self):
         return self.objects != []
