@@ -89,6 +89,9 @@ class Game_Object(object):
             if effect['type'] == 'satiate hunger':
                 self.hunger.change_current(effect['amount'])
                 self.remove_object(item)
+            if effect['type'] == 'heal':
+                self.hp.change_current(effect['amount'])
+                self.remove_object(item)
 
     def has_an_object_which_is(self, a_property):
         if self.has_objects():

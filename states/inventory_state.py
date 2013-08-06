@@ -62,6 +62,9 @@ class Inventory_State(object):
             elif event == 'show edible items':
                 self.key = 'edible'
                 self.init()
+            elif event == 'show consumable items':
+                self.key = 'consumable'
+                self.init()
             elif event == 'quit':
                 self.game.state_manager.change_state(self.game.state_manager.map_state)
         else:
@@ -69,5 +72,8 @@ class Inventory_State(object):
                 self.game.state_manager.change_state(self.game.state_manager.map_state)
 
         if self.key == 'edible' and self.selected_item:
+            self.game.objects_handler.player.consume(self.selected_item)
+            self.game.state_manager.change_state(self.game.state_manager.map_state)
+        elif self.key == 'consumable' and self.selected_item:
             self.game.objects_handler.player.consume(self.selected_item)
             self.game.state_manager.change_state(self.game.state_manager.map_state)
