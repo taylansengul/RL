@@ -17,22 +17,6 @@ class Game_World(object):
             for n in range(self.dungeon.dungeon_height):
                 self.tiles_list.append(self.dungeon.map2D[m][n])
 
-    def change_position_of(self, object_, new_coordinates):
-        old_tile = self.get_tile(object_.coordinates)
-        new_tile = self.get_tile(new_coordinates)
-        old_tile.remove_object(object_)
-        new_tile.add_object(object_)
-        # change object coordinates
-        object_.coordinates = new_coordinates
-
-    def get_tile(self, coordinates):
-        w, h = self.dungeon.dungeon_width, self.dungeon.dungeon_height
-        x, y = coordinates
-        if 0 <= x <= w and 0 <= y <= h:
-            return self.dungeon.map2D[x][y]
-        else:
-            return False
-
     def get_neighbors(self, tile, radius):
         neighbors = []
         x, y = tile.coordinates

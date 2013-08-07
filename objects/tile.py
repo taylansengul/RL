@@ -22,6 +22,7 @@ class Tile(Game_Object):
                   'properties': Tile.tiles[tip].get('properties', ''),
                   'ID': tip}
         super(Tile, self).__init__(game, **kwargs)
+        self.coordinates = coordinates
         self.tip = tip
         self.is_explored = False  # tiles which are currently or previously visible . once explored, always explored.
         self.is_visible = False  # tiles which are currently visible. this is set to False every turn.

@@ -14,13 +14,13 @@ class Map_State(object):
         event = self.game.io_handler.get_active_event()
         player = self.game.objects_handler.player
         game_world = self.game.game_world
-        tile = self.game.game_world.get_tile(player.coordinates)
+        tile = player.tile
         self.game.event_log.append(event)
 
         move_keys = {'move left': (-1, 0), 'move right': (1, 0), 'move up': (0, -1), 'move down': (0, 1)}
         if event in move_keys.keys():
-            x, y = player.coordinates[0] + move_keys[event][0], player.coordinates[1] + move_keys[event][1]
-            target_tile = game_world.get_tile((x, y))
+            m, n = player.tile.coordinates[0] + move_keys[event][0], player.tile.coordinates[1] + move_keys[event][1]
+            target_tile = game_world.dungeon.map2D[m][n]
             if not target_tile or 'movement blocking' in target_tile.properties:  # target not valid or movement blocking
                 self.game.io_handler.set_active_event(None)
             elif self.game.event_log[-2] == 'close door':

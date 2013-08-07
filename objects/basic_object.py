@@ -7,11 +7,6 @@ class Game_Object(object):
         self.game = game
         self.ID = kwargs['ID']
         self.tile = kwargs.get('tile', self)  # if no tile it must be a tile and hence it points to itself
-        c = kwargs.get('coordinates', None)
-        if c:                                          # if coordinates are given
-            self.coordinates = c                       # then assign it
-        else:                                          # if NO coordinates given
-            self.coordinates = self.tile.coordinates   # it points to its tile's coordinates
         self.icon = kwargs['icon']
         self.color = data.colors.palette[kwargs['color']]
         self.properties = kwargs.get('properties', '')
@@ -46,35 +41,21 @@ class Game_Object(object):
 
     def add_object(self, item):
         assert 'container' in self.properties  # only applies if self container
-        self_item = self.get_item_by_id(item.ID)
-        if 'stackable' in item.properties:
-            if self_item:
-                self_item.quantity += 1
-            else:
-                self_item = Game_Object(self.game, coordinates=self.coordinates, **data.game_items.dictionary[item.ID])
-                self.objects.append(self_item)
-        else:
-            self.objects.append(item)
-
-    def remove_object(self, item):
-        assert 'container' in self.properties and item in self.objects
-        self.objects.remove(item)
-
-    def add_object(self, item):
-        assert 'container' in self.properties  # only applies if self container
+        item.tile = self.tile
         if 'stackable' in item.properties:
             # add item
             self_item = self.get_item_by_id(item.ID)
             if self_item:  # if self has the item
-                self_item.quantity += 1  # increase quanitity
+                self_item.quantity += 1  # increase quantity
             else:
-                new_item = Game_Object(self.game, coordinates=self.coordinates, **data.game_items.dictionary[item.ID])
+                new_item = Game_Object(self.game, tile=self.tile, **data.game_items.dictionary[item.ID])
                 self.game.objects_handler.add_game_item(new_item, self)  # create and add item
         else:  # if item is not stackable
             self.objects.append(item)
 
     def remove_object(self, item):
         assert 'container' in self.properties and item in self.objects
+        item.tile = None
         # remove item
         if 'stackable' in item.properties:
             if item.quantity > 1:       # if more than 1
@@ -119,13 +100,19 @@ class Game_Object(object):
 
     # MOVEMENT HANDLING
     #----- start ------
-    def move(self, tile):
+    def move(self, target_tile):
         b1 = 'movable' in self.properties
-        b2 = not 'movement blocking' in tile.properties
-        b3 = not tile.has_an_object_which_is('movement blocking')
+        b2 = not 'movement blocking' in target_tile.properties
+        b3 = not target_tile.has_an_object_which_is('movement blocking')
+        print 'origin = ', self.tile.coordinates
+        print 'target = ', target_tile.coordinates
 
         if b1 and b2 and b3 and b3:
-            self.game.game_world.change_position_of(self, tile.coordinates)
+            print '1'
+            self.tile.remove_object(self)
+            print '2'
+            target_tile.add_object(self)
+            # change object coordinates
             self.game.time.new_turn()
 
     def open_door(self, tile):
@@ -158,5 +145,4 @@ class Game_Object(object):
         # is self dead
         if 'NPC' in self.properties:
             if not self.is_alive:
-                tile = self.game.game_world.get_tile(self.coordinates)
-                self.game.objects_handler.remove_NPC(self, tile)
+                self.game.objects_handler.remove_NPC(self, self.tile)

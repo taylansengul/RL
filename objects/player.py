@@ -17,18 +17,17 @@ class Player(Game_Object):
     def update_vision(self):
         # todo: optimize later (takes 1/1000~2/1000 secs)
         game_world = self.game.game_world
-        x, y = self.coordinates
-        player_tile = game_world.get_tile((x, y))
+        x, y = self.tile.coordinates
 
         for tile in game_world.tiles_list:  # make every tile
             tile.set_visibility(False)      # invisible
 
         non_visible_tiles = []
-        tiles_in_visibility_radius = game_world.get_neighbors(player_tile, self.visibility_radius)
+        tiles_in_visibility_radius = game_world.get_neighbors(self.tile, self.visibility_radius)
         for tile in tiles_in_visibility_radius:
             x1, y1 = tile.coordinates
             vision_ray_coordinates = get_line(x, y, x1, y1)
-            vision_ray_tiles = [game_world.get_tile(_) for _ in vision_ray_coordinates]
+            vision_ray_tiles = [game_world.dungeon.map2D[c[0]][c[1]] for c in vision_ray_coordinates]
             line_blocking_status = ['light blocking' in _.properties for _ in vision_ray_tiles]
             for j, b in enumerate(line_blocking_status):
                 if b:  # if found a light blocking tile t
@@ -41,9 +40,9 @@ class Player(Game_Object):
 
     def close_door(self, event):
         move_key = {'move left': (-1, 0), 'move right': (1, 0), 'move up': (0, -1), 'move down': (0, 1)}
-        current_x, current_y = self.coordinates
-        target_x, target_y = current_x + move_key[event][0], current_y + move_key[event][1]
-        target_tile = self.game.game_world.get_tile((target_x, target_y))
+        current_x, current_y = self.tile.coordinates
+        m, n = current_x + move_key[event][0], current_y + move_key[event][1]
+        target_tile = self.game.game_world.dungeon.map2D[m][n]
         if not target_tile:
             return
         elif target_tile.tip != 'open door':

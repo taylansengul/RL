@@ -13,11 +13,11 @@ class Objects_Handler():
         self.all_objects = []
 
     def create_player(self):
-        starting_coordinates = self.game.game_world.dungeon.player_starting_coordinates
-        player_tile = self.game.game_world.get_tile(starting_coordinates)
+        m, n = self.game.game_world.dungeon.player_starting_coordinates
+        player_tile = self.game.game_world.dungeon.map2D[m][n]
         player = Player(self.game, key='fighter', tile=player_tile)
         self.player = player
-        self.game.game_world.get_tile(starting_coordinates).add_object(player)
+        player_tile.add_object(player)
         player.update_vision()
 
     def populate_game_items(self):
@@ -29,8 +29,8 @@ class Objects_Handler():
             kwargs = dict(data.game_items.dictionary[ID].items() + item.items())
             for _ in range(number_of_items):
                 while True:
-                    coordinates = self.game.game_world.dungeon.get_random_room_floor()
-                    tile = self.game.game_world.get_tile(coordinates)
+                    m, n = self.game.game_world.dungeon.get_random_room_floor()
+                    tile = self.game.game_world.dungeon.map2D[m][n]
                     if not tile.has_objects():
                         break
                 new_item = Game_Object(self.game, tile=tile, **kwargs)
@@ -51,8 +51,8 @@ class Objects_Handler():
             number_of_creatures = randint(creature['number'][0], creature['number'][1])
             for _ in range(number_of_creatures):
                 while True:
-                    coordinates = self.game.game_world.dungeon.get_random_room_floor()
-                    tile = self.game.game_world.get_tile(coordinates)
+                    m, n = self.game.game_world.dungeon.get_random_room_floor()
+                    tile = self.game.game_world.dungeon.map2D[m][n]
                     if not tile.has_objects():
                         break
                 kwargs = data.NPC.dictionary[creature['race']]
