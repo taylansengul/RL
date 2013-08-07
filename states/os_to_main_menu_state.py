@@ -3,6 +3,7 @@ import data
 from systems.cFontManager import cFontManager
 from systems.graphics_engine import Graphics_Engine
 from systems.io_handler import Io_Handler
+import random
 
 
 class Enter_Main_Game_Loop_State(object):
@@ -12,10 +13,13 @@ class Enter_Main_Game_Loop_State(object):
         self.ID = 'initializing state'
 
     def init(self):
-        print 'initializing graphics'  # initialize graphics engine handler
+        print 'initializing graphics engine'
         self.game.graphics_engine = Graphics_Engine(self.game)
-        print 'initializing io handler'  # initialize io handler
+        print 'initializing i/o handler'
         self.game.io_handler = Io_Handler(self.game)
+        print 'initializing random seed'
+        seed_value = 0  # make this None to use the system time as a seed_value
+        random.seed(seed_value)
         # setup pygame
         pg.init()
         # initialize main screen
