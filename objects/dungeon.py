@@ -52,18 +52,19 @@ class Dungeon(object):
 
     def build_walls(self):
         """Convert dirt tiles neighboring floor tiles to wall tiles"""
-        def get_neighbors(x, y):
-            """Returns coordinates which are neighbors of given x, y and lies in the dungeon grid"""
-            coordinates = [(m, n) for m in range(x-1, x+2) for n in range(y-1, y+2) if (m, n) != (x, y)]
-            return [c for c in coordinates if 0 <= c[0] < self.dungeon_width and 0 <= c[1] < self.dungeon_height]
 
         for m in range(0, self.dungeon_width):
             for n in range(0, self.dungeon_height):
                 if self.pre_map2D[m][n] == 'floor':  # if tile is floor
-                    for c in get_neighbors(m, n):  # look for its neighbors
+                    for c in self.get_neighbors((m, n), 1):  # look for its neighbors
                         x, y = c
                         if self.pre_map2D[x][y] == 'dirt':  # if there is a dirt tile as its neighbor
                             self.pre_map2D[x][y] = 'wall'  # make it a wall tile.
+
+    def get_neighbors(self, (x, y), r):
+        """Returns coordinates which are neighbors of given x, y and lies in the dungeon grid"""
+        coordinates = [(m, n) for m in range(x-r, x+r+1) for n in range(y-r, y+r+1) if (m, n) != (x, y)]
+        return [c for c in coordinates if 0 <= c[0] < self.dungeon_width and 0 <= c[1] < self.dungeon_height]
 
     def get_closest_room(self, room):
         """Returns X1, Y1, X2, Y2, distance, closest_room

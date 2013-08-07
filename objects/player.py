@@ -19,13 +19,15 @@ class Player(Game_Object):
         game_world = self.game.game_world
         x, y = self.tile.coordinates
 
-        for tile in game_world.tiles_list:  # make every tile
-            tile.set_visibility(False)      # invisible
+        for m in range(game_world.dungeon.dungeon_width):
+            for n in range(game_world.dungeon.dungeon_height):
+                game_world.dungeon.map2D[m][n].set_visibility(False)      # make every tile invisible
 
         non_visible_tiles = []
-        tiles_in_visibility_radius = game_world.get_neighbors(self.tile, self.visibility_radius)
-        for tile in tiles_in_visibility_radius:
-            x1, y1 = tile.coordinates
+        coordinates_in_visibility_radius = game_world.dungeon.get_neighbors(self.tile.coordinates, self.visibility_radius)
+        coordinates_in_visibility_radius.append(self.tile.coordinates)
+        for X in coordinates_in_visibility_radius:
+            x1, y1 = X
             vision_ray_coordinates = get_line(x, y, x1, y1)
             vision_ray_tiles = [game_world.dungeon.map2D[c[0]][c[1]] for c in vision_ray_coordinates]
             line_blocking_status = ['light blocking' in _.properties for _ in vision_ray_tiles]
@@ -35,8 +37,10 @@ class Player(Game_Object):
                         non_visible_tiles.append(_)  # are appended to non_visible_tiles list
                     break
 
-        for _ in tiles_in_visibility_radius:  # go over
-            _.set_visibility(False) if _ in non_visible_tiles else _.set_visibility(True)
+        for X in coordinates_in_visibility_radius:  # go over
+            x1, y1 = X
+            t = self.game.game_world.dungeon.map2D[x1][y1]
+            t.set_visibility(False) if t in non_visible_tiles else t.set_visibility(True)
 
     def close_door(self, event):
         move_key = {'move left': (-1, 0), 'move right': (1, 0), 'move up': (0, -1), 'move down': (0, 1)}
