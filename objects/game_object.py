@@ -22,6 +22,7 @@ class Game_Object(object):
             self.defense = kwargs['defense']
             self.hp = Rechargeable(capacity=kwargs['hp'])
             self.is_alive = True
+            self.conditions = kwargs.get('conditions', '')
         if 'player' in self.properties:
             self.hunger = Rechargeable(capacity=100)
             self.money = 1000
@@ -96,6 +97,31 @@ class Game_Object(object):
             if key in item.properties:
                 return_list.append(item)
         return return_list
+
+    @staticmethod
+    def get_condition(key, search_string):
+        term = key+'('
+        start = search_string.find(term) + len(term)
+        end = search_string.find(')', start)
+        return search_string[start: end]
+
+    @staticmethod
+    def remove_condition(key, search_string):
+        start = search_string.find(key)
+        end = search_string.find(')', start)
+        if end == len(search_string):
+            new = search_string[:start]
+        else:
+            new = search_string[:start] + search_string[end+1:]
+        return new
+
+    @staticmethod
+    def add_condition(key, search_string):
+        if search_string == '':
+            search_string = key
+        else:
+            search_string = search_string + ', ' + key
+        return search_string
     #----- end ------
 
     # MOVEMENT HANDLING
@@ -131,6 +157,15 @@ class Game_Object(object):
 
     def update_status(self):
         assert 'NPC' in self.properties or 'player' in self.properties
+        if 'poisoned' in self.conditions:
+            kwargs = eval(Game_Object.get_condition('poisoned', self.conditions))
+            kwargs['turn'] -= 1
+            self.hp.change_current(-kwargs['damage'])
+            self.conditions = Game_Object.remove_condition('poisoned', self.conditions)
+            self.conditions = Game_Object.add_condition('poisoned('+str(kwargs)+')', self.conditions)
+            if kwargs['turn'] == 0:
+                self.conditions = Game_Object.remove_condition('poisoned', self.conditions)
+
         # hit points
         if self.hp.is_zero():
             self.is_alive = False
