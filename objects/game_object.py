@@ -104,19 +104,13 @@ class Game_Object(object):
         b1 = 'movable' in self.properties
         b2 = not 'movement blocking' in target_tile.properties
         b3 = not target_tile.has_an_object_which_is('movement blocking')
-        print 'origin = ', self.tile.coordinates
-        print 'target = ', target_tile.coordinates
 
         if b1 and b2 and b3 and b3:
-            print '1'
-            self.tile.remove_object(self)
-            print '2'
-            target_tile.add_object(self)
-            # change object coordinates
+            self.tile.transfer_to(target_tile, self)
             self.game.time.new_turn()
 
     def open_door(self, tile):
-        if 'can open doors' in self.properties:  # self can open doors
+        if 'can open doors' in self.properties:
             tile.set_tip('open door')
             self.game.logger.add_message('A door has been opened.')
             return True

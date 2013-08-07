@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="858756d4-51e8-4dbf-9478-529754cbc247" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/objects/dungeon.py" afterPath="$PROJECT_DIR$/objects/dungeon.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/objects/game_world.py" afterPath="$PROJECT_DIR$/objects/game_world.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/states/map_state.py" afterPath="$PROJECT_DIR$/states/map_state.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/objects/game_object.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/systems/objects_handler.py" afterPath="$PROJECT_DIR$/systems/objects_handler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/objects/player.py" afterPath="$PROJECT_DIR$/objects/player.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/objects/tile.py" afterPath="$PROJECT_DIR$/objects/tile.py" />
     </list>
     <ignored path="roguelike.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,7 +23,7 @@
     <file path="/utils.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1373183277914" ignored="false" />
     <file path="/event.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1373186648845" ignored="false" />
     <file path="/message_handler.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1373281695004" ignored="false" />
-    <file path="/a.dummy" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375862105462" ignored="false" />
+    <file path="/a.dummy" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375862590175" ignored="false" />
     <file path="/alive.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1374567964125" ignored="false" />
     <file path="/rechargeable.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375698587109" ignored="false" />
     <file path="/game_data.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1373359673268" ignored="false" />
@@ -73,7 +73,7 @@
     <file path="/inventory_owner.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1374591999879" ignored="false" />
     <file path="/level_design.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375802941967" ignored="false" />
     <file path="/movable_object.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375270768487" ignored="false" />
-    <file path="/basic_object.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375858309817" ignored="false" />
+    <file path="/basic_object.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375862339831" ignored="false" />
     <file path="/pickable_object.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1374591822012" ignored="false" />
     <file path="/consumable_object.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375256235982" ignored="false" />
     <file path="/stateManager.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375433100551" ignored="false" />
@@ -167,16 +167,16 @@
       <file leaf-file-name="objects_handler.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/systems/objects_handler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="61" selection-start="2254" selection-end="2254" vertical-scroll-proportion="0.0">
+            <state line="54" column="61" selection-start="2253" selection-end="2253" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="basic_object.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/objects/basic_object.py">
+      <file leaf-file-name="game_object.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/objects/game_object.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="24" selection-start="2236" selection-end="2236" vertical-scroll-proportion="0.0">
+            <state line="16" column="20" selection-start="621" selection-end="621" vertical-scroll-proportion="0.5298013">
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -187,7 +187,7 @@
       <file leaf-file-name="player.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/objects/player.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="0" selection-start="649" selection-end="769" vertical-scroll-proportion="0.0">
+            <state line="21" column="0" selection-start="648" selection-end="768" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -240,10 +240,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dungeon.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="dungeon.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/objects/dungeon.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="187" column="37" selection-start="9242" selection-end="9242" vertical-scroll-proportion="0.8013245">
+            <state line="187" column="37" selection-start="9242" selection-end="9242" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -280,11 +280,11 @@
         <option value="$PROJECT_DIR$/systems/ai.py" />
         <option value="$PROJECT_DIR$/systems/graphics_engine.py" />
         <option value="$PROJECT_DIR$/systems/objects_handler.py" />
-        <option value="$PROJECT_DIR$/objects/basic_object.py" />
         <option value="$PROJECT_DIR$/objects/player.py" />
         <option value="$PROJECT_DIR$/objects/game_world.py" />
         <option value="$PROJECT_DIR$/objects/dungeon.py" />
         <option value="$PROJECT_DIR$/states/map_state.py" />
+        <option value="$PROJECT_DIR$/objects/basic_object.py" />
       </list>
     </option>
   </component>
@@ -773,13 +773,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/systems/objects_handler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="61" selection-start="2254" selection-end="2254" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Library/Caches/PyCharm20/python_stubs/596071422/__builtin__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3253" column="8" selection-start="111039" selection-end="111039" vertical-scroll-proportion="0.33333334">
@@ -787,18 +780,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/objects/basic_object.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="24" selection-start="2236" selection-end="2236" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/objects/player.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="0" selection-start="649" selection-end="769" vertical-scroll-proportion="0.0">
+        <state line="21" column="0" selection-start="648" selection-end="768" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -821,9 +805,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/objects/dungeon.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="187" column="37" selection-start="9242" selection-end="9242" vertical-scroll-proportion="0.8013245">
+        <state line="187" column="37" selection-start="9242" selection-end="9242" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/systems/objects_handler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="61" selection-start="2253" selection-end="2253" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/objects/game_object.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="20" selection-start="621" selection-end="621" vertical-scroll-proportion="0.5298013">
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>

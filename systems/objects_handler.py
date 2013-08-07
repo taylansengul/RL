@@ -1,5 +1,5 @@
 from objects.player import Player
-from objects.basic_object import Game_Object
+from objects.game_object import Game_Object
 from random import randint
 import data
 

@@ -1,5 +1,5 @@
 from data import classes, colors
-from basic_object import Game_Object
+from game_object import Game_Object
 from systems.utils import get_line
 
 

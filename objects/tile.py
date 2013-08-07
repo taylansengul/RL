@@ -1,4 +1,4 @@
-from basic_object import Game_Object
+from game_object import Game_Object
 import inspect
 
 
