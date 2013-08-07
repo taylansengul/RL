@@ -20,11 +20,11 @@ class Game_Object(object):
         if 'NPC' in self.properties or 'player' in self.properties:
             self.attack = kwargs['attack']
             self.defense = kwargs['defense']
-            self.hp = Rechargeable(capacity=kwargs['hp'])
+            self.hp = Rechargeable(self.game, owner=self, capacity=kwargs['hp'])
             self.is_alive = True
             self.conditions = kwargs.get('conditions', '')
         if 'player' in self.properties:
-            self.hunger = Rechargeable(capacity=100)
+            self.hunger = Rechargeable(self.game, owner=self, capacity=100)
             self.money = 1000
             self.visibility_radius = 2
 
@@ -146,7 +146,6 @@ class Game_Object(object):
 
     # ATTACK - TAKE HIT - DIE
     # ---- start ----
-
     def attack_to(self, other):
         damage = max(self.attack - other.defense, 0)
         other.take_hit(damage)
@@ -157,15 +156,14 @@ class Game_Object(object):
 
     def update_status(self):
         assert 'NPC' in self.properties or 'player' in self.properties
-        if 'poisoned' in self.conditions:
-            kwargs = eval(Game_Object.get_condition('poisoned', self.conditions))
-            kwargs['turn'] -= 1
-            self.hp.change_current(-kwargs['damage'])
-            self.conditions = Game_Object.remove_condition('poisoned', self.conditions)
-            self.conditions = Game_Object.add_condition('poisoned('+str(kwargs)+')', self.conditions)
-            if kwargs['turn'] == 0:
-                self.conditions = Game_Object.remove_condition('poisoned', self.conditions)
-
+        #if 'poisoned' in self.conditions:
+        #    kwargs = eval(Game_Object.get_condition('poisoned', self.conditions))
+        #    kwargs['turn'] -= 1
+        #    self.hp.change_current(-kwargs['damage'])
+        #    self.conditions = Game_Object.remove_condition('poisoned', self.conditions)
+        #    self.conditions = Game_Object.add_condition('poisoned('+str(kwargs)+')', self.conditions)
+        #    if kwargs['turn'] == 0:
+        #        self.conditions = Game_Object.remove_condition('poisoned', self.conditions)
         # hit points
         if self.hp.is_zero():
             self.is_alive = False

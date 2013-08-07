@@ -14,6 +14,8 @@ class Time(object):
         # ai action
         # do not need ai: self.game.ai.determine_total_action()
         self.turn += 1
+        # run resource manager
+        self.game.resource_manager.manage()
 
     def get_display_info(self):
         st = [{'screen': 'game info',
