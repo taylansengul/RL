@@ -33,7 +33,7 @@ class Main_Menu_To_Map_State(object):
 
         print 'testing'
         # test
-        self.game.objects_handler.player.hp.add_to_change_list([-1, -1, -1])
+        self.game.objects_handler.player.hp.add_condition({'change': [-2, -1, -1], 'type': ''})
 
         # AI: do not need AI
         # self.game.ai = AI(self.game)

@@ -58,7 +58,6 @@ class Player(Game_Object):
     def update_status(self):
         # player hunger changes
         super(Player, self).update_status()
-        self.hunger.change_current(-1)
         if self.hunger.is_zero():
             self.is_alive = False
             self.game.logger.game_over_message = 'You died of hunger.'

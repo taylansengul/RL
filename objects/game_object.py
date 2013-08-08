@@ -5,6 +5,7 @@ from rechargeable import Rechargeable
 class Game_Object(object):
     def __init__(self, game, **kwargs):
         self.game = game
+
         self.ID = kwargs['ID']
         self.tile = kwargs.get('tile', self)  # if no tile it must be a tile and hence it points to itself
         self.icon = kwargs['icon']
@@ -25,6 +26,9 @@ class Game_Object(object):
             self.conditions = kwargs.get('conditions', '')
         if 'player' in self.properties:
             self.hunger = Rechargeable(self.game, owner=self, capacity=100)
+            for condition in kwargs['conditions']:
+                if 'hunger' in condition['effects']:
+                    self.hunger.add_condition(condition)
             self.money = 1000
             self.visibility_radius = 2
 
@@ -156,15 +160,6 @@ class Game_Object(object):
 
     def update_status(self):
         assert 'NPC' in self.properties or 'player' in self.properties
-        #if 'poisoned' in self.conditions:
-        #    kwargs = eval(Game_Object.get_condition('poisoned', self.conditions))
-        #    kwargs['turn'] -= 1
-        #    self.hp.change_current(-kwargs['damage'])
-        #    self.conditions = Game_Object.remove_condition('poisoned', self.conditions)
-        #    self.conditions = Game_Object.add_condition('poisoned('+str(kwargs)+')', self.conditions)
-        #    if kwargs['turn'] == 0:
-        #        self.conditions = Game_Object.remove_condition('poisoned', self.conditions)
-        # hit points
         if self.hp.is_zero():
             self.is_alive = False
             if 'player' in self.properties:

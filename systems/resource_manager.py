@@ -3,8 +3,11 @@ class Resource_Manager(object):
         self.game = game
         self.resources_to_update = []
 
-    def add_to_update_list(self, resource):
+    def add_resource(self, resource):
         self.resources_to_update.append(resource)
+
+    def remove_resource(self, resource):
+        self.resources_to_update.remove(resource)
 
     def manage(self):
         for resource in self.resources_to_update:

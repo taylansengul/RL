@@ -7,7 +7,7 @@ class Rechargeable(object):
         self.game = game
         self.owner = owner
         self.capacity = capacity
-        self.change_over_time = []
+        self.conditions = []
         if current is None:
             self.current = self.capacity
         else:
@@ -40,17 +40,23 @@ class Rechargeable(object):
     def get_time_to_charge(self):
         return self.capacity - self.current
 
-    def add_to_change_list(self, a_list):
-        self.change_over_time += a_list
-        self.game.resource_manager.add_to_update_list(self)
+    def add_condition(self, condition):
+        self.conditions.append(condition)
+        self.game.resource_manager.add_resource(self)
+
+    def remove_condition(self, condition):
+        self.conditions.remove(condition)
+        self.game.resource_manager.remove_resource(self)
 
     def update(self):
-        if self.change_over_time:
-            self.change_current(self.change_over_time[0])
-            self.change_over_time.pop(0)
-        if not self.change_over_time:
-            pass
+        for condition in self.conditions:
+            self.change_current(condition['change'][0])
+            if condition['type'] != 'permanent':
+                condition['change'].pop(0)
 
+        for condition in self.conditions:
+            if not condition['change']:  # if condition['change'] list is empty
+                self.remove_condition(condition)  # remove condition
 
     def __str__(self):
         return str(self.current) + ' / ' + str(self.capacity)
