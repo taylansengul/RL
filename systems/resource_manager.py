@@ -4,11 +4,12 @@ class Resource_Manager(object):
         self.resources_to_update = []
 
     def add_resource(self, resource):
-        self.resources_to_update.append(resource)
+        if resource not in self.resources_to_update:
+            self.resources_to_update.append(resource)
 
     def remove_resource(self, resource):
         self.resources_to_update.remove(resource)
 
     def manage(self):
-        for resource in self.resources_to_update:
+        for j, resource in enumerate(self.resources_to_update):
             resource.update()

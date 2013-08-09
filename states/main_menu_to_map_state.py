@@ -31,10 +31,6 @@ class Main_Menu_To_Map_State(object):
         self.game.objects_handler.populate_game_items()  # populate game world with game items
         self.game.objects_handler.populate_NPCs()  # populate game world with NPCS
 
-        print 'testing'
-        # test
-        self.game.objects_handler.player.hp.add_condition({'change': [-2, -1, -1], 'type': ''})
-
         # AI: do not need AI
         # self.game.ai = AI(self.game)
 

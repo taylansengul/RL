@@ -7,7 +7,7 @@ class Rechargeable(object):
         self.game = game
         self.owner = owner
         self.capacity = capacity
-        self.conditions = []
+        self.current_conditions = []
         if current is None:
             self.current = self.capacity
         else:
@@ -32,29 +32,38 @@ class Rechargeable(object):
         return self.current
 
     def is_full(self):
-        return self.current == self.capacity
+        if isinstance(self.current, int):
+            return self.current == self.capacity
+        elif isinstance(self.current, float):
+            return self.current > self.capacity - 0.00001
 
     def is_zero(self):
-        return self.current == 0
+        if isinstance(self.current, int):
+            return self.current == 0
+        elif isinstance(self.current, float):
+            return self.current < 0.00001
 
     def get_time_to_charge(self):
         return self.capacity - self.current
 
     def add_condition(self, condition):
-        self.conditions.append(condition)
+        self.current_conditions.append(condition)
         self.game.resource_manager.add_resource(self)
 
     def remove_condition(self, condition):
-        self.conditions.remove(condition)
-        self.game.resource_manager.remove_resource(self)
+        self.current_conditions.remove(condition)
+        if not self.current_conditions:
+            self.game.resource_manager.remove_resource(self)
 
     def update(self):
-        for condition in self.conditions:
-            self.change_current(condition['change'][0])
+        total_change = 0
+        for condition in self.current_conditions:
+            total_change += condition['change'][0]
             if condition['type'] != 'permanent':
                 condition['change'].pop(0)
+        self.change_current(total_change)
 
-        for condition in self.conditions:
+        for condition in self.current_conditions:
             if not condition['change']:  # if condition['change'] list is empty
                 self.remove_condition(condition)  # remove condition
 

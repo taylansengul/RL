@@ -23,12 +23,11 @@ class Game_Object(object):
             self.defense = kwargs['defense']
             self.hp = Rechargeable(self.game, owner=self, capacity=kwargs['hp'])
             self.is_alive = True
-            self.conditions = kwargs.get('conditions', '')
+            self.current_conditions = kwargs.get('conditions', '')
         if 'player' in self.properties:
             self.hunger = Rechargeable(self.game, owner=self, capacity=100)
-            for condition in kwargs['conditions']:
-                if 'hunger' in condition['effects']:
-                    self.hunger.add_condition(condition)
+            for condition in kwargs.get('conditions', []):  # if there are conditions
+                getattr(self, condition['effects']).add_condition(condition)
             self.money = 1000
             self.visibility_radius = 2
 
