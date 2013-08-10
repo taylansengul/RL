@@ -75,13 +75,10 @@ class Game_Object(object):
 
     def consume(self, item):
         assert 'consumable' in item.properties
-        for effect in item.effects:
-            if effect['type'] == 'satiate hunger':
-                self.hunger.change_current(effect['amount'])
-                self.remove_object(item)
-            if effect['type'] == 'heal':
-                self.hp.change_current(effect['amount'])
-                self.remove_object(item)
+        for condition in item.effects:
+            getattr(self, condition['effects']).add_condition(condition)
+        self.remove_object(item)
+        self.game.time.new_turn()
 
     def has_an_object_which_is(self, a_property):
         if self.has_objects():

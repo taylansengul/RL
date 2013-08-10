@@ -3,14 +3,14 @@ dictionary = {'apple': {'type': 'game item',
                         'icon': 'F',
                         'color': 'green',
                         'properties': 'pickable, edible, consumable, stackable',
-                        'effects': [{'type': 'satiate hunger', 'amount': 30}]
+                        'effects': [{'effects': 'hunger', 'change': [30], 'type': 'temporary'}]
                         },
               'potion of healing': {'type': 'game item',
                                     'ID': 'potion of healing',
                                     'icon': 'P',
                                     'color': 'green',
                                     'properties': 'pickable, drinkable, consumable, stackable',
-                                    'effects': [{'type': 'heal', 'amount': 3}]
+                                    'effects': [{'effects': 'hp', 'change': [3], 'type': 'temporary'}]
                         },
               'lantern': {'type': 'game item',
                           'ID': 'lantern',

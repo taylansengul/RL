@@ -1,3 +1,6 @@
+import copy
+
+
 class Rechargeable(object):
     """
     Pair object consists of two elements (current and capacity) where first element is the current status and the second
@@ -47,7 +50,9 @@ class Rechargeable(object):
         return self.capacity - self.current
 
     def add_condition(self, condition):
-        self.current_conditions.append(condition)
+        # need to make a deepcopy in order to not mutate the properties of a stackable game item
+        condition_copy = copy.deepcopy(condition)
+        self.current_conditions.append(condition_copy)
         self.game.resource_manager.add_resource(self)
 
     def remove_condition(self, condition):
