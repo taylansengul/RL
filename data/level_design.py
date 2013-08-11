@@ -1,8 +1,8 @@
 import screens
 
-NPCs = [{'race': 'orc', 'number': (5, 10)}, {'race': 'rat', 'number': (10, 15)}]
+NPCs = [{'id': 'orc', 'number': (5, 10)}, {'id': 'rat', 'number': (10, 15)}]
 
-game_items = [{'item': 'apple', 'number': (5, 8)}, {'item': 'potion of healing', 'number': (5, 8)}]
+game_items = [{'id': 'apple', 'number': (5, 8)}, {'id': 'potion of healing', 'number': (5, 8)}]
 
 dungeon_level_1 = {'dungeon width': screens.tile_no_x,
                    'dungeon height': screens.tile_no_y,
