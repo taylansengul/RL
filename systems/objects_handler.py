@@ -48,14 +48,6 @@ class Objects_Handler():
                 new_NPC = Game_Object(self.game, tile=tile, **kwargs)
                 self.add_NPC(new_NPC, tile)
 
-    def create_player_items(self):
-        print 'creating player items'
-        inventory = data.classes.dictionary[self.game.objects_handler.player.player_class]['objects']
-        for item in inventory:
-            kwargs = dict(data.game_items.dictionary[item].items())
-            new_item = Game_Object(self.game, tile=self.player.tile, **kwargs)
-            self.add_game_item(new_item, self.player)
-
     def add_NPC(self, NPC, game_object):
         self.NPCs.append(NPC)
         self.all_objects.append(NPC)

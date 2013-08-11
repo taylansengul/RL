@@ -5,7 +5,6 @@ from rechargeable import Rechargeable
 class Game_Object(object):
     def __init__(self, game, **kwargs):
         self.game = game
-
         self.ID = kwargs['ID']
         self.tile = kwargs.get('tile', self)  # if no tile it must be a tile and hence it points to itself
         self.icon = kwargs['icon']
@@ -15,7 +14,10 @@ class Game_Object(object):
         if 'container' in self.properties:
             self.objects = []
             for ID in kwargs.get('objects', []):
-                pass
+                print 'creating player items'
+                item_kwargs = data.game_items.dictionary[ID]
+                new_item = Game_Object(self.game, tile=self.tile, **item_kwargs)
+                self.game.objects_handler.add_game_item(new_item, self)
         if 'stackable' in self.properties:
             self.quantity = kwargs.get('quantity', 1)
         if 'NPC' in self.properties or 'player' in self.properties:
@@ -29,7 +31,7 @@ class Game_Object(object):
             for condition in kwargs.get('conditions', []):  # if there are conditions
                 getattr(self, condition['effects']).add_condition(condition)
             self.money = 1000
-            self.visibility_radius = 2
+            self.visibility_radius = kwargs['visibility radius']
 
         # add self to game objects
         self.game.objects_handler.all_objects.append(self)

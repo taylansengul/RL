@@ -6,6 +6,7 @@ initial_poison = {'effects': 'hp', 'change': [-2, -1, -1], 'type': 'temporary'}
 dictionary = {'fighter': {'hp': 10,
                           'attack': 3,
                           'defense': 2,
+                          'visibility radius': 2,
                           'objects': ['lantern', 'apple'],
                           'properties': common_player_properties,
                           'conditions': [food_needing, regeneration, initial_poison]}}
