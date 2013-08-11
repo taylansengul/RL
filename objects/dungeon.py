@@ -85,8 +85,15 @@ class Dungeon(object):
 
         return X1, Y1, X2, Y2, distance, closest_room
 
-    def get_random_room_floor(self):
-        return choice(choice(self.rooms).get_all())
+    def get_random_room_floor_tile_with_no_objects(self):
+        while True:
+            the_random_room = choice(self.rooms)
+            coordinates_of_all_tiles_in_the_random_room = the_random_room.get_all()
+            m, n = choice(coordinates_of_all_tiles_in_the_random_room)
+            tile = self.map2D[m][n]
+            if not tile.has_objects():
+                    break
+        return tile
 
     def connect_rooms(self):
         """ first connect every room to the closest one, then connect the unconnected components"""
