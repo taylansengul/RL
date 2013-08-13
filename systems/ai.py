@@ -8,11 +8,9 @@ class AI(object):
 
     def determine_total_action(self):
         for npc in self.NPCs:
-            # todo: this code is repeated in map_state
-            move_keys = {'move left': (-1, 0), 'move right': (1, 0), 'move up': (0, -1), 'move down': (0, 1)}
-            event = random.choice(move_keys.keys())
-            m, n = npc.tile.coordinates[0] + move_keys[event][0], npc.tile.coordinates[1] + move_keys[event][1]
-            target_tile = self.game.game_world.dungeon.map2D[m][n]
+            # todo: this code is repeated in map_state:
+            event = random.choice(['up', 'down', 'left', 'right'])
+            target_tile = self.game.game_world.dungeon.get_neighbor_tile(self.tile, event)
             if not target_tile or 'movement blocking' in target_tile.properties:  # tile not valid or movement blocking
                 self.game.io_handler.set_active_event(None)
             elif self.game.event_log[-2] == 'close door':

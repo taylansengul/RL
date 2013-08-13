@@ -56,12 +56,12 @@ class Dungeon(object):
         for m in range(0, self.dungeon_width):
             for n in range(0, self.dungeon_height):
                 if self.pre_map2D[m][n] == 'floor':  # if tile is floor
-                    for c in self.get_neighbors((m, n), 1):  # look for its neighbors
+                    for c in self.get_all_neighbors_coordinates((m, n), 1):  # look for its neighbors
                         x, y = c
                         if self.pre_map2D[x][y] == 'dirt':  # if there is a dirt tile as its neighbor
                             self.pre_map2D[x][y] = 'wall'  # make it a wall tile.
 
-    def get_neighbors(self, (x, y), r):
+    def get_all_neighbors_coordinates(self, (x, y), r):
         """Returns coordinates which are neighbors of given x, y and lies in the dungeon grid"""
         coordinates = [(m, n) for m in range(x-r, x+r+1) for n in range(y-r, y+r+1) if (m, n) != (x, y)]
         return [c for c in coordinates if 0 <= c[0] < self.dungeon_width and 0 <= c[1] < self.dungeon_height]
@@ -84,6 +84,14 @@ class Dungeon(object):
         # assert X1 is not None and Y1 is not None and X2 is not None and Y2 is not None and closest_room is not None
 
         return X1, Y1, X2, Y2, distance, closest_room
+
+    def get_neighbor_tile(self, tile, direction):
+        direction_dictionary = {'up': (0, -1), 'down': (0, 1), 'left': (-1, 0), 'right': (1, 0)}
+        x1, y1 = tile.coordinates
+        x2, y2 = direction_dictionary[direction]
+        x, y = x1 + x2, y1 + y2
+        if 0 <= x <= self.dungeon_width and 0 <= y <= self.dungeon_height:
+            return self.map2D[x][y]
 
     def get_random_room_floor_tile_with_no_objects(self):
         while True:

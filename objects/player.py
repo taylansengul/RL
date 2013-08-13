@@ -24,7 +24,8 @@ class Player(Game_Object):
                 game_world.dungeon.map2D[m][n].set_visibility(False)      # make every tile invisible
 
         non_visible_tiles = []
-        coordinates_in_visibility_radius = game_world.dungeon.get_neighbors(self.tile.coordinates, self.visibility_radius)
+        coordinates_in_visibility_radius = game_world.dungeon.get_all_neighbors_coordinates(self.tile.coordinates,
+                                                                                            self.visibility_radius)
         coordinates_in_visibility_radius.append(self.tile.coordinates)
         for X in coordinates_in_visibility_radius:
             x1, y1 = X
