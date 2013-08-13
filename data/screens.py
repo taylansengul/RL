@@ -33,4 +33,5 @@ screen_coordinates = {'main': (0, 0),
                                     'messages': (left_bar_width, game_info_height + player_height),
                                     'enemy': (left_bar_width, messages_height + game_info_height + player_height)},
                       'main menu state': (0, 0),
-                      'inventory state': (0, 0)}
+                      'inventory state': (0, 0),
+                      'targeting state': (0, 0)}

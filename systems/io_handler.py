@@ -32,7 +32,12 @@ class Io_Handler(object):
                                                                  pgl.K_RETURN: 'select',
                                                                  pgl.K_ESCAPE: 'quit',
                                                                  pgl.K_e: 'show edible items',
-                                                                 pgl.K_u: 'show consumable items'}}
+                                                                 pgl.K_u: 'show consumable items'},
+                                             'targeting state': {pgl.K_RIGHT: 'right',
+                                                                 pgl.K_LEFT: 'left',
+                                                                 pgl.K_DOWN: 'down',
+                                                                 pgl.K_UP: 'up',
+                                                                 pgl.K_RETURN: 'select'}}
 
     def compute_active_event(self):
         """compute the active event"""

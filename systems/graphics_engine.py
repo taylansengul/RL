@@ -35,7 +35,7 @@ class Graphics_Engine(object):
         for a_dict in info_list:
             s_id = a_dict['screen']
             screen = self.screens[s_id]
-            x, y = data.screens.screen_coordinates[self.game.state_manager.current_state.ID][s_id]
+            x, y = data.screens.screen_coordinates['map state'][s_id]
             screen.fill(data.colors.palette['black'])
             for i in a_dict['info']:
                 c = i['coordinates'] + (x, y)

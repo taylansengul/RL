@@ -53,6 +53,8 @@ class Map_State(object):
             if player.has_objects():
                 item = player.objects[0]
                 player.transfer_to(tile, item)
+        elif event == 'target':
+            self.game.state_manager.change_state(self.game.state_manager.targeting_state)
         elif event == 'quit':
             self.game.state_manager.change_state(self.game.state_manager.main_menu_state)
 
@@ -71,8 +73,8 @@ class Map_State(object):
                     continue
                 coordinates = graphics.get_screen_position_of(tile.coordinates)
                 color = tile.color
-                pg.draw.rect(graphics.screens['map'], color, coordinates)
-                pg.draw.rect(graphics.screens['map'], data.colors.palette['white'], coordinates, 1)
+                pg.draw.rect(graphics.screens['map'], color, coordinates)  # tile background
+                pg.draw.rect(graphics.screens['map'], data.colors.palette['white'], coordinates, 1)  # tile border
 
                 if 'container' in tile.properties:
                     for item in tile.objects:
