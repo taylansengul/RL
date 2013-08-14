@@ -13,9 +13,12 @@ class Graphics_Engine(object):
         self.game.state_manager.current_state.init()
 
     def get_screen_position_of(self, (x, y)):
-        c1 = data.screens.tile_length * x
-        c2 = data.screens.tile_length * y
-        c3 = data.screens.tile_length
+        """returns a pg.Rect object where coordinates are normalized w.r.t. player position in the middle"""
+        x1, y1 = self.game.objects_handler.player.tile.coordinates
+        x2, y2 = data.screens.map_center_x, data.screens.map_center_y
+        c1 = data.screens.tile_length * (x - x1 + x2)  # left border coordinate
+        c2 = data.screens.tile_length * (y - y1 + y2)  # top border coordinate
+        c3 = data.screens.tile_length  # length and width
         return pg.Rect(c1, c2, c3, c3)
 
     def display_messages(self):
@@ -41,6 +44,3 @@ class Graphics_Engine(object):
                 c = i['coordinates'] + (x, y)
                 self.fontMgr.Draw(screen, 'arial', 12, i['item'], pg.Rect(c), i['color'], 'left', 'top', True)
             self.screens['main'].blit(screen, (x, y))
-
-    def update_screen(self):
-        self.game.state_manager.current_state.updateScreen()

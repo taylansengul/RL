@@ -16,6 +16,7 @@ player_height = 3 * height / 10
 game_info_height = height / 10
 messages_height = 3 * height / 10
 enemy_height = 3 * height / 10
+map_center_x, map_center_y = tile_no_x/2, tile_no_y/2
 
 screen_size = {'main': (main_multiplier_x * tile_length, main_multiplier_y * tile_length),
                'map state': {'map': (map_multiplier_x * tile_length, map_multiplier_y * tile_length),

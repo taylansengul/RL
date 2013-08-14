@@ -19,15 +19,16 @@ class Game(object):
         # also player is created
 
     def loop(self):
-        while not self.state_manager.current_state == self.state_manager.exit_game_loop_state:
+        SM = self.state_manager
+        while not SM.current_state == SM.exit_game_loop_state:
             # get input
             self.io_handler.compute_active_event()
             # if there is input
             if self.io_handler.active_event:
                 # determine action
-                self.state_manager.current_state.determineAction()
+                SM.current_state.determineAction()
                 # update graphics
-                self.graphics_engine.update_screen()
+                SM.current_state.updateScreen()
 
 
 def main():
