@@ -1,4 +1,3 @@
-import pygame as pg
 import data
 from systems.graphics.menu import Menu, Menu_Option
 
@@ -40,11 +39,11 @@ class Inventory_State(object):
             self.menu.draw()
             gE.screens['main'].blit(screen, data.screens.screen_coordinates['inventory state'])
         else:
-            gE.fontMgr.Draw(screen, 'arial', 36, 'Empty Inventory',
+            gE.font_manager.Draw(screen, 'arial', 36, 'Empty Inventory',
                             (0, 0), data.colors.palette['white'], 'center', 'center', True)
 
         gE.screens['main'].blit(screen, (0, 0))
-        pg.display.flip()
+        self.game.pygame.display.flip()
 
     def determineAction(self):
         self.selected_item = None

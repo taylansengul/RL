@@ -1,4 +1,3 @@
-import pygame as pg
 import data
 
 
@@ -17,9 +16,9 @@ class Targeting_State(object):
         graphics = self.game.graphics_engine
         self.game.state_manager.map_state.updateScreen()
         coordinates = graphics.get_screen_position_of(self.highlighted_tile.coordinates)
-        pg.draw.rect(graphics.screens['map'], data.colors.palette['yellow'], coordinates, 5)  # tile border
+        self.game.pygame.draw.rect(graphics.screens['map'], data.colors.palette['yellow'], coordinates, 5)  # tile border
         graphics.screens['main'].blit(graphics.screens['map'], (0, 0))
-        pg.display.flip()
+        self.game.pygame.display.flip()
 
     def determineAction(self):
         event = self.game.io_handler.get_active_event()

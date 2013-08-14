@@ -1,5 +1,4 @@
 import data
-import pygame as pg
 
 
 class Game_Over_State(object):
@@ -18,10 +17,10 @@ class Game_Over_State(object):
     def updateScreen(self):
         graphics = self.game.graphics_engine
         graphics.screens['main'].fill(data.colors.palette['black'])
-        graphics.fontMgr.Draw(graphics.screens['main'], 'arial', 36, 'Game is over.',
+        graphics.font_manager.Draw(graphics.screens['main'], 'arial', 36, 'Game is over.',
             (0, 0), data.colors.palette['white'], 'center', 'center', True)
-        graphics.fontMgr.Draw(graphics.screens['main'], 'arial', 36, self.game.logger.game_over_message,
+        graphics.font_manager.Draw(graphics.screens['main'], 'arial', 36, self.game.logger.game_over_message,
             (0, 40), data.colors.palette['white'], 'center', 'center', True)
-        graphics.fontMgr.Draw(graphics.screens['main'], 'arial', 36, 'Press Space.',
+        graphics.font_manager.Draw(graphics.screens['main'], 'arial', 36, 'Press Space.',
             (0, 80), data.colors.palette['white'], 'center', 'center', True)
-        pg.display.flip()
+        self.game.pygame.display.flip()

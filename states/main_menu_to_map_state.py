@@ -1,4 +1,3 @@
-import pygame as pg
 import data
 from systems.time import Time
 from systems.message_logger import MessageLogger
@@ -36,10 +35,10 @@ class Main_Menu_To_Map_State(object):
 
         # initialize game screens
         for ID, size in data.screens.screen_size[self.game.state_manager.current_state.ID].iteritems():
-                self.game.graphics_engine.screens[ID] = pg.Surface(size)
+                self.game.graphics_engine.screens[ID] = self.game.pygame.Surface(size)
 
         # initialize inventory screen
-        self.game.graphics_engine.screens['inventory state'] = pg.Surface(data.screens.screen_size['inventory state'])
+        self.game.graphics_engine.screens['inventory state'] = self.game.pygame.Surface(data.screens.screen_size['inventory state'])
 
         self.game.logger.add_message('Starting New Game.')
 

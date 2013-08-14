@@ -1,4 +1,3 @@
-import pygame as pg
 import pygame.locals as pgl
 import data
 
@@ -47,13 +46,13 @@ class Io_Handler(object):
         self.click_coordinates = (-1, -1)
         self.hover_coordinates = (-1, -1)
         # wait for input
-        event = pg.event.wait()
-        if event.type == pg.MOUSEBUTTONDOWN:  # mouse click coordinates
+        event = self.game.pygame.event.wait()
+        if event.type == self.game.pygame.MOUSEBUTTONDOWN:  # mouse click coordinates
             x, y = event.pos
             if x < data.screens.screen_size['main'][0] and y < data.screens.screen_size['main'][1]:
                 self.active_event = 'moving'
                 self.click_coordinates = (x, y)
-        elif event.type == pg.MOUSEMOTION:
+        elif event.type == self.game.pygame.MOUSEMOTION:
             self.input = 'mouse motion'
             self.hover_coordinates = event.pos
         elif event.type == pgl.QUIT:

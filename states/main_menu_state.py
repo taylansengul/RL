@@ -1,4 +1,3 @@
-import pygame as pg
 from systems.graphics.menu import Menu, Menu_Option
 import data
 
@@ -11,7 +10,7 @@ class Main_Menu_State(object):
     def init(self):
         gE = self.game.graphics_engine
         gE.screens['main'].fill(data.colors.palette['black'])
-        gE.screens['menu'] = pg.Surface(data.screens.screen_size['main menu state'])
+        gE.screens['menu'] = self.game.pygame.Surface(data.screens.screen_size['main menu state'])
         font = gE.font_18
         self.newGameOption = Menu_Option("NEW GAME", (140, 105), font, isHovered=True)
         self.loadGameOption = Menu_Option("LOAD GAME", (140, 155), font)
@@ -26,7 +25,7 @@ class Main_Menu_State(object):
         gE = self.game.graphics_engine
         self.menu.draw()
         gE.screens['main'].blit(gE.screens['menu'], data.screens.screen_coordinates['main menu state'])
-        pg.display.update()
+        self.game.pygame.display.update()
 
     def determineAction(self):
         event = self.game.io_handler.get_active_event()

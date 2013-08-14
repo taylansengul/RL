@@ -1,9 +1,9 @@
-import pygame as pg
 import data
 from systems.cFontManager import cFontManager
 from systems.graphics_engine import Graphics_Engine
 from systems.io_handler import Io_Handler
 import random
+import pygame
 
 
 class Enter_Main_Game_Loop_State(object):
@@ -21,16 +21,17 @@ class Enter_Main_Game_Loop_State(object):
         seed_value = 0  # make this None to use the system time as a seed_value
         random.seed(seed_value)
         # setup pygame
-        pg.init()
+        self.game.pygame = pygame
+        self.game.pygame.init()
         # initialize main screen
-        self.game.graphics_engine.screens['main'] = pg.display.set_mode(data.screens.screen_size['main'], 0, 32)
+        self.game.graphics_engine.screens['main'] = self.game.pygame.display.set_mode(data.screens.screen_size['main'], 0, 32)
         # Setup fonts and font manager
-        # avail_fonts = pg.font.get_fonts()
+        # avail_fonts = self.game.pygame.font.get_fonts()
         # avail_fonts = ['arial']
-        self.game.graphics_engine.font_18 = pg.font.SysFont(None, 18)
-        self.game.graphics_engine.font_36 = pg.font.SysFont(None, 36)
-        self.game.graphics_engine.fontMgr = cFontManager((('arial', 12), ('arial', 18), ('arial', 36)))
-        pg.display.set_caption("This is a roguelike project.")
+        self.game.graphics_engine.font_18 = self.game.pygame.font.SysFont(None, 18)
+        self.game.graphics_engine.font_36 = self.game.pygame.font.SysFont(None, 36)
+        self.game.graphics_engine.font_manager = cFontManager((('arial', 12), ('arial', 18), ('arial', 36)))
+        self.game.pygame.display.set_caption("This is a roguelike project.")
 
     def updateScreen(self):
         pass

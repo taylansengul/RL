@@ -1,4 +1,3 @@
-import pygame as pg
 import data
 
 
@@ -75,12 +74,12 @@ class Map_State(object):
                 continue
             coordinates = graphics.get_screen_position_of((x2, y2))
             color = tile.color
-            pg.draw.rect(graphics.screens['map'], color, coordinates)  # tile background
-            pg.draw.rect(graphics.screens['map'], data.colors.palette['white'], coordinates, 1)  # tile border
+            self.game.pygame.draw.rect(graphics.screens['map'], color, coordinates)  # tile background
+            self.game.pygame.draw.rect(graphics.screens['map'], data.colors.palette['white'], coordinates, 1)  # tile border
 
             if 'container' in tile.properties:
                 for item in tile.objects:
-                    graphics.fontMgr.Draw(graphics.screens['map'], 'arial', 36, item.icon,
+                    graphics.font_manager.Draw(graphics.screens['map'], 'arial', 36, item.icon,
                                           coordinates, item.color, 'center', 'center', True)
 
         # logger messages
@@ -96,4 +95,4 @@ class Map_State(object):
 
         # always update player info screen #todo
         graphics.screens['main'].blit(graphics.screens['map'], (0, 0))
-        pg.display.flip()
+        self.game.pygame.display.flip()
