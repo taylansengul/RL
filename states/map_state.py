@@ -32,7 +32,7 @@ class Map_State(object):
                 player.move(target_tile)  # move
         elif event == 'descend' and tile.tip == 'exit':
             self.game.logger.game_over_message = 'Congratulations. You found the way out.'
-            self.game.state_manager.change_state(self.game.state_manager.game_over_state)
+            self.game.state_manager.change_state(self.game.state_manager.game_over_screen_state)
         elif event == 'inventory':
             self.game.state_manager.inventory_state.key = ''
             self.game.state_manager.change_state(self.game.state_manager.inventory_state)

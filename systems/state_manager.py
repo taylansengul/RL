@@ -11,7 +11,7 @@ class State_Manager(object):
         self.inventory_state = states.Inventory_State(game)
         self.main_menu_to_map_state = states.Main_Menu_To_Map_State(game)
         self.exit_to_os_state = states.Exit_To_OS_State(game)
-        self.game_over_state = states.Game_Over_State(game)
+        self.game_over_screen_state = states.Game_Over_Screen_State(game)
         self.targeting_state = states.Targeting_State(game)
         self.current_state = None
 

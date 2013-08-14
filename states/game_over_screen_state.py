@@ -1,7 +1,7 @@
 import data
 
 
-class Game_Over_State(object):
+class Game_Over_Screen_State(object):
     def __init__(self, game):
         self.game = game
         self.ID = 'game over state'

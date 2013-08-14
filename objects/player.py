@@ -67,7 +67,7 @@ class Player(Game_Object):
 
         if not self.is_alive:  # player dead
             sM = self.game.state_manager
-            sM.change_state(sM.game_over_state)
+            sM.change_state(sM.game_over_screen_state)
 
     def get_display_info(self):
         new_line_height = 16

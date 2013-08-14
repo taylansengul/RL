@@ -5,5 +5,5 @@ from inventory_state import Inventory_State
 from main_menu_to_map_state import Main_Menu_To_Map_State
 from exit_game_loop_state import Exit_Game_Loop_State
 from exit_to_os_state import Exit_To_OS_State
-from game_over_state import Game_Over_State
+from game_over_screen_state import Game_Over_Screen_State
 from targeting_state import Targeting_State
