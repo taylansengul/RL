@@ -28,6 +28,6 @@ class Game_Over_Screen_State(object):
         for _ in zip(screen_IDs, contexts, coordinates, colors):
             info.append(Text(screen=_[0], context=_[1], coordinates=_[2], color=_[3]))
 
-        self.game.graphics_engine.screens['main'].fill(data.colors.palette['black'])
+        self.game.graphics_engine.clear_screen('main', 'black')
         self.game.graphics_engine.render_info(info)
         self.game.pygame.display.flip()

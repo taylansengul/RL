@@ -26,7 +26,7 @@ class Graphics_Engine(object):
         while self.game.logger.has_unhandled_messages():
             self.game.logger.handle_message()
 
-        screen.fill(data.colors.palette['black'])
+        self.clear_screen('messages')
         for co, message in enumerate(self.game.logger.message_archive[-4:]):
             self.font_manager.Draw(screen, 'arial', 12, message,
                               self.game.pygame.Rect(0, new_line_height*co, x, y), data.colors.palette['white'], 'left', 'top', True)
@@ -37,11 +37,12 @@ class Graphics_Engine(object):
             s_id = text.screen
             screen = self.screens[s_id]
             cs = self.game.state_manager.current_state.ID
-
-            try:
-                x, y = data.screens.screen_coordinates[cs][s_id]
-            except:
-                x, y = data.screens.screen_coordinates['main']
+            x, y = data.screens.screen_coordinates[cs][s_id]
             r = self.game.pygame.Rect(text.coordinates + (x, y))
             self.font_manager.Draw(screen, 'arial', 12, text.context, r, text.color, 'left', 'top', True)
             self.screens['main'].blit(screen, (x, y))
+
+    def clear_screen(self, screen_name, color='black'):
+        if isinstance(color, str):
+            color = data.colors.palette[color]
+        self.screens[screen_name].fill(color)

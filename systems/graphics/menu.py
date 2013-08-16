@@ -5,7 +5,6 @@ class Menu(object):
         self.option_selected = None
 
     def draw(self):
-        self.screen.fill((0, 0, 0))
         for option in self.options:
             option.draw(self.screen)
 

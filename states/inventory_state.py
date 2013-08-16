@@ -34,7 +34,7 @@ class Inventory_State(object):
     def updateScreen(self):
         gE = self.game.graphics_engine
         screen = gE.screens['inventory state']
-        screen.fill(data.colors.palette['black'])
+        gE.clear_screen('main')
         if self.inventory:
             self.menu.draw()
             gE.screens['main'].blit(screen, data.screens.screen_coordinates['inventory state'])

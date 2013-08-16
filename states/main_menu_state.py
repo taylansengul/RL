@@ -9,7 +9,7 @@ class Main_Menu_State(object):
 
     def init(self):
         gE = self.game.graphics_engine
-        gE.screens['main'].fill(data.colors.palette['black'])
+        gE.clear_screen('main')
         gE.screens['menu'] = self.game.pygame.Surface(data.screens.screen_size['main menu state'])
         font = gE.font_18
         self.newGameOption = Menu_Option("NEW GAME", (140, 105), font, isHovered=True)

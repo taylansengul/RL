@@ -63,7 +63,7 @@ class Map_State(object):
 
         # game world
         # clear game world
-        graphics.screens['map'].fill(data.colors.palette['black'])
+        graphics.clear_screen('map')
         # add game map to render list
         x1, y1 = self.game.objects_handler.player.tile.coordinates
         coordinates_list = game_world.dungeon.get_all_neighbors_coordinates((x1, y1), 10)
@@ -87,7 +87,7 @@ class Map_State(object):
             graphics.display_messages()
 
         for i in ['enemy', 'game info', 'messages', 'player']:
-            graphics.screens[i].fill(data.colors.palette['black'])
+            graphics.clear_screen(i)
         # render all the other info
         # obtain info to display
         info = self.game.objects_handler.player.get_display_info()  # player info
