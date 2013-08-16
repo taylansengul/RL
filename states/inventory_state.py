@@ -2,6 +2,7 @@ import data
 from systems.graphics.menu import Menu, Menu_Option
 
 
+# todo: create inventory state main screen
 class Inventory_State(object):
     def __init__(self, game):
         self.ID = 'inventory state'
@@ -37,8 +38,9 @@ class Inventory_State(object):
         gE.clear_screen('main')
         if self.inventory:
             self.menu.draw()
-            gE.screens['main'].blit(screen, data.screens.screen_coordinates['inventory state'])
+            gE.screens['main'].blit(screen, data.screens.screen_coordinates['main'])
         else:
+            gE.clear_screen('main')
             gE.font_manager.Draw(screen, 'arial', 36, 'Empty Inventory',
                             (0, 0), data.colors.palette['white'], 'center', 'center', True)
 
