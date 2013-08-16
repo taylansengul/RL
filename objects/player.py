@@ -1,6 +1,7 @@
 from data import classes, colors
 from game_object import Game_Object
 from systems.utils import get_line
+from systems.text import Text
 
 
 class Player(Game_Object):
@@ -71,17 +72,13 @@ class Player(Game_Object):
 
     def get_display_info(self):
         new_line_height = 16
-        st = {'screen': 'player',
-              'info': [{'item': self.name,
-                        'coordinates': (0, 0),
-                        'color': colors.palette['white']},
-                       {'item': 'hp: %d/%d' % (self.hp.current, self.hp.capacity),
-                        'coordinates': (0, new_line_height),
-                        'color': colors.palette['white']},
-                       {'item': 'hunger: %d/%d' % (self.hunger.current, self.hunger.capacity),
-                        'coordinates': (0, 2*new_line_height),
-                        'color': colors.palette['white']},
-                       {'item': 'money: %d' % self.money,
-                        'coordinates': (0, 3*new_line_height),
-                        'color': colors.palette['white']}]}
+        contexts = [self.name,
+                    'hp: %d/%d' % (self.hp.current, self.hp.capacity),
+                    'hunger: %d/%d' % (self.hunger.current, self.hunger.capacity),
+                    'money: %d' % self.money]
+        st = []
+        for j, context in enumerate(contexts):
+            c = (0, j*new_line_height)
+            st.append(Text(screen='player', context=context, coordinates=c, color=colors.palette['white']))
+
         return st

@@ -15,12 +15,9 @@ class Game_Over_Screen_State(object):
             self.game.state_manager.change_state(self.game.state_manager.main_menu_state)
 
     def updateScreen(self):
-        graphics = self.game.graphics_engine
-        graphics.screens['main'].fill(data.colors.palette['black'])
-        graphics.font_manager.Draw(graphics.screens['main'], 'arial', 36, 'Game is over.',
-            (0, 0), data.colors.palette['white'], 'center', 'center', True)
-        graphics.font_manager.Draw(graphics.screens['main'], 'arial', 36, self.game.logger.game_over_message,
-            (0, 40), data.colors.palette['white'], 'center', 'center', True)
-        graphics.font_manager.Draw(graphics.screens['main'], 'arial', 36, 'Press Space.',
-            (0, 80), data.colors.palette['white'], 'center', 'center', True)
+        info = [{'screen': 'main',
+                 'info': [{'item': 'Game is over.', 'coordinates': (0, 0), 'color': data.colors.palette['white']},
+                          {'item': self.game.logger.game_over_message, 'coordinates': (0, 40), 'color': data.colors.palette['white']},
+                          {'item': 'Press Space.', 'coordinates': (0, 80), 'color': data.colors.palette['white']}]}]
+        self.game.graphics_engine.render_info(info)
         self.game.pygame.display.flip()

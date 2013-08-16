@@ -86,9 +86,11 @@ class Map_State(object):
         if self.game.logger.has_unhandled_messages():
             graphics.display_messages()
 
+        for i in ['enemy', 'game info', 'messages', 'player']:
+            graphics.screens[i].fill(data.colors.palette['black'])
         # render all the other info
         # obtain info to display
-        info = [self.game.objects_handler.player.get_display_info()]  # player info
+        info = self.game.objects_handler.player.get_display_info()  # player info
         info.extend(self.game.time.get_display_info())    # turn info
         # display info
         graphics.render_info(info)

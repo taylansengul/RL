@@ -1,4 +1,5 @@
 import data
+from text import Text
 
 
 class Time(object):
@@ -18,8 +19,5 @@ class Time(object):
         self.game.resource_manager.manage()
 
     def get_display_info(self):
-        st = [{'screen': 'game info',
-               'info': [{'item': 'turn: %d' % self.turn,
-                         'coordinates': (0, 0),
-                         'color': data.colors.palette['white']}]}]
-        return st
+        st = Text(screen='game info', context='turn: %d' % self.turn, coordinates=(0, 0), color=data.colors.palette['white'])
+        return [st]

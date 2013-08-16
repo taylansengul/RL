@@ -32,13 +32,12 @@ class Graphics_Engine(object):
                               self.game.pygame.Rect(0, new_line_height*co, x, y), data.colors.palette['white'], 'left', 'top', True)
         self.screens['main'].blit(screen, (x, y))
 
-    def render_info(self, info_list):
-        for a_dict in info_list:
-            s_id = a_dict['screen']
+    def render_info(self, text_list):
+        for text in text_list:
+            s_id = text.screen
             screen = self.screens[s_id]
-            x, y = data.screens.screen_coordinates['map state'][s_id]
-            screen.fill(data.colors.palette['black'])
-            for i in a_dict['info']:
-                c = i['coordinates'] + (x, y)
-                self.font_manager.Draw(screen, 'arial', 12, i['item'], self.game.pygame.Rect(c), i['color'], 'left', 'top', True)
+            cs = self.game.state_manager.current_state.ID
+            x, y = data.screens.screen_coordinates[cs][s_id]
+            c = text.coordinates + (x, y)
+            self.font_manager.Draw(screen, 'arial', 12, text.context, self.game.pygame.Rect(c), text.color, 'left', 'top', True)
             self.screens['main'].blit(screen, (x, y))
