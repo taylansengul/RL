@@ -25,6 +25,8 @@ class Enter_Main_Game_Loop_State(object):
         self.game.pygame.init()
         # initialize main screen
         self.game.graphics_engine.screens['main'] = self.game.pygame.display.set_mode(data.screens.screen_size['main'], 0, 32)
+        # initialize main menu screen
+        self.game.state_manager.initialize_screens('main_menu_state')
         # Setup fonts and font manager
         # avail_fonts = self.game.pygame.font.get_fonts()
         # avail_fonts = ['arial']

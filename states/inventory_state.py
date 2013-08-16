@@ -11,6 +11,7 @@ class Inventory_State(object):
         self.selected_item = None
         self.menu_options = []
         self.key = ''
+        self.screens = {'menu': None, 'details': None}
 
     def init(self):
         self.inventory = self.game.objects_handler.player.get_objects(self.key)
@@ -28,14 +29,13 @@ class Inventory_State(object):
             else:
                 self.menu_options.append(Menu_Option(label, (0, j * st), font))
 
-        self.menu = Menu(screen=self.game.graphics_engine.screens['inventory state'],
-                         options=self.menu_options)
+        self.menu = Menu(screen=self.screens['menu'], options=self.menu_options)
         self.updateScreen()
 
     def updateScreen(self):
         gE = self.game.graphics_engine
-        screen = gE.screens['inventory state']
-        gE.clear_screen('main')
+        screen = self.screens['menu']
+        # gE.clear_screen('menu')
         if self.inventory:
             self.menu.draw()
             gE.screens['main'].blit(screen, data.screens.screen_coordinates['main'])

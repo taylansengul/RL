@@ -6,25 +6,23 @@ class Main_Menu_State(object):
     def __init__(self, game):
         self.game = game
         self.ID = 'main menu state'
+        self.screens = {'menu': None}
 
     def init(self):
         gE = self.game.graphics_engine
-        gE.clear_screen('main')
-        gE.screens['menu'] = self.game.pygame.Surface(data.screens.screen_size['main menu state'])
         font = gE.font_18
         self.newGameOption = Menu_Option("NEW GAME", (140, 105), font, isHovered=True)
         self.loadGameOption = Menu_Option("LOAD GAME", (140, 155), font)
         self.quitGameOption = Menu_Option("QUIT", (140, 205), font)
-        self.menu = Menu(screen=gE.screens['menu'],
+        self.menu = Menu(screen=self.screens['menu'],
                          options=[self.newGameOption,
                                   self.loadGameOption,
                                   self.quitGameOption])
         self.updateScreen()
 
     def updateScreen(self):
-        gE = self.game.graphics_engine
         self.menu.draw()
-        gE.screens['main'].blit(gE.screens['menu'], data.screens.screen_coordinates['main menu state'])
+        self.screens['menu'].render()
         self.game.pygame.display.update()
 
     def determineAction(self):

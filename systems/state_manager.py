@@ -1,4 +1,6 @@
 import states
+import data
+from systems.graphics import screen
 
 
 class State_Manager(object):
@@ -18,3 +20,8 @@ class State_Manager(object):
     def change_state(self, new_state):
         self.current_state = new_state
         self.current_state.init()
+
+    def initialize_screens(self, state_ID):
+        for screen_ID in data.screens.screen_size[state_ID]:
+            state = getattr(self, state_ID)
+            state.screens[screen_ID] = screen.Screen(self.game, **{'state': state_ID, 'name': screen_ID})

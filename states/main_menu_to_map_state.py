@@ -33,14 +33,11 @@ class Main_Menu_To_Map_State(object):
         # AI: do not need AI
         # self.game.ai = AI(self.game)
 
-        # initialize game screens
-        for ID, size in data.screens.screen_size[self.game.state_manager.current_state.ID].iteritems():
-                self.game.graphics_engine.screens[ID] = self.game.pygame.Surface(size)
+        # initialize map and inventory screens
+        self.game.state_manager.initialize_screens('inventory_state')
+        self.game.state_manager.initialize_screens('map_state')
 
-        # initialize inventory screen
-        self.game.graphics_engine.screens['inventory state'] = self.game.pygame.Surface(data.screens.screen_size['inventory state'])
-
-        self.game.logger.add_message('Starting New Game.')
+        self.game.logger.add_message('Menu to Map initialization finished.')
 
     def determineAction(self):
         pass

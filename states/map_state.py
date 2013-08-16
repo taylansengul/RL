@@ -5,6 +5,7 @@ class Map_State(object):
     def __init__(self, game):
         self.game = game
         self.ID = 'map state'
+        self.screens = {'map': None, 'player': None, 'game info': None, 'messages': None, 'enemy': None}
 
     def init(self):
         self.updateScreen()
@@ -60,10 +61,13 @@ class Map_State(object):
     def updateScreen(self):
         game_world = self.game.game_world
         graphics = self.game.graphics_engine
+        for ID in self.screens:
+            self.screens[ID].clear()
 
         # game world
         # clear game world
-        graphics.clear_screen('map')
+        ms = self.screens['map']
+        ms.clear()
         # add game map to render list
         x1, y1 = self.game.objects_handler.player.tile.coordinates
         coordinates_list = game_world.dungeon.get_all_neighbors_coordinates((x1, y1), 10)
@@ -74,27 +78,24 @@ class Map_State(object):
                 continue
             coordinates = graphics.get_screen_position_of((x2, y2))
             color = tile.color
-            self.game.pygame.draw.rect(graphics.screens['map'], color, coordinates)  # tile background
-            self.game.pygame.draw.rect(graphics.screens['map'], data.colors.palette['white'], coordinates, 1)  # tile border
+            self.game.pygame.draw.rect(ms.surface, color, coordinates)  # tile background
+            self.game.pygame.draw.rect(ms.surface, data.colors.palette['white'], coordinates, 1)  # tile border
 
             if 'container' in tile.properties:
                 for item in tile.objects:
-                    graphics.font_manager.Draw(graphics.screens['map'], 'arial', 36, item.icon,
+                    graphics.font_manager.Draw(ms.surface, 'arial', 36, item.icon,
                                           coordinates, item.color, 'center', 'center', True)
 
         # logger messages
         if self.game.logger.has_unhandled_messages():
-            graphics.display_messages()
+            self.game.logger.display_messages()
 
-        for i in ['enemy', 'game info', 'messages', 'player']:
-            graphics.clear_screen(i)
         # render all the other info
         # obtain info to display
-        info = self.game.objects_handler.player.get_display_info()  # player info
-        info.extend(self.game.time.get_display_info())    # turn info
-        # display info
-        graphics.render_info(info)
+        self.game.objects_handler.player.render_stats()  # display player stats
+        self.game.time.render_turn()    # display turn info
 
         # always update player info screen #todo
-        graphics.screens['main'].blit(graphics.screens['map'], (0, 0))
+        ms.render()
+
         self.game.pygame.display.flip()

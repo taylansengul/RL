@@ -6,7 +6,7 @@ class Menu(object):
 
     def draw(self):
         # todo: get rid of this fill
-        self.screen.fill((0, 0, 0))
+        self.screen.clear()
         for option in self.options:
             option.draw(self.screen)
 
@@ -51,7 +51,7 @@ class Menu_Option:
 
     def draw(self, screen):
         self.set_rend()
-        screen.blit(self.rend, self.rect)
+        screen.surface.blit(self.rend, self.rect)
 
     def set_rend(self):
         if self.isHovered:

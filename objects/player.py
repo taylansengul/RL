@@ -70,17 +70,15 @@ class Player(Game_Object):
             sM = self.game.state_manager
             sM.change_state(sM.game_over_screen_state)
 
-    def get_display_info(self):
-        info = []
+    def render_stats(self):
         line_height = 16
         contexts = [self.name,
                     'hp: %d/%d' % (self.hp.current, self.hp.capacity),
                     'hunger: %d/%d' % (self.hunger.current, self.hunger.capacity),
                     'money: %d' % self.money]
         l = len(contexts)
-        screen_IDs = ['player']*l
+        screens = [self.game.state_manager.map_state.screens['player']]*l
         coordinates = [(0, j*line_height) for j in range(l)]
         colors = ['white']*l
-        for _ in zip(screen_IDs, contexts, coordinates, colors):
-            info.append(Text(screen=_[0], context=_[1], coordinates=_[2], color=_[3]))
-        return info
+        for _ in zip(screens, contexts, coordinates, colors):
+            Text(self.game, screen=_[0], context=_[1], coordinates=_[2], color=_[3]).render()
