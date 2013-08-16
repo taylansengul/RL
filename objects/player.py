@@ -1,12 +1,12 @@
-from data import classes, colors
+import data
 from game_object import Game_Object
 from systems.utils import get_line
-from systems.text import Text
+from systems.graphics.text import Text
 
 
 class Player(Game_Object):
     def __init__(self, game, key='Fighter', tile=None):
-        kwargs = dict(classes.dictionary[key].items())
+        kwargs = dict(data.classes.dictionary[key].items())
         kwargs['icon'] = '@'
         kwargs['tile'] = tile
         kwargs['color'] = 'red'
@@ -71,14 +71,16 @@ class Player(Game_Object):
             sM.change_state(sM.game_over_screen_state)
 
     def get_display_info(self):
-        new_line_height = 16
+        info = []
+        line_height = 16
         contexts = [self.name,
                     'hp: %d/%d' % (self.hp.current, self.hp.capacity),
                     'hunger: %d/%d' % (self.hunger.current, self.hunger.capacity),
                     'money: %d' % self.money]
-        st = []
-        for j, context in enumerate(contexts):
-            c = (0, j*new_line_height)
-            st.append(Text(screen='player', context=context, coordinates=c, color=colors.palette['white']))
-
-        return st
+        l = len(contexts)
+        screen_IDs = ['player']*l
+        coordinates = [(0, j*line_height) for j in range(l)]
+        colors = ['white']*l
+        for _ in zip(screen_IDs, contexts, coordinates, colors):
+            info.append(Text(screen=_[0], context=_[1], coordinates=_[2], color=_[3]))
+        return info

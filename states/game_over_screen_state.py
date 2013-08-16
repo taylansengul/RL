@@ -1,4 +1,5 @@
 import data
+from systems.graphics.text import Text
 
 
 class Game_Over_Screen_State(object):
@@ -15,9 +16,18 @@ class Game_Over_Screen_State(object):
             self.game.state_manager.change_state(self.game.state_manager.main_menu_state)
 
     def updateScreen(self):
-        info = [{'screen': 'main',
-                 'info': [{'item': 'Game is over.', 'coordinates': (0, 0), 'color': data.colors.palette['white']},
-                          {'item': self.game.logger.game_over_message, 'coordinates': (0, 40), 'color': data.colors.palette['white']},
-                          {'item': 'Press Space.', 'coordinates': (0, 80), 'color': data.colors.palette['white']}]}]
+        info = []
+        line_height = 40
+        contexts = ['Game is over.',
+                    self.game.logger.game_over_message,
+                    'Press Space.']
+        l = len(contexts)
+        screen_IDs = ['main']*l
+        coordinates = [(0, j*line_height) for j in range(l)]
+        colors = ['white']*l
+        for _ in zip(screen_IDs, contexts, coordinates, colors):
+            info.append(Text(screen=_[0], context=_[1], coordinates=_[2], color=_[3]))
+
+        self.game.graphics_engine.screens['main'].fill(data.colors.palette['black'])
         self.game.graphics_engine.render_info(info)
         self.game.pygame.display.flip()

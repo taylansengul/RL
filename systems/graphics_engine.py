@@ -37,7 +37,11 @@ class Graphics_Engine(object):
             s_id = text.screen
             screen = self.screens[s_id]
             cs = self.game.state_manager.current_state.ID
-            x, y = data.screens.screen_coordinates[cs][s_id]
-            c = text.coordinates + (x, y)
-            self.font_manager.Draw(screen, 'arial', 12, text.context, self.game.pygame.Rect(c), text.color, 'left', 'top', True)
+
+            try:
+                x, y = data.screens.screen_coordinates[cs][s_id]
+            except:
+                x, y = data.screens.screen_coordinates['main']
+            r = self.game.pygame.Rect(text.coordinates + (x, y))
+            self.font_manager.Draw(screen, 'arial', 12, text.context, r, text.color, 'left', 'top', True)
             self.screens['main'].blit(screen, (x, y))
