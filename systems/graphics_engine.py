@@ -4,11 +4,6 @@ import data
 class Graphics_Engine(object):
     def __init__(self, game):
         self.game = game
-        self.screens = {}
-        self.font_manager = None  # is setup in Initializing State
-
-    def init(self):
-        self.game.state_manager.current_state.init()
 
     def get_screen_position_of(self, (x, y)):
         """returns a pygame.Rect object whose coordinates are normalized w.r.t. player position in the middle"""

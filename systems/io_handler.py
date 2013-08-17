@@ -24,7 +24,7 @@ class Io_Handler(object):
                                              'main menu state': {pgl.K_DOWN: 'down',
                                                                  pgl.K_UP: 'up',
                                                                  pgl.K_RETURN: 'select'},
-                                             'game over state': {pgl.K_SPACE: 'pass'},
+                                             'game_over_screen_state': {pgl.K_SPACE: 'pass'},
                                              'initializing state': {},
                                              'inventory state': {pgl.K_DOWN: 'down',
                                                                  pgl.K_UP: 'up',

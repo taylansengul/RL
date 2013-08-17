@@ -12,7 +12,7 @@ class Screen(object):
         self.surface = self.game.pygame.Surface(self.size)
 
     def render(self):
-        self.game.graphics_engine.screens['main'].blit(self.surface, self.coordinates)
+        self.game.main_screen.blit(self.surface, self.coordinates)
 
     def clear(self, color='black'):
         if isinstance(color, str):

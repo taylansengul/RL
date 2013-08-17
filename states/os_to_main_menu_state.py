@@ -24,7 +24,7 @@ class Enter_Main_Game_Loop_State(object):
         self.game.pygame = pygame
         self.game.pygame.init()
         # initialize main screen
-        self.game.graphics_engine.screens['main'] = self.game.pygame.display.set_mode(data.screens.screen_size['main'], 0, 32)
+        self.game.main_screen = self.game.pygame.display.set_mode(data.screens.screen_size['main'], 0, 32)
         # initialize main menu screen
         self.game.state_manager.initialize_screens('main_menu_state')
         # Setup fonts and font manager
@@ -32,7 +32,7 @@ class Enter_Main_Game_Loop_State(object):
         # avail_fonts = ['arial']
         self.game.graphics_engine.font_18 = self.game.pygame.font.SysFont(None, 18)
         self.game.graphics_engine.font_36 = self.game.pygame.font.SysFont(None, 36)
-        self.game.graphics_engine.font_manager = cFontManager((('arial', 12), ('arial', 18), ('arial', 36)))
+        self.game.font_manager = cFontManager((('arial', 12), ('arial', 18), ('arial', 36)))
         self.game.pygame.display.set_caption("This is a roguelike project.")
 
     def updateScreen(self):

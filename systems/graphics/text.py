@@ -15,6 +15,6 @@ class Text(object):
         self.font_size = font_size
 
     def render(self):
-        self.game.graphics_engine.font_manager.Draw(self.screen.surface, self.font, self.font_size, self.context, self.coordinates,
+        self.game.font_manager.Draw(self.screen.surface, self.font, self.font_size, self.context, self.coordinates,
                                                     self.color, 'left', 'top', True)
         self.screen.render()

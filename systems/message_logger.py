@@ -32,6 +32,6 @@ class MessageLogger(object):
 
         screen.clear()
         for co, message in enumerate(self.game.logger.message_archive[-4:]):
-            self.game.graphics_engine.font_manager.Draw(screen.surface, 'arial', 12, message,
+            self.game.font_manager.Draw(screen.surface, 'arial', 12, message,
                                                         self.game.pygame.Rect(0, new_line_height*co, x, y), data.colors.palette['white'], 'left', 'top', True)
         screen.render()

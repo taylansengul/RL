@@ -60,7 +60,6 @@ class Map_State(object):
 
     def updateScreen(self):
         game_world = self.game.game_world
-        graphics = self.game.graphics_engine
         for ID in self.screens:
             self.screens[ID].clear()
 
@@ -76,14 +75,14 @@ class Map_State(object):
             tile = game_world.dungeon.map2D[x2][y2]
             if not tile.is_explored:
                 continue
-            coordinates = graphics.get_screen_position_of((x2, y2))
+            coordinates = self.game.graphics_engine.get_screen_position_of((x2, y2))
             color = tile.color
             self.game.pygame.draw.rect(ms.surface, color, coordinates)  # tile background
             self.game.pygame.draw.rect(ms.surface, data.colors.palette['white'], coordinates, 1)  # tile border
 
             if 'container' in tile.properties:
                 for item in tile.objects:
-                    graphics.font_manager.Draw(ms.surface, 'arial', 36, item.icon,
+                    self.game.font_manager.Draw(ms.surface, 'arial', 36, item.icon,
                                           coordinates, item.color, 'center', 'center', True)
 
         # logger messages

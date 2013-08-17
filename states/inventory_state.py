@@ -33,18 +33,15 @@ class Inventory_State(object):
         self.updateScreen()
 
     def updateScreen(self):
-        gE = self.game.graphics_engine
         screen = self.screens['menu']
-        # gE.clear_screen('menu')
         if self.inventory:
             self.menu.draw()
-            gE.screens['main'].blit(screen, data.screens.screen_coordinates['main'])
         else:
-            gE.clear_screen('main')
-            gE.font_manager.Draw(screen, 'arial', 36, 'Empty Inventory',
+            self.game.main_screen.fill((0, 0, 0))
+            self.game.font_manager.Draw(screen, 'arial', 36, 'Empty Inventory',
                             (0, 0), data.colors.palette['white'], 'center', 'center', True)
 
-        gE.screens['main'].blit(screen, (0, 0))
+        screen.render()
         self.game.pygame.display.flip()
 
     def determineAction(self):

@@ -5,8 +5,6 @@ class Exit_To_OS_State(object):
 
     def init(self):
         # delete game engines
-        del self.game.io_handler
-        del self.game.graphics_engine
         print 'Exiting to OS.'
 
     def updateScreen(self):

@@ -13,8 +13,7 @@ class Game_Object(object):
         self.effects = kwargs.get('effects', {})
         if 'container' in self.properties:
             self.objects = []
-            for ID in kwargs.get('objects', []):
-                print 'creating player items'
+            for ID in kwargs.get('objects', []):  # creating self.objects from string list
                 item_kwargs = data.game_items.dictionary[ID]
                 new_item = Game_Object(self.game, tile=self.tile, **item_kwargs)
                 self.game.objects_handler.add_game_item(new_item, self)

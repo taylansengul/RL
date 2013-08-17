@@ -9,8 +9,7 @@ class Main_Menu_State(object):
         self.screens = {'menu': None}
 
     def init(self):
-        gE = self.game.graphics_engine
-        font = gE.font_18
+        font = self.game.graphics_engine.font_18
         self.newGameOption = Menu_Option("NEW GAME", (140, 105), font, isHovered=True)
         self.loadGameOption = Menu_Option("LOAD GAME", (140, 155), font)
         self.quitGameOption = Menu_Option("QUIT", (140, 205), font)
@@ -39,4 +38,4 @@ class Main_Menu_State(object):
             elif option == self.loadGameOption:
                 pass
             elif option == self.quitGameOption:
-                self.game.state_manager.change_state(self.game.state_manager.exit_game_loop_state)
+                self.game.is_in_loop = False

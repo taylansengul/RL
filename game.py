@@ -7,8 +7,11 @@ class Game(object):
         # initialized in os_to_main_menu_state
         self.io_handler = None
         self.graphics_engine = None
+        self.font_manager = None
+        self.is_in_loop = True
 
         # initialized in initializing_new_map_state
+        self.main_screen = None
         self.event_log = [None]
         self.time = None
         self.logger = None
@@ -20,7 +23,7 @@ class Game(object):
 
     def loop(self):
         SM = self.state_manager
-        while not SM.current_state == SM.exit_game_loop_state:
+        while self.is_in_loop:
             # get input
             self.io_handler.compute_active_event()
             # if there is input
