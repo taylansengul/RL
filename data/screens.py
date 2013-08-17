@@ -27,7 +27,7 @@ screen_size = {'main': (main_multiplier_x * tile_length, main_multiplier_y * til
                'main_menu_state': {'menu': (width, height)},
                'inventory_state': {'menu': (width*.5, height),
                                    'details': (width*.5, height)},
-               'game_over_screen_state': {'main': (0, 0)}}
+               'game_over_screen_state': {'main': (width, height)}}
 
 screen_coordinates = {'main': (0, 0),
                       'map_state': {'map': (0, 0),

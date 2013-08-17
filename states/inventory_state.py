@@ -1,5 +1,5 @@
-import data
 from systems.graphics.menu import Menu, Menu_Option
+from systems.graphics.text import Text
 
 
 # todo: create inventory state main screen
@@ -17,32 +17,8 @@ class Inventory_State(object):
         self.inventory = self.game.objects_handler.player.get_objects(self.key)
         self.selected_item = None
         self.menu_options = []
-        font = self.game.graphics_engine.font_18
-        st = 18
-        for j, item in enumerate(self.inventory):
-            if 'stackable' in item.properties:
-                label = str(item.quantity) + ' ' + item.ID
-            else:
-                label = item.ID
-            if j == 0:
-                self.menu_options.append(Menu_Option(label, (0, j * st), font, isHovered=True))
-            else:
-                self.menu_options.append(Menu_Option(label, (0, j * st), font))
-
-        self.menu = Menu(screen=self.screens['menu'], options=self.menu_options)
+        self._build_menu_from_inventory()  # builds menu from self.inventory
         self.updateScreen()
-
-    def updateScreen(self):
-        screen = self.screens['menu']
-        if self.inventory:
-            self.menu.draw()
-        else:
-            self.game.main_screen.fill((0, 0, 0))
-            self.game.font_manager.Draw(screen, 'arial', 36, 'Empty Inventory',
-                            (0, 0), data.colors.palette['white'], 'center', 'center', True)
-
-        screen.render()
-        self.game.pygame.display.flip()
 
     def determineAction(self):
         self.selected_item = None
@@ -75,3 +51,35 @@ class Inventory_State(object):
         elif self.key == 'consumable' and self.selected_item:
             self.game.objects_handler.player.consume(self.selected_item)
             self.game.state_manager.change_state(self.game.state_manager.map_state)
+
+    def updateScreen(self):
+        screen = self.screens['menu']
+        screen.clear()
+        self._render_inventory()
+        screen.render()
+        self.game.pygame.display.flip()
+
+    # PRIVATE METHODS
+    def _build_menu_from_inventory(self):
+        """Builds a menu object from self.inventory"""
+        font = self.game.graphics_engine.font_18
+        st = 18
+        for j, item in enumerate(self.inventory):
+            if 'stackable' in item.properties:
+                label = str(item.quantity) + ' ' + item.ID
+            else:
+                label = item.ID
+            if j == 0:
+                self.menu_options.append(Menu_Option(label, (0, j * st), font, isHovered=True))
+            else:
+                self.menu_options.append(Menu_Option(label, (0, j * st), font))
+        self.menu = Menu(screen=self.screens['menu'], options=self.menu_options)
+
+    def _render_inventory(self):
+        """Renders inventory if inventory not empty otherwise display a message to self.screens['menu']"""
+        screen = self.screens['menu']
+        if self.inventory:
+            self.menu.draw()
+        else:
+            Text(self.game, screen=screen, context='Empty Inventory', coordinates=(0, 0), color='white').render()
+
