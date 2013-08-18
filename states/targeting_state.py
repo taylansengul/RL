@@ -1,6 +1,3 @@
-import data
-
-
 class Targeting_State(object):
     def __init__(self, game):
         self.ID = 'targeting state'
@@ -26,6 +23,6 @@ class Targeting_State(object):
         self.game.state_manager.map_state.updateScreen()
         coordinates = self.game.graphics_engine.get_screen_position_of(self.highlighted_tile.coordinates)
         screen = self.screens['map']
-        self.game.pygame.draw.rect(screen.surface, data.colors.palette['yellow'], coordinates, 5)  # tile border
+        self.game.pygame.draw.rect(screen.surface, self.game.data.colors.palette['yellow'], coordinates, 5)  # tile border
         screen.render()
         self.game.pygame.display.flip()

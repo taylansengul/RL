@@ -1,6 +1,3 @@
-import data
-
-
 class Text(object):
     def __init__(self, game, screen=None, context=None, coordinates=None, color=None, font='arial', font_size=12):
         """color can be a string or RGB-tuple"""
@@ -9,7 +6,7 @@ class Text(object):
         self.context = context
         self.coordinates = coordinates
         if isinstance(color, str):
-            self.color = data.colors.palette[color]
+            self.color = self.game.data.colors.palette[color]
         else:
             self.color = color
         self.font = font

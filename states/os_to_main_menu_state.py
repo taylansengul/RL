@@ -23,8 +23,10 @@ class Enter_Main_Game_Loop_State(object):
         # setup pygame
         self.game.pygame = pygame
         self.game.pygame.init()
+        # load data
+        self.game.data = data
         # initialize main screen
-        self.game.main_screen = self.game.pygame.display.set_mode(data.screens.screen_size['main'], 0, 32)
+        self.game.main_screen = self.game.pygame.display.set_mode(self.game.data.screens.screen_size['main'], 0, 32)
         # initialize main menu screen
         self.game.state_manager.initialize_screens('main_menu_state')
         # Setup fonts and font manager

@@ -1,4 +1,3 @@
-import data
 import os
 
 
@@ -85,7 +84,7 @@ class Map_State(object):
                 ms.surface.blit(self.images['floor'], coordinates)
             else:
                 self.game.pygame.draw.rect(ms.surface, color, coordinates)  # tile background
-            self.game.pygame.draw.rect(ms.surface, data.colors.palette['white'], coordinates, 1)  # tile border
+            self.game.pygame.draw.rect(ms.surface, self.game.data.colors.palette['white'], coordinates, 1)  # tile border
 
             if 'container' in tile.properties:
                 for item in tile.objects:

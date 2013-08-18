@@ -1,5 +1,4 @@
 from systems.graphics.menu import Menu, Menu_Option
-import data
 
 
 class Main_Menu_State(object):

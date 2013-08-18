@@ -4,11 +4,12 @@ from systems.state_manager import State_Manager
 class Game(object):
     def __init__(self):
         self.state_manager = State_Manager(self)
+        self.is_in_loop = True
         # initialized in os_to_main_menu_state
         self.io_handler = None
         self.graphics_engine = None
         self.font_manager = None
-        self.is_in_loop = True
+        self.data = None
 
         # initialized in initializing_new_map_state
         self.main_screen = None

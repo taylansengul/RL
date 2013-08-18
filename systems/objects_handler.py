@@ -1,7 +1,6 @@
 from objects.player import Player
 from objects.game_object import Game_Object
 from random import randint
-import data
 
 
 class Objects_Handler():
@@ -22,22 +21,22 @@ class Objects_Handler():
 
     def populate_game_items(self):
         print 'populating game items...',
-        for item in data.level_design.game_items:
+        for item in self.game.data.level_design.game_items:
             number_of_objects = randint(item['number'][0], item['number'][1])
             for _ in range(number_of_objects):
                 tile = self.game.game_world.dungeon.get_random_room_floor_tile_with_no_objects()
-                kwargs = data.game_items.dictionary[item['id']]
+                kwargs = self.game.data.game_items.dictionary[item['id']]
                 new_item = Game_Object(self.game, tile=tile, **kwargs)
                 self.add_game_item(new_item, tile)
         print 'done.'
 
     def populate_NPCs(self):
         print 'populating NPCs...',
-        for item in data.level_design.NPCs:
+        for item in self.game.data.level_design.NPCs:
             number_of_objects = randint(item['number'][0], item['number'][1])
             for _ in range(number_of_objects):
                 tile = self.game.game_world.dungeon.get_random_room_floor_tile_with_no_objects()
-                kwargs = data.NPC.dictionary[item['id']]
+                kwargs = self.game.data.NPC.dictionary[item['id']]
                 new_NPC = Game_Object(self.game, tile=tile, **kwargs)
                 self.add_NPC(new_NPC, tile)
         print 'done.'

@@ -1,4 +1,3 @@
-import data
 from systems.graphics.text import Text
 
 

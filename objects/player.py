@@ -1,4 +1,3 @@
-import data
 from game_object import Game_Object
 from systems.utils import get_line
 from systems.graphics.text import Text
@@ -6,7 +5,7 @@ from systems.graphics.text import Text
 
 class Player(Game_Object):
     def __init__(self, game, key='Fighter', tile=None):
-        kwargs = dict(data.classes.dictionary[key].items())
+        kwargs = dict(game.data.classes.dictionary[key].items())
         kwargs['icon'] = '@'
         kwargs['tile'] = tile
         kwargs['color'] = 'red'

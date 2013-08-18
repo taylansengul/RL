@@ -1,5 +1,4 @@
 import states
-import data
 from systems.graphics import screen
 
 
@@ -21,6 +20,6 @@ class State_Manager(object):
         self.current_state.init()
 
     def initialize_screens(self, state_ID):
-        for screen_ID in data.screens.screen_size[state_ID]:
+        for screen_ID in self.game.data.screens.screen_size[state_ID]:
             state = getattr(self, state_ID)
             state.screens[screen_ID] = screen.Screen(self.game, **{'state': state_ID, 'name': screen_ID})

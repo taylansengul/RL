@@ -1,6 +1,3 @@
-import data
-
-
 class MessageLogger(object):
     def __init__(self, game):
         self.game = game
@@ -26,12 +23,12 @@ class MessageLogger(object):
     def display_messages(self):
         new_line_height = 12
         screen = self.game.state_manager.map_state.screens['messages']
-        x, y = data.screens.screen_coordinates['map_state']['messages']
+        x, y = self.game.data.screens.screen_coordinates['map_state']['messages']
         while self.has_unhandled_messages():
             self.handle_message()
 
         screen.clear()
         for co, message in enumerate(self.game.logger.message_archive[-4:]):
             self.game.font_manager.Draw(screen.surface, 'arial', 12, message,
-                                                        self.game.pygame.Rect(0, new_line_height*co, x, y), data.colors.palette['white'], 'left', 'top', True)
+                                                        self.game.pygame.Rect(0, new_line_height*co, x, y), self.game.data.colors.palette['white'], 'left', 'top', True)
         screen.render()
