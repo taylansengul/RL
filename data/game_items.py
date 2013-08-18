@@ -1,5 +1,6 @@
 dictionary = {'apple': {'ID': 'apple',
                         'color': 'green',
+                        'description': 'yummy',
                         'effects': [{'effects': 'hunger', 'change': [30], 'type': 'temporary'}],
                         'icon': 'F',
                         'properties': 'pickable, edible, consumable, stackable',

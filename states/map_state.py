@@ -1,4 +1,5 @@
 import data
+import os
 
 
 class Map_State(object):
@@ -6,8 +7,11 @@ class Map_State(object):
         self.game = game
         self.ID = 'map state'
         self.screens = {'map': None, 'player': None, 'game info': None, 'messages': None, 'enemy': None}
+        self.images = {}
 
     def init(self):
+        image_location = os.path.join('images', "floor_tile.png")
+        self.images['floor'] = self.game.pygame.image.load(image_location).convert_alpha()
         self.updateScreen()
 
     def determineAction(self):
@@ -77,7 +81,10 @@ class Map_State(object):
                 continue
             coordinates = self.game.graphics_engine.get_screen_position_of((x2, y2))
             color = tile.color
-            self.game.pygame.draw.rect(ms.surface, color, coordinates)  # tile background
+            if tile.tip == 'floor':
+                ms.surface.blit(self.images['floor'], coordinates)
+            else:
+                self.game.pygame.draw.rect(ms.surface, color, coordinates)  # tile background
             self.game.pygame.draw.rect(ms.surface, data.colors.palette['white'], coordinates, 1)  # tile border
 
             if 'container' in tile.properties:

@@ -8,6 +8,7 @@ class Inventory_State(object):
         self.ID = 'inventory state'
         self.game = game
         self.inventory = None  # to be initialized later
+        self.highlighted_item = None
         self.selected_item = None
         self.menu_options = []
         self.key = ''
@@ -15,6 +16,10 @@ class Inventory_State(object):
 
     def init(self):
         self.inventory = self.game.objects_handler.player.get_objects(self.key)
+        if self.inventory:
+            self.highlighted_item = self.inventory[0]
+        else:
+            self.highlighted_item = None
         self.selected_item = None
         self.menu_options = []
         self._build_menu_from_inventory()  # builds menu from self.inventory
@@ -23,11 +28,19 @@ class Inventory_State(object):
     def determineAction(self):
         self.selected_item = None
         event = self.game.io_handler.get_active_event()
-        if self.inventory:
+        if self.inventory:  # if inventory is non-empty
             if event == 'down':
                 self.menu.select_next()
+                option = self.menu.get_active_option()
+                if option:  # if an option is hovered
+                    item_index = self.menu_options.index(option)
+                    self.highlighted_item = self.inventory[item_index]
             elif event == 'up':
                 self.menu.select_prev()
+                option = self.menu.get_active_option()
+                if option:  # if an option is hovered
+                    item_index = self.menu_options.index(option)
+                    self.highlighted_item = self.inventory[item_index]
             elif event == 'select':
                 option = self.menu.get_active_option()
                 if option:  # if an option is hovered
@@ -41,7 +54,7 @@ class Inventory_State(object):
                 self.init()
             elif event == 'quit':
                 self.game.state_manager.change_state(self.game.state_manager.map_state)
-        else:
+        else:  # if inventory is empty
             if event == 'quit':
                 self.game.state_manager.change_state(self.game.state_manager.map_state)
 
@@ -57,6 +70,11 @@ class Inventory_State(object):
         screen.clear()
         self._render_inventory()
         screen.render()
+        if self.inventory:
+            screen = self.screens['details']
+            screen.clear()
+            self._render_item_properties()
+            screen.render()
         self.game.pygame.display.flip()
 
     # PRIVATE METHODS
@@ -83,3 +101,7 @@ class Inventory_State(object):
         else:
             Text(self.game, screen=screen, context='Empty Inventory', coordinates=(0, 0), color='white').render()
 
+    def _render_item_properties(self):
+        screen = self.screens['details']
+        context = self.highlighted_item.description
+        Text(self.game, screen=screen, context=context, coordinates=(0, 0), color='white').render()

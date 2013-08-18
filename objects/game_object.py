@@ -11,6 +11,7 @@ class Game_Object(object):
         self.color = data.colors.palette[kwargs['color']]
         self.properties = kwargs.get('properties', '')
         self.effects = kwargs.get('effects', {})
+        self.description = kwargs.get('description', '')
         if 'container' in self.properties:
             self.objects = []
             for ID in kwargs.get('objects', []):  # creating self.objects from string list
