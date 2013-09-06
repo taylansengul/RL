@@ -1,6 +1,5 @@
 from systems.state_manager import State_Manager
 import data
-from systems.cFontManager import cFontManager
 from systems.graphics_engine import Graphics_Engine
 from systems.io_handler import Io_Handler
 import random
@@ -21,7 +20,6 @@ class Game(object):
         # Setup fonts
         self.graphics_engine.font_18 = self.pygame.font.SysFont(None, 18)
         self.graphics_engine.font_36 = self.pygame.font.SysFont(None, 36)
-        self.font_manager = cFontManager((('arial', 12), ('arial', 18), ('arial', 36)))
         # Load data
         self.data = data
         print 'done.'

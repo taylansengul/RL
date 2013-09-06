@@ -1,5 +1,5 @@
 import os
-
+from systems.graphics.text import Text
 
 class Map_State(object):
     def __init__(self, game):
@@ -88,9 +88,9 @@ class Map_State(object):
 
             if 'container' in tile.properties:
                 for item in tile.objects:
-
-                    self.game.font_manager.Draw(ms.surface, 'arial', 36, item.icon,
-                                          coordinates, item.color, 'center', 'center', True)
+                    Text(self.game, screen=ms, font='arial', font_size=36, context=item.icon, coordinates=coordinates,
+                         color=item.color).render()
+                    # 'center', 'center', True
 
         # logger messages
         if self.game.logger.has_unhandled_messages():

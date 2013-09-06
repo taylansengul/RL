@@ -3,7 +3,8 @@ from data import fonts
 
 
 class Text(object):
-    def __init__(self, game, screen=None, context=None, coordinates=None, color=None, font='arial', font_size=12):
+    def __init__(self, game, screen=None, context=None, coordinates=None, color=None, font='arial', font_size=12,
+                 horizontal_align='left', vertical_align='top', anti_alias=False):
         """color can be a string or RGB-tuple"""
         self.game = game
         self.screen = screen
@@ -13,16 +14,22 @@ class Text(object):
             self.color = self.game.data.colors.palette[color]
         else:
             self.color = color
-        self.font = font
+        if font == 'arial':
+            self.font = self.game.pygame.font.SysFont('monospace', font_size)
+        else:
+            self.font = font
+
         self.font_size = font_size
+        self.horizontal_align = horizontal_align
+        self.vertical_align = vertical_align
+        self.anti_alias = anti_alias
 
     def render(self):
         """renders text to self.screen"""
-        self.game.font_manager.Draw(self.screen.surface, self.font, self.font_size, self.context, self.coordinates,
-                                    self.color, 'left', 'top', True)
+        self.draw()
         self.screen.render()
 
-    def draw(self, rectOrPosToDrawTo, alignHoriz='left', alignVert='top', antialias=False):
+    def draw(self):
         '''
         Draw text with the given parameters on the given surface.
 
@@ -41,24 +48,24 @@ class Text(object):
 
         antialias - Whether to draw the text anti-aliased or not.
         '''
-        fontSurface = self.font.render(self.context, antialias, self.color)
-        if isinstance(rectOrPosToDrawTo, tuple):
-            self.screen.surface.blit(fontSurface, rectOrPosToDrawTo)
-        elif isinstance(rectOrPosToDrawTo, pygame.Rect):
+        fontSurface = self.font.render(self.context, self.anti_alias, self.color)
+        if isinstance(self.coordinates, tuple):
+            self.screen.surface.blit(fontSurface, self.coordinates)
+        elif isinstance(self.coordinates, pygame.Rect):
             fontRect = fontSurface.get_rect()
-            # align horiz
-            if alignHoriz == 'center':
-                fontRect.centerx = rectOrPosToDrawTo.centerx
-            elif alignHoriz == 'right':
-                fontRect.right = rectOrPosToDrawTo.right
+            # align horizontally
+            if self.horizontal_align == 'center':
+                fontRect.centerx = self.coordinates.centerx
+            elif self.horizontal_align == 'right':
+                fontRect.right = self.coordinates.right
             else:
-                fontRect.x = rectOrPosToDrawTo.x  # left
-            # align vert
-            if alignVert == 'center':
-                fontRect.centery = rectOrPosToDrawTo.centery
-            elif alignVert == 'bottom':
-                fontRect.bottom = rectOrPosToDrawTo.bottom
+                fontRect.x = self.coordinates.x  # left
+            # align vertically
+            if self.vertical_align == 'center':
+                fontRect.centery = self.coordinates.centery
+            elif self.vertical_align == 'bottom':
+                fontRect.bottom = self.coordinates.bottom
             else:
-                fontRect.y = rectOrPosToDrawTo.y  # top
+                fontRect.y = self.coordinates.y  # top
 
             self.screen.surface.blit(fontSurface, fontRect)
