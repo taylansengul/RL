@@ -99,9 +99,9 @@ class Inventory_State(object):
         if self.inventory:
             self.menu.draw()
         else:
-            Text(self.game, screen=screen, context='Empty Inventory', coordinates=(0, 0), color='white').render()
+            Text(screen=screen, context='Empty Inventory', coordinates=(0, 0), color='white').render()
 
     def _render_item_properties(self):
         screen = self.screens['details']
         context = self.highlighted_item.description
-        Text(self.game, font='console', screen=screen, context=context, coordinates=(0, 0), color='white').render()
+        Text(font='console', screen=screen, context=context, coordinates=(0, 0), color='white').render()

@@ -37,4 +37,4 @@ class Game_Over_Screen_State(object):
         coordinates = [(0, j*line_height) for j in range(l)]
         colors = ['white']*l
         for _ in zip(screens, contexts, coordinates, colors):
-            Text(self.game, font='console', screen=_[0], context=_[1], coordinates=_[2], color=_[3]).render()
+            Text(font='console', screen=_[0], context=_[1], coordinates=_[2], color=_[3]).render()

@@ -33,5 +33,5 @@ class MessageLogger(object):
         screen.clear()
         for co, message in enumerate(self.game.logger.message_archive[-4:]):
             c = self.game.pygame.Rect(0, new_line_height*co, x, y),
-            Text(self.game, screen=screen, font='console', font_size=12, context=message, coordinates=c, color='white').render()
+            Text(screen=screen, font='console', font_size=12, context=message, coordinates=c, color='white').render()
         screen.render()
