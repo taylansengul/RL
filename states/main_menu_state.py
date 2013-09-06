@@ -13,7 +13,7 @@ class Main_Menu_State(object):
         self.screens = {'menu': None}
 
     def init(self):
-        font = self.game.graphics_engine.font_18
+        font = self.game.data.fonts.MAIN_MENU
         self.newGameOption = Menu_Option("NEW GAME", (140, 105), font, isHovered=True)
         self.loadGameOption = Menu_Option("LOAD GAME", (140, 155), font)
         self.quitGameOption = Menu_Option("QUIT", (140, 205), font)

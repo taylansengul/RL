@@ -1,6 +1,5 @@
 from systems.state_manager import State_Manager
 import data
-from systems.graphics_engine import Graphics_Engine
 from systems.io_handler import Io_Handler
 import random
 import pygame
@@ -16,12 +15,10 @@ class Game(object):
         self.pygame = pygame
         self.pygame.init()
         self.io_handler = Io_Handler(self)
-        self.graphics_engine = Graphics_Engine(self)
-        # Setup fonts
-        self.graphics_engine.font_18 = self.pygame.font.SysFont(None, 18)
-        self.graphics_engine.font_36 = self.pygame.font.SysFont(None, 36)
         # Load data
         self.data = data
+        # Setup fonts
+        # done in data.fonts
         print 'done.'
         print 'initializing random seed'
         seed_value = 0  # make this None to use the system time as a seed_value

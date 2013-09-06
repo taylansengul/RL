@@ -80,7 +80,7 @@ class Inventory_State(object):
     # PRIVATE METHODS
     def _build_menu_from_inventory(self):
         """Builds a menu object from self.inventory"""
-        font = self.game.graphics_engine.font_18
+        font = self.game.data.fonts.CONSOLE
         st = 18
         for j, item in enumerate(self.inventory):
             if 'stackable' in item.properties:
@@ -104,4 +104,4 @@ class Inventory_State(object):
     def _render_item_properties(self):
         screen = self.screens['details']
         context = self.highlighted_item.description
-        Text(self.game, screen=screen, context=context, coordinates=(0, 0), color='white').render()
+        Text(self.game, font='console', screen=screen, context=context, coordinates=(0, 0), color='white').render()

@@ -14,8 +14,10 @@ class Text(object):
             self.color = self.game.data.colors.palette[color]
         else:
             self.color = color
-        if font == 'arial':
-            self.font = self.game.pygame.font.SysFont('monospace', font_size)
+        if font == 'map object':
+            self.font = fonts.MAP_OBJECT
+        elif font == 'console':
+            self.font = fonts.CONSOLE
         else:
             self.font = font
 

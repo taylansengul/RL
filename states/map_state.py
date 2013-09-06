@@ -88,7 +88,7 @@ class Map_State(object):
 
             if 'container' in tile.properties:
                 for item in tile.objects:
-                    Text(self.game, screen=ms, font='arial', font_size=36, context=item.icon, coordinates=coordinates,
+                    Text(self.game, screen=ms, font='map object', font_size=36, context=item.icon, coordinates=coordinates,
                          color=item.color).render()
                     # 'center', 'center', True
 
