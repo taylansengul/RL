@@ -78,7 +78,7 @@ class Map_State(object):
             tile = game_world.dungeon.map2D[x2][y2]
             if not tile.is_explored:
                 continue
-            coordinates = self.game.graphics_engine.get_screen_position_of((x2, y2))
+            coordinates = tile.get_screen_position()
             color = tile.color
             if tile.tip == 'floor':
                 ms.surface.blit(self.images['floor'], coordinates)
