@@ -62,47 +62,51 @@ class Map_State(object):
             self.game.state_manager.change_state(self.game.state_manager.main_menu_state)
 
     def updateScreen(self):
-        game_world = self.game.game_world
-        for ID in self.screens:
-            self.screens[ID].clear()
+        def clear_all_screens():
+            for ID in self.screens:
+                self.screens[ID].clear()
 
-        # game world
-        # clear game world
-        ms = self.screens['map']
-        ms.clear()
-        # add game map to render list
-        x1, y1 = self.game.objects_handler.player.tile.coordinates
-        coordinates_list = game_world.dungeon.get_all_neighbors_coordinates((x1, y1), 10)
-        coordinates_list.append((x1, y1))
-        for x2, y2 in coordinates_list:
-            tile = game_world.dungeon.map2D[x2][y2]
-            if not tile.is_explored:
-                continue
-            coordinates = tile.get_screen_position()
-            color = tile.color
-            if tile.tip == 'floor':
-                ms.surface.blit(self.images['floor'], coordinates)
-            else:
-                self.game.pygame.draw.rect(ms.surface, color, coordinates)  # tile background
-            self.game.pygame.draw.rect(ms.surface, self.game.data.colors.palette['white'], coordinates, 1)  # tile border
+        def draw_game_map():
+            def get_coordinates_in_players_neighborhood(r):
+                """
+                returns all coordinates in the r radius neighborhood of the player
+                """
+                x1, y1 = self.game.objects_handler.player.tile.coordinates
+                coordinates_list = self.game.game_world.dungeon.get_all_neighbors_coordinates((x1, y1), r)
+                coordinates_list.append((x1, y1))  # append player coordinates to the list
+                return coordinates_list
 
-            if 'container' in tile.properties:
+            def draw_tile_border():
+                self.game.pygame.draw.rect(ms.surface, self.game.data.colors.palette['white'], coordinates, 1)
+
+            def draw_tile(tile):
+                color = tile.color
+                if tile.tip == 'floor':
+                    ms.surface.blit(self.images['floor'], coordinates)
+                else:
+                    self.game.pygame.draw.rect(ms.surface, color, coordinates)  # tile background
+                # draw_tile_border()  # uncomment to draw tile border
+
+            def draw_tile_objects(tile):
                 for item in tile.objects:
                     t = Text(screen=ms, font='map object', context=item.icon, coordinates=coordinates,
                              color=item.color, horizontal_align='center', vertical_align='center')
                     t.render()
-                    # 'center', 'center', True
 
-        # logger messages
-        if self.game.logger.has_unhandled_messages():
-            self.game.logger.display_messages()
+            ms = self.screens['map']
+            for x2, y2 in get_coordinates_in_players_neighborhood(5):
+                tile = self.game.game_world.dungeon.map2D[x2][y2]
+                coordinates = tile.get_screen_position()
+                if tile.is_explored:
+                    draw_tile(tile)
+                    if 'container' in tile.properties:
+                        draw_tile_objects(tile)
+            ms.render()
 
-        # render all the other info
-        # obtain info to display
-        self.game.objects_handler.player.render_stats()  # display player stats
-        self.game.time.render_turn()    # display turn info
-
-        # always update player info screen #todo
-        ms.render()
+        clear_all_screens()                                 # clear all screens
+        draw_game_map()                                     # draw tiles and game objects on map
+        self.game.logger.display_messages()                 # display game messages
+        self.game.objects_handler.player.render_stats()     # display player stats
+        self.game.time.render_turn()                        # display turn info
 
         self.game.pygame.display.flip()

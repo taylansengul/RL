@@ -24,6 +24,8 @@ class MessageLogger(object):
         return str(self.message_archive)
 
     def display_messages(self):
+        if not self.has_unhandled_messages():
+            return
         new_line_height = 12
         screen = self.game.state_manager.map_state.screens['messages']
         x, y = self.game.data.screens.screen_coordinates['map_state']['messages']

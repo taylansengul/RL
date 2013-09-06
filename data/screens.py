@@ -39,3 +39,5 @@ screen_coordinates = {'main': (0, 0),
                       'inventory_state': {'menu': (0, 0),
                                           'details': (width*.5, 0)},
                       'game_over_screen_state': {'main': (0, 0)}}
+
+# screen names
