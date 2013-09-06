@@ -1,3 +1,6 @@
+from systems.graphics.text import Text
+
+
 class MessageLogger(object):
     def __init__(self, game):
         self.game = game
@@ -29,6 +32,6 @@ class MessageLogger(object):
 
         screen.clear()
         for co, message in enumerate(self.game.logger.message_archive[-4:]):
-            self.game.font_manager.Draw(screen.surface, 'arial', 12, message,
-                                                        self.game.pygame.Rect(0, new_line_height*co, x, y), self.game.data.colors.palette['white'], 'left', 'top', True)
+            c = self.game.pygame.Rect(0, new_line_height*co, x, y),
+            Text(self.game, screen=screen, font='arial', font_size=12, context=message, coordinates=c, color='white').render()
         screen.render()

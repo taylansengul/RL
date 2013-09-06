@@ -1,3 +1,7 @@
+import pygame
+from data import fonts
+
+
 class Text(object):
     def __init__(self, game, screen=None, context=None, coordinates=None, color=None, font='arial', font_size=12):
         """color can be a string or RGB-tuple"""
@@ -18,8 +22,7 @@ class Text(object):
                                     self.color, 'left', 'top', True)
         self.screen.render()
 
-    def draw(self, rectOrPosToDrawTo,
-            alignHoriz='left', alignVert='top', antialias=False):
+    def draw(self, rectOrPosToDrawTo, alignHoriz='left', alignVert='top', antialias=False):
         '''
         Draw text with the given parameters on the given surface.
 

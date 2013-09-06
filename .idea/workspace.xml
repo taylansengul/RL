@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="858756d4-51e8-4dbf-9478-529754cbc247" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/NPC.py" afterPath="$PROJECT_DIR$/data/NPC.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/game_items.py" afterPath="$PROJECT_DIR$/data/game_items.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/systems/graphics/text.py" afterPath="$PROJECT_DIR$/systems/graphics/text.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/states/map_state.py" afterPath="$PROJECT_DIR$/states/map_state.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/systems/message_logger.py" afterPath="$PROJECT_DIR$/systems/message_logger.py" />
     </list>
     <ignored path="roguelike.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -22,7 +21,7 @@
     <file path="/utils.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1373183277914" ignored="false" />
     <file path="/event.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1373186648845" ignored="false" />
     <file path="/message_handler.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1373281695004" ignored="false" />
-    <file path="/a.dummy" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1378488379067" ignored="false" />
+    <file path="/a.dummy" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1378490900828" ignored="false" />
     <file path="/alive.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1374567964125" ignored="false" />
     <file path="/rechargeable.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1376057579169" ignored="false" />
     <file path="/game_data.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1373359673268" ignored="false" />
@@ -54,7 +53,7 @@
     <file path="/screens.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1376733813866" ignored="false" />
     <file path="$PROJECT_DIR$/../GameStateEngine/cgamestate.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1374135489571" ignored="false" />
     <file path="/cgamestate.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1374049017140" ignored="false" />
-    <file path="/Dummy.txt" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1378487242693" ignored="false" />
+    <file path="/Dummy.txt" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1378489872840" ignored="false" />
     <file path="/gameState.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1374321644115" ignored="false" />
     <file path="/system.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1374593677067" ignored="false" />
     <file path="/initializingState.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375391814214" ignored="false" />
@@ -111,7 +110,7 @@
     <file path="$PROJECT_DIR$/../roguelike2/states/mainMenuState.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375430782392" ignored="false" />
     <file path="$PROJECT_DIR$/../roguelike2/states/initializingState.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375391814214" ignored="false" />
     <file path="$PROJECT_DIR$/../roguelike2/systems/message_logger.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375273646348" ignored="false" />
-    <file path="/message_logger.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1376676093952" ignored="false" />
+    <file path="/message_logger.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1378490959192" ignored="false" />
     <file path="$PROJECT_DIR$/../roguelike2/states/__init__.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375524197693" ignored="false" />
     <file path="$PROJECT_DIR$/../roguelike2/systems/objects_handler.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375560757190" ignored="false" />
     <file path="$PROJECT_DIR$/../roguelike2/data/__init__.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1375459386419" ignored="false" />
@@ -148,9 +147,10 @@
     <file path="/targeting_state.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1378487397121" ignored="false" />
     <file path="/toDO" changelist="3bcf96e4-40bf-4a8d-ad85-e2298755dc36" time="1376435967450" ignored="false" />
     <file path="/game_over_screen_state.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1376733753825" ignored="false" />
-    <file path="/text.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1378487941423" ignored="false" />
+    <file path="/text.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1378490035609" ignored="false" />
     <file path="/screen.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1376695745337" ignored="false" />
     <file path="/screen_manager.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1376666587940" ignored="false" />
+    <file path="/fonts.py" changelist="858756d4-51e8-4dbf-9478-529754cbc247" time="1378490338331" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,13 +170,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="cFontManager.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/systems/cFontManager.py">
+      <file leaf-file-name="map_state.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/states/map_state.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="18" selection-start="2133" selection-end="2133" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
+            <state line="95" column="50" selection-start="4361" selection-end="4361" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="message_logger.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/systems/message_logger.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="44" selection-start="917" selection-end="917" vertical-scroll-proportion="0.60285133">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="graphics_engine.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/systems/graphics_engine.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="0" selection-start="86" selection-end="86" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -184,25 +200,18 @@
       <file leaf-file-name="text.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/systems/graphics/text.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="98" selection-start="118" selection-end="118" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="20" column="18" selection-start="632" selection-end="632" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game_items.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/game_items.py">
+      <file leaf-file-name="fonts.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/fonts.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="40" selection-start="1390" selection-end="1395" vertical-scroll-proportion="-6.1764708">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NPC.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/data/NPC.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="23" selection-start="548" selection-end="548" vertical-scroll-proportion="0.39795917">
+            <state line="2" column="18" selection-start="33" selection-end="33" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -226,8 +235,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/systems/graphics/screen.py" />
-        <option value="$PROJECT_DIR$/systems/cFontManager.py" />
         <option value="$PROJECT_DIR$/states/main_menu_state.py" />
         <option value="$PROJECT_DIR$/states/os_to_main_menu_state.py" />
         <option value="$PROJECT_DIR$/states/exit_to_os_state.py" />
@@ -235,13 +242,15 @@
         <option value="$PROJECT_DIR$/systems/state_manager.py" />
         <option value="$PROJECT_DIR$/states/__init__.py" />
         <option value="$PROJECT_DIR$/data/screens.py" />
-        <option value="$PROJECT_DIR$/systems/graphics_engine.py" />
         <option value="$PROJECT_DIR$/states/targeting_state.py" />
         <option value="$PROJECT_DIR$/objects/tile.py" />
-        <option value="$PROJECT_DIR$/states/map_state.py" />
-        <option value="$PROJECT_DIR$/systems/graphics/text.py" />
         <option value="$PROJECT_DIR$/data/game_items.py" />
         <option value="$PROJECT_DIR$/data/NPC.py" />
+        <option value="$PROJECT_DIR$/systems/graphics_engine.py" />
+        <option value="$PROJECT_DIR$/systems/graphics/text.py" />
+        <option value="$PROJECT_DIR$/data/fonts.py" />
+        <option value="$PROJECT_DIR$/states/map_state.py" />
+        <option value="$PROJECT_DIR$/systems/message_logger.py" />
       </list>
     </option>
   </component>
@@ -293,6 +302,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -387,18 +397,17 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FullScreen" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -649,11 +658,11 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3223684" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2494244" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29568344" sideWeight="0.58157897" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3" sideWeight="0.58157897" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29568344" sideWeight="0.1" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3" sideWeight="0.1" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31842107" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31710526" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -726,27 +735,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/data/screens.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="58" selection-start="1880" selection-end="1880" vertical-scroll-proportion="0.7581967">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/states/main_menu_state.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="0" selection-start="958" selection-end="958" vertical-scroll-proportion="0.020491803">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/systems/graphics/menu.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="225" selection-end="225" vertical-scroll-proportion="0.020491803">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/states/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="43" selection-start="119" selection-end="119" vertical-scroll-proportion="0.040983606">
@@ -784,9 +772,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/states/targeting_state.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="64" selection-start="986" selection-end="986" vertical-scroll-proportion="0.7084189">
-          <folding />
-        </state>
+        <state line="23" column="64" selection-start="986" selection-end="986" vertical-scroll-proportion="0.7084189" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/objects/tile.py">
@@ -798,46 +784,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/systems/graphics_engine.py">
+    <entry file="file://$PROJECT_DIR$/data/NPC.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="86" selection-end="86" vertical-scroll-proportion="0.092402466">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/states/map_state.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="52" selection-start="3647" selection-end="3647" vertical-scroll-proportion="2.4640658">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/systems/cFontManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="18" selection-start="2133" selection-end="2133" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/systems/graphics/text.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="98" selection-start="118" selection-end="118" vertical-scroll-proportion="0.0">
+        <state line="8" column="31" selection-start="350" selection-end="350" vertical-scroll-proportion="0.16393442">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data/game_items.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="40" selection-start="1390" selection-end="1395" vertical-scroll-proportion="-6.1764708">
+        <state line="22" column="40" selection-start="1390" selection-end="1395" vertical-scroll-proportion="0.45081967">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/NPC.py">
+    <entry file="file://$PROJECT_DIR$/systems/cFontManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="23" selection-start="548" selection-end="548" vertical-scroll-proportion="0.39795917">
+        <state line="53" column="18" selection-start="2133" selection-end="2133" vertical-scroll-proportion="0.020491803">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Python/2.7/site-packages/pygame/sysfont.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="534" column="0" selection-start="21979" selection-end="21979" vertical-scroll-proportion="0.33197555">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/fonts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="18" selection-start="33" selection-end="33" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/systems/graphics/text.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="18" selection-start="632" selection-end="632" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/systems/graphics_engine.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="86" selection-end="86" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/states/map_state.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="95" column="50" selection-start="4361" selection-end="4361" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/systems/message_logger.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="44" selection-start="917" selection-end="917" vertical-scroll-proportion="0.60285133">
           <folding />
         </state>
       </provider>

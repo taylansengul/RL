@@ -88,6 +88,7 @@ class Map_State(object):
 
             if 'container' in tile.properties:
                 for item in tile.objects:
+
                     self.game.font_manager.Draw(ms.surface, 'arial', 36, item.icon,
                                           coordinates, item.color, 'center', 'center', True)
 
