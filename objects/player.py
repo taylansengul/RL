@@ -80,4 +80,5 @@ class Player(Game_Object):
         coordinates = [(0, j*line_height) for j in range(l)]
         colors = ['white']*l
         for _ in zip(screens, contexts, coordinates, colors):
-            Text(font ='console', screen=_[0], context=_[1], coordinates=_[2], color=_[3]).render()
+            t = Text(font='console', screen=_[0], context=_[1], coordinates=_[2], color=_[3])
+            t.render()

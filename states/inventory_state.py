@@ -2,7 +2,6 @@ from systems.graphics.menu import Menu, Menu_Option
 from systems.graphics.text import Text
 
 
-# todo: create inventory state main screen
 class Inventory_State(object):
     def __init__(self, game):
         self.ID = 'inventory state'
@@ -80,7 +79,7 @@ class Inventory_State(object):
     # PRIVATE METHODS
     def _build_menu_from_inventory(self):
         """Builds a menu object from self.inventory"""
-        font = self.game.data.fonts.CONSOLE
+        font = self.game.data.fonts.INVENTORY
         st = 18
         for j, item in enumerate(self.inventory):
             if 'stackable' in item.properties:
@@ -99,9 +98,11 @@ class Inventory_State(object):
         if self.inventory:
             self.menu.draw()
         else:
-            Text(screen=screen, context='Empty Inventory', coordinates=(0, 0), color='white').render()
+            t = Text(screen=screen, font='inventory', context='Empty Inventory', coordinates=(0, 0), color='white')
+            t.render()
 
     def _render_item_properties(self):
         screen = self.screens['details']
         context = self.highlighted_item.description
-        Text(font='console', screen=screen, context=context, coordinates=(0, 0), color='white').render()
+        t = Text(font='inventory', screen=screen, context=context, coordinates=(0, 0), color='white')
+        t.render()

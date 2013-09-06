@@ -88,8 +88,9 @@ class Map_State(object):
 
             if 'container' in tile.properties:
                 for item in tile.objects:
-                    Text(screen=ms, font='map object', font_size=36, context=item.icon, coordinates=coordinates,
-                         color=item.color).render()
+                    t = Text(screen=ms, font='map object', context=item.icon, coordinates=coordinates,
+                             color=item.color, horizontal_align='center', vertical_align='center')
+                    t.render()
                     # 'center', 'center', True
 
         # logger messages
