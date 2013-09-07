@@ -23,8 +23,6 @@ class Game(object):
         print 'initializing random seed'
         seed_value = 0  # make this None to use the system time as a seed_value
         random.seed(seed_value)
-        # Main Screen
-        self.main_screen = self.pygame.display.set_mode(self.data.screens.screen_size['main'], 0, 32)
         # initialize main menu screen
         self.state_manager.initialize_screens('main_menu_state')
 

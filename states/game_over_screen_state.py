@@ -1,4 +1,5 @@
 from systems.graphics.text import Text
+from data import screens
 
 
 class Game_Over_Screen_State(object):
@@ -17,7 +18,7 @@ class Game_Over_Screen_State(object):
             self.game.state_manager.change_state(self.game.state_manager.main_menu_state)
 
     def updateScreen(self):
-        self.game.main_screen.fill((0, 0, 0))
+        screens.MAIN.fill((0, 0, 0))
         screen = self.screens['main']
         screen.clear()
         self._render_game_over_messages()

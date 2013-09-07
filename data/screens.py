@@ -1,3 +1,6 @@
+import pygame
+
+
 # screen sizes
 width = 1200
 height = 720
@@ -41,3 +44,6 @@ screen_coordinates = {'main': (0, 0),
                       'game_over_screen_state': {'main': (0, 0)}}
 
 # screen names
+
+# Main Screen
+MAIN = pygame.display.set_mode(screen_size['main'], 0, 32)

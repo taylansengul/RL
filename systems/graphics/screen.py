@@ -1,3 +1,6 @@
+from data import screens
+
+
 class Screen(object):
     def __init__(self, game, **kwargs):
         self.game = game
@@ -9,7 +12,7 @@ class Screen(object):
         self.surface = self.game.pygame.Surface(self.size)
 
     def render(self):
-        self.game.main_screen.blit(self.surface, self.coordinates)
+        screens.MAIN.blit(self.surface, self.coordinates)
 
     def clear(self, color='black'):
         if isinstance(color, str):
