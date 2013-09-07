@@ -1,8 +1,11 @@
+import random
+
+import pygame
+
+from main import main
 from systems.state_manager import State_Manager
 import data
 from systems.io_handler import Io_Handler
-import random
-import pygame
 
 
 class Game(object):
@@ -51,14 +54,3 @@ class Game(object):
     def exit(self):
         # delete game engines
         print 'Exiting to OS.'
-
-def main():
-    game = Game()
-    game.state_manager.change_state(game.state_manager.main_menu_state)
-    game.loop()
-    game.exit()
-    del game
-
-
-if __name__ == '__main__':
-    main()
