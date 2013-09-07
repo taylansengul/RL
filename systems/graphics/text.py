@@ -11,23 +11,26 @@ class Text(object):
         self.screen = screen
         self.context = context
         self.coordinates = coordinates
-        if isinstance(color, str):
-            self.color = colors.palette[color]
-        else:
-            self.color = color
-        if font == 'map object':
-            self.font = fonts.MAP_OBJECT
-        elif font == 'console':
-            self.font = fonts.CONSOLE
-        elif font == 'inventory':
-            self.font = fonts.INVENTORY
-        else:
-            assert False
+        self.color = Text.get_color(color)
+        self.font = Text.get_font(font)
 
         self.horizontal_align = horizontal_align
         self.vertical_align = vertical_align
         self.anti_alias = anti_alias
-        print self.coordinates
+
+    @staticmethod
+    def get_font(font_name):
+        fonts_dictionary = {'map object': fonts.MAP_OBJECT,
+                            'console': fonts.CONSOLE,
+                            'inventory': fonts.INVENTORY}
+        return fonts_dictionary[font_name]
+
+    @staticmethod
+    def get_color(color):
+        if isinstance(color, str):
+            return colors.palette[color]
+        else:
+            return color
 
     def render(self):
         """renders text to self.screen
