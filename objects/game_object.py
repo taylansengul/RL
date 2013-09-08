@@ -137,9 +137,11 @@ class Game_Object(object):
             self.tile.transfer_to(target_tile, self)
             self.game.time.new_turn()
 
-    def open_door(self, tile):
+    def open_door(self, target_tile):
+        if target_tile.tip != 'open door':
+            return False
         if 'can open doors' in self.properties:
-            tile.set_tip('open door')
+            target_tile.set_tip('open door')
             self.game.logger.add_message('A door has been opened.')
             return True
         else:

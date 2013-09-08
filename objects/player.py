@@ -49,14 +49,8 @@ class Player(Game_Object):
             t = self.game.game_world.dungeon.map2D[x1][y1]
             t.set_visibility(False) if t in non_visible_tiles else t.set_visibility(True)
 
-    def close_door(self, event):
-        move_key = {'move left': (-1, 0), 'move right': (1, 0), 'move up': (0, -1), 'move down': (0, 1)}
-        current_x, current_y = self.tile.coordinates
-        m, n = current_x + move_key[event][0], current_y + move_key[event][1]
-        target_tile = self.game.game_world.dungeon.map2D[m][n]
-        if not target_tile:
-            return
-        elif target_tile.tip != 'open door':
+    def close_door(self, target_tile):
+        if target_tile.tip != 'open door':
             return
         else:
             target_tile.set_tip('closed door')
