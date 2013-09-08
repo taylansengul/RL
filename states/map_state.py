@@ -1,5 +1,5 @@
 import os
-from systems.graphics.text import Text
+
 
 class Map_State(object):
     def __init__(self, game):
@@ -66,47 +66,22 @@ class Map_State(object):
             for ID in self.screens:
                 self.screens[ID].clear()
 
+        def visible_tiles_coordinates(radius=5):
+            player_coordinates = self.game.objects_handler.player.tile.coordinates
+            return self.game.game_world.dungeon.get_all_neighbors_coordinates(player_coordinates, radius)
+
         def draw_game_map():
-            def get_coordinates_in_players_neighborhood(r):
-                """
-                returns all coordinates in the r radius neighborhood of the player
-                """
-                x1, y1 = self.game.objects_handler.player.tile.coordinates
-                coordinates_list = self.game.game_world.dungeon.get_all_neighbors_coordinates((x1, y1), r)
-                coordinates_list.append((x1, y1))  # append player coordinates to the list
-                return coordinates_list
-
-            def draw_tile_border():
-                self.game.pygame.draw.rect(ms.surface, self.game.data.colors.palette['white'], coordinates, 1)
-
-            def draw_tile(tile):
-                color = tile.color
-                if tile.tip == 'floor':
-                    ms.surface.blit(self.images['floor'], coordinates)
-                else:
-                    self.game.pygame.draw.rect(ms.surface, color, coordinates)  # tile background
-                # draw_tile_border()  # uncomment to draw tile border
-
-            def draw_tile_objects(tile):
-                for item in tile.objects:
-                    t = Text(screen=ms, font='map object', context=item.icon, coordinates=coordinates,
-                             color=item.color, horizontal_align='center', vertical_align='center')
-                    t.render()
-
-            ms = self.screens['map']
-            for x2, y2 in get_coordinates_in_players_neighborhood(5):
-                tile = self.game.game_world.dungeon.map2D[x2][y2]
-                coordinates = tile.get_screen_position()
+            screen = self.screens['map']
+            for x, y in visible_tiles_coordinates():
+                tile = self.game.game_world.dungeon.map2D[x][y]
                 if tile.is_explored:
-                    draw_tile(tile)
-                    if 'container' in tile.properties:
-                        draw_tile_objects(tile)
-            ms.render()
+                    tile.draw(screen)
+                    tile.draw_tile_objects(screen)
+            screen.render()
 
         clear_all_screens()                                 # clear all screens
         draw_game_map()                                     # draw tiles and game objects on map
         self.game.logger.display_messages()                 # display game messages
         self.game.objects_handler.player.render_stats()     # display player stats
         self.game.time.render_turn()                        # display turn info
-
-        self.game.pygame.display.flip()
+        self.game.pygame.display.flip()                     # refresh main screen

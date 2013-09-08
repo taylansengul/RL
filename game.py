@@ -1,8 +1,5 @@
 import random
-
 import pygame
-
-from main import main
 from systems.state_manager import State_Manager
 import data
 from systems.io_handler import Io_Handler

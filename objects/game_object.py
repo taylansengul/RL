@@ -1,4 +1,5 @@
 from rechargeable import Rechargeable
+from systems.graphics.text import Text
 
 
 class Game_Object(object):
@@ -165,3 +166,13 @@ class Game_Object(object):
         if 'NPC' in self.properties:
             if not self.is_alive:
                 self.game.objects_handler.remove_NPC(self, self.tile)
+
+    def draw(self, screen):
+        t = Text(screen=screen,
+                 font='map object',
+                 context=self.icon,
+                 coordinates=self.tile.screen_position,
+                 color=self.color,
+                 horizontal_align='center',
+                 vertical_align='center')
+        t.render()

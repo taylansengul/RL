@@ -1,5 +1,6 @@
 from game_object import Game_Object
-import inspect
+import pygame as pg
+from systems.graphics.text import Text
 
 
 class Tile(Game_Object):
@@ -39,7 +40,8 @@ class Tile(Game_Object):
         else:
             self.is_visible = False
 
-    def get_screen_position(self):
+    @property
+    def screen_position(self):
         """returns a pygame.Rect object whose coordinates are normalized w.r.t. player position in the middle"""
         x, y = self.coordinates
         x1, y1 = self.game.objects_handler.player.tile.coordinates
@@ -47,4 +49,20 @@ class Tile(Game_Object):
         c1 = self.game.data.screens.tile_length * (x - x1 + x2)  # left border coordinate
         c2 = self.game.data.screens.tile_length * (y - y1 + y2)  # top border coordinate
         c3 = self.game.data.screens.tile_length  # length and width
-        return self.game.pygame.Rect(c1, c2, c3, c3)
+        return pg.Rect(c1, c2, c3, c3)
+
+    def draw(self, screen):
+        if self.tip == 'floor':
+            screen.surface.blit(self.game.state_manager.map_state.images['floor'], self.screen_position)
+        else:
+            self.game.pygame.draw.rect(screen.surface, self.color, self.screen_position)  # tile background
+        # self.draw_tile_border(screen)  # uncomment to draw tile border
+
+    def draw_tile_objects(self, screen):
+        if not 'container' in self.properties:
+            return
+        for each in self.objects:
+            each.draw(screen)
+
+    def draw_tile_border(self, screen):
+        self.game.pygame.draw.rect(screen, self.game.data.colors.palette['white'], self.screen_position, 1)

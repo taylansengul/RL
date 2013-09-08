@@ -50,7 +50,7 @@ class Dungeon(object):
         for m in range(0, self.dungeon_width):
             for n in range(0, self.dungeon_height):
                 if self.pre_map2D[m][n] == 'floor':  # if tile is floor
-                    for c in self.get_all_neighbors_coordinates((m, n), 1):  # look for its neighbors
+                    for c in self.get_all_neighbors_coordinates((m, n), 1, self_included=False):  # look for its neighbors
                         x, y = c
                         if self.pre_map2D[x][y] == 'dirt':  # if there is a dirt tile as its neighbor
                             self.pre_map2D[x][y] = 'wall'  # make it a wall tile.
@@ -132,10 +132,20 @@ class Dungeon(object):
             for n in range(0, self.dungeon_height):
                 self.map2D[m][n] = Tile(self.game, coordinates=(m, n), tip=self.pre_map2D[m][n])
 
-    def get_all_neighbors_coordinates(self, (x, y), r):
+    def get_all_neighbors_coordinates(self, center, radius=1, self_included=True):
         """Returns coordinates which are neighbors of given x, y and lies in the dungeon grid"""
-        coordinates = [(m, n) for m in range(x-r, x+r+1) for n in range(y-r, y+r+1) if (m, n) != (x, y)]
-        return [c for c in coordinates if 0 <= c[0] < self.dungeon_width and 0 <= c[1] < self.dungeon_height]
+        coordinates = []
+        x, y = center
+        x_left = max(x-radius, 0)
+        x_right = min(x+radius, self.dungeon_width)
+        y_top = max(y-radius, 0)
+        y_bottom = min(y+radius, self.dungeon_height)
+        for m in range(x_left, x_right+1):
+            for n in range(y_top, y_bottom+1):
+                coordinates.append((m ,n))
+        if not self_included:
+            coordinates.remove((x, y))
+        return coordinates
 
     def get_neighbor_tile(self, tile, direction):
         direction_dictionary = {'up': (0, -1), 'down': (0, 1), 'left': (-1, 0), 'right': (1, 0)}
