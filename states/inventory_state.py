@@ -21,48 +21,34 @@ class Inventory_State(object):
             self.highlighted_item = None
         self.selected_item = None
         self.menu_options = []
-        self._build_menu_from_inventory()  # builds menu from self.inventory
+        self._build_menu_from_inventory()
         self.updateScreen()
 
     def determineAction(self):
         self.selected_item = None
         event = self.game.io_handler.get_active_event()
+        menu_actions = {
+            None: self._none,
+            'down': self._down,
+            'up': self._up,
+            'select': self._select,
+            'show edible items': self._show_edible_items,
+            'show consumable items': self._show_consumable_items,
+            'quit': self._quit
+        }
         if self.inventory:  # if inventory is non-empty
-            if event == 'down':
-                self.menu.select_next()
-                option = self.menu.get_active_option()
-                if option:  # if an option is hovered
-                    item_index = self.menu_options.index(option)
-                    self.highlighted_item = self.inventory[item_index]
-            elif event == 'up':
-                self.menu.select_prev()
-                option = self.menu.get_active_option()
-                if option:  # if an option is hovered
-                    item_index = self.menu_options.index(option)
-                    self.highlighted_item = self.inventory[item_index]
-            elif event == 'select':
-                option = self.menu.get_active_option()
-                if option:  # if an option is hovered
-                    item_index = self.menu_options.index(option)
-                    self.selected_item = self.inventory[item_index]
-            elif event == 'show edible items':
-                self.key = 'edible'
-                self.init()
-            elif event == 'show consumable items':
-                self.key = 'consumable'
-                self.init()
-            elif event == 'quit':
-                self.game.state_manager.change_state(self.game.state_manager.map_state)
+            menu_actions[event]()
         else:  # if inventory is empty
             if event == 'quit':
-                self.game.state_manager.change_state(self.game.state_manager.map_state)
+                self._quit()
 
-        if self.key == 'edible' and self.selected_item:
-            self.game.objects_handler.player.consume(self.selected_item)
-            self.game.state_manager.change_state(self.game.state_manager.map_state)
-        elif self.key == 'consumable' and self.selected_item:
-            self.game.objects_handler.player.consume(self.selected_item)
-            self.game.state_manager.change_state(self.game.state_manager.map_state)
+        if self.selected_item:
+            if self.key == 'edible':
+                self.game.objects_handler.player.consume(self.selected_item)
+                self.game.state_manager.change_state(self.game.state_manager.map_state)
+            elif self.key == 'consumable':
+                self.game.objects_handler.player.consume(self.selected_item)
+                self.game.state_manager.change_state(self.game.state_manager.map_state)
 
     def updateScreen(self):
         screen = self.screens['menu']
@@ -77,6 +63,41 @@ class Inventory_State(object):
         self.game.pygame.display.flip()
 
     # PRIVATE METHODS
+    def _none(self):
+        pass
+
+    def _down(self):
+        self.menu.select_next()
+        option = self.menu.get_active_option()
+        if option:  # if an option is hovered
+            item_index = self.menu_options.index(option)
+            self.highlighted_item = self.inventory[item_index]
+
+    def _up(self):
+        self.menu.select_prev()
+        option = self.menu.get_active_option()
+        if option:  # if an option is hovered
+            item_index = self.menu_options.index(option)
+            self.highlighted_item = self.inventory[item_index]
+
+    def _select(self):
+        option = self.menu.get_active_option()
+        if option:  # if an option is hovered
+            item_index = self.menu_options.index(option)
+            self.selected_item = self.inventory[item_index]
+
+    def _show_edible_items(self):
+        self.key = 'edible'
+        self.init()
+
+    def _show_consumable_items(self):
+        self.key = 'consumable'
+        self.init()
+
+    def _quit(self):
+        self.game.state_manager.change_state(self.game.state_manager.map_state)
+
+
     def _build_menu_from_inventory(self):
         """Builds a menu object from self.inventory"""
         font = self.game.data.fonts.INVENTORY
@@ -97,7 +118,7 @@ class Inventory_State(object):
         screen = self.screens['menu']
         if self.inventory:
             self.menu.draw()
-        else:
+        else:  # inventory is empty
             t = Text(screen=screen, font='inventory', context='Empty Inventory', coordinates=(0, 0), color='white')
             t.render()
 
