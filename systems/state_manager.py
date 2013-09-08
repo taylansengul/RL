@@ -1,5 +1,5 @@
+from graphics import screen
 import states
-from systems.graphics import screen
 
 
 class State_Manager(object):

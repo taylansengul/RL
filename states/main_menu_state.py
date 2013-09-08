@@ -1,4 +1,4 @@
-from systems.graphics.menu import Menu, Menu_Option
+from graphics.menu import Menu, Menu_Option
 from systems.time import Time
 from systems.message_logger import MessageLogger
 from objects.game_world import Game_World

@@ -1,6 +1,6 @@
-from game_object import Game_Object
 import pygame as pg
-from systems.graphics.text import Text
+
+from game_object import Game_Object
 
 
 class Tile(Game_Object):

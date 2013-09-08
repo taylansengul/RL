@@ -1,4 +1,4 @@
-from systems.graphics.text import Text
+from graphics.text import Text
 
 
 class Time(object):

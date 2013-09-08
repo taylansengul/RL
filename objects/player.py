@@ -1,6 +1,6 @@
 from game_object import Game_Object
 from systems.utils import get_line
-from systems.graphics.text import Text
+from graphics.text import Text
 
 
 class Player(Game_Object):

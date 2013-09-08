@@ -1,5 +1,5 @@
-from systems.graphics.menu import Menu, Menu_Option
-from systems.graphics.text import Text
+from graphics.menu import Menu, Menu_Option
+from graphics.text import Text
 
 
 class Inventory_State(object):
