@@ -1,6 +1,6 @@
 from graphics.menu import Menu, Menu_Option
 from graphics.text import Text
-
+from inventory_state_screen_updater import InventoryStateScreenUpdater
 
 class Inventory_State(object):
     def __init__(self, game):
@@ -12,6 +12,7 @@ class Inventory_State(object):
         self.menu_options = []
         self.key = ''
         self.screens = {'menu': None, 'details': None}
+        self.screen_updater = InventoryStateScreenUpdater(game, self.screens, )
 
     def init(self):
         self.inventory = self.game.objects_handler.player.get_objects(self.key)
@@ -114,7 +115,7 @@ class Inventory_State(object):
         self.menu = Menu(screen=self.screens['menu'], options=self.menu_options)
 
     def _render_inventory(self):
-        """Renders inventory if inventory not empty otherwise display a message to self.screens['menu']"""
+        """Renders inventory if inventory is not empty otherwise display a message to self.screens['menu']"""
         screen = self.screens['menu']
         if self.inventory:
             self.menu.draw()
