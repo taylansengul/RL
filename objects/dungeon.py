@@ -50,7 +50,7 @@ class Dungeon(object):
         for m in range(0, self.dungeon_width):
             for n in range(0, self.dungeon_height):
                 if self.pre_map2D[m][n] == 'floor':  # if tile is floor
-                    for c in self.get_all_neighbors_coordinates((m, n), 1, self_included=False):  # look for its neighbors
+                    for c in self.get_neighboring_coordinates((m, n), 1, self_included=False):  # look for its neighbors
                         x, y = c
                         if self.pre_map2D[x][y] == 'dirt':  # if there is a dirt tile as its neighbor
                             self.pre_map2D[x][y] = 'wall'  # make it a wall tile.
@@ -132,7 +132,7 @@ class Dungeon(object):
             for n in range(0, self.dungeon_height):
                 self.map2D[m][n] = Tile(self.game, coordinates=(m, n), tip=self.pre_map2D[m][n])
 
-    def get_all_neighbors_coordinates(self, center, radius=1, self_included=True):
+    def get_neighboring_coordinates(self, center, radius=1, self_included=True):
         """Returns coordinates which are neighbors of given x, y and lies in the dungeon grid"""
         coordinates = []
         x, y = center
@@ -146,6 +146,15 @@ class Dungeon(object):
         if not self_included:
             coordinates.remove((x, y))
         return coordinates
+
+    def get_neighboring_tiles(self, tile, radius=1, self_included=True):
+        """Returns coordinates which are neighbors of given x, y and lies in the dungeon grid"""
+        coordinates = self.get_neighboring_coordinates(tile.coordinates, radius, self_included)
+        tiles = []
+        for each in coordinates:
+            x, y = each[0], each[1]
+            tiles.append(self.map2D[x][y])
+        return tiles
 
     def get_neighbor_tile(self, tile, direction):
         direction_dictionary = {'up': (0, -1), 'down': (0, 1), 'left': (-1, 0), 'right': (1, 0)}
@@ -217,3 +226,11 @@ class Dungeon(object):
         print 'setting dungeon map...',
         self._set_map_from_pre_map()
         print 'done.'
+
+    def draw(self, screen):
+        player = self.game.objects_handler.player
+        for tile in player.tiles_in_visibility_radius:
+            if tile.is_explored:
+                tile.draw(screen)
+                tile.draw_tile_objects(screen)
+        screen.render()

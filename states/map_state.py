@@ -61,27 +61,29 @@ class Map_State(object):
         elif event == 'quit':
             self.game.state_manager.change_state(self.game.state_manager.main_menu_state)
 
+    def clear_all_screens(self):
+        for ID in self.screens:
+            self.screens[ID].clear()
+
+    def draw_gameworld(self):
+        self.game.game_world.dungeon.draw(self.screens['map'])
+
+    def display_message_console(self):
+        self.game.logger.display_messages()
+
+    def display_player_stats(self):
+        self.game.objects_handler.player.render_stats()
+
+    def display_turn_info(self):
+        self.game.time.render_turn()
+
+    def refresh_screen(self):
+        self.game.pygame.display.flip()
+
     def updateScreen(self):
-        def clear_all_screens():
-            for ID in self.screens:
-                self.screens[ID].clear()
-
-        def visible_tiles_coordinates(radius=5):
-            player_coordinates = self.game.objects_handler.player.tile.coordinates
-            return self.game.game_world.dungeon.get_all_neighbors_coordinates(player_coordinates, radius)
-
-        def draw_game_map():
-            screen = self.screens['map']
-            for x, y in visible_tiles_coordinates():
-                tile = self.game.game_world.dungeon.map2D[x][y]
-                if tile.is_explored:
-                    tile.draw(screen)
-                    tile.draw_tile_objects(screen)
-            screen.render()
-
-        clear_all_screens()                                 # clear all screens
-        draw_game_map()                                     # draw tiles and game objects on map
-        self.game.logger.display_messages()                 # display game messages
-        self.game.objects_handler.player.render_stats()     # display player stats
-        self.game.time.render_turn()                        # display turn info
-        self.game.pygame.display.flip()                     # refresh main screen
+        self.clear_all_screens()
+        self.draw_gameworld()
+        self.display_message_console()
+        self.display_player_stats()
+        self.display_turn_info()
+        self.refresh_screen()

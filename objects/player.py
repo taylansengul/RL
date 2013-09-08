@@ -14,6 +14,15 @@ class Player(Game_Object):
         self.player_class = key
         self.name = 'Numan'
 
+    @property
+    def coordinates_of_tiles_in_visibility_radius(self, radius=5):
+        return self.game.game_world.dungeon.get_neighboring_coordinates(self.tile.coordinates,
+                                                                          self.visibility_radius)
+
+    @property
+    def tiles_in_visibility_radius(self, radius=5):
+        return self.game.game_world.dungeon.get_neighboring_tiles(self.tile, self.visibility_radius)
+
     def update_vision(self):
         # todo: optimize later (takes 1/1000~2/1000 secs)
         game_world = self.game.game_world
@@ -24,20 +33,18 @@ class Player(Game_Object):
                 game_world.dungeon.map2D[m][n].set_visibility(False)      # make every tile invisible
 
         non_visible_tiles = []
-        coordinates_in_visibility_radius = game_world.dungeon.get_all_neighbors_coordinates(self.tile.coordinates,
-                                                                                            self.visibility_radius)
-        for X in coordinates_in_visibility_radius:
+        for X in self.coordinates_of_tiles_in_visibility_radius:
             x1, y1 = X
             vision_ray_coordinates = get_line(x, y, x1, y1)
             vision_ray_tiles = [game_world.dungeon.map2D[c[0]][c[1]] for c in vision_ray_coordinates]
             line_blocking_status = ['light blocking' in _.properties for _ in vision_ray_tiles]
             for j, b in enumerate(line_blocking_status):
                 if b:  # if found a light blocking tile t
-                    for _ in vision_ray_tiles[j+1:]:  # tiles after that tile
-                        non_visible_tiles.append(_)  # are appended to non_visible_tiles list
+                    for each in vision_ray_tiles[j+1:]:  # tiles after that tile
+                        non_visible_tiles.append(each)  # are appended to non_visible_tiles list
                     break
 
-        for X in coordinates_in_visibility_radius:  # go over
+        for X in self.coordinates_of_tiles_in_visibility_radius:  # go over
             x1, y1 = X
             t = self.game.game_world.dungeon.map2D[x1][y1]
             t.set_visibility(False) if t in non_visible_tiles else t.set_visibility(True)
