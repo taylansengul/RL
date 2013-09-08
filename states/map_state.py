@@ -1,4 +1,5 @@
 import os
+from map_state_screen_updater import MapStateScreenUpdater
 
 
 class Map_State(object):
@@ -7,6 +8,7 @@ class Map_State(object):
         self.ID = 'map state'
         self.screens = {'map': None, 'player': None, 'game info': None, 'messages': None, 'enemy': None}
         self.images = {}
+        self.screen_updater = MapStateScreenUpdater(game, self.screens)
 
     def init(self):
         image_location = os.path.join('images', "floor_tile.png")
@@ -61,29 +63,5 @@ class Map_State(object):
         elif event == 'quit':
             self.game.state_manager.change_state(self.game.state_manager.main_menu_state)
 
-    def clear_all_screens(self):
-        for ID in self.screens:
-            self.screens[ID].clear()
-
-    def draw_gameworld(self):
-        self.game.game_world.dungeon.draw(self.screens['map'])
-
-    def display_message_console(self):
-        self.game.logger.display_messages()
-
-    def display_player_stats(self):
-        self.game.objects_handler.player.render_stats()
-
-    def display_turn_info(self):
-        self.game.time.render_turn()
-
-    def refresh_screen(self):
-        self.game.pygame.display.flip()
-
     def updateScreen(self):
-        self.clear_all_screens()
-        self.draw_gameworld()
-        self.display_message_console()
-        self.display_player_stats()
-        self.display_turn_info()
-        self.refresh_screen()
+        self.screen_updater.run()
