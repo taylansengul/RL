@@ -1,68 +1,46 @@
-class Menu(object):
-    def __init__(self, screen=None, options=None):
-        self.options = options
+from graphics.text import Text
+
+
+class Menu(list):
+    def __init__(self, screen=None, options=None, font='console'):
+        super(Menu, self).__init__(options)
         self.screen = screen
-        self.option_selected = None
+        self.highlighted_option_index = 0
+        self.highlighted_option_color = 'yellow'
+        self.normal_option_color = 'white'
+        self.font = font
+
+    @property
+    def highlighted_option(self):
+        return self[self.highlighted_option_index]
+
+    def set_highlighted_option_index(self, new):
+        if 0 <= new <= len(self) - 1:
+            pass
+        elif new == len(self):
+            new = 0
+        elif new == -1:
+            new = len(self) - 1
+        else:
+            assert False, "Invalid menu item"
+        self.highlighted_option_index = new
 
     def draw(self):
         # todo: get rid of this fill
         self.screen.clear()
-        for option in self.options:
-            option.draw(self.screen)
+        st = 18
+        for j, option in enumerate(self):
+            color = [self.normal_option_color, self.highlighted_option_color][j == self.highlighted_option_index]
+            t = Text(
+                screen=self.screen,
+                context=option,
+                coordinates=(0, j*st),
+                color=color,
+                font=self.font)
+            t.render()
 
-    def select_next(self):
-        for no, option in enumerate(self.options):
-            if option.isHovered:
-                option.isHovered = False
-                if no == len(self.options) - 1:
-                    self.options[0].isHovered = True
-                else:
-                    self.options[no+1].isHovered = True
-                break
+    def next(self):
+        self.set_highlighted_option_index(self.highlighted_option_index+1)
 
-    def select_prev(self):
-        for no, option in enumerate(self.options):
-            if option.isHovered:
-                option.isHovered = False
-                if no == 0:
-                    self.options[len(self.options) - 1].isHovered = True
-                else:
-                    self.options[no-1].isHovered = True
-                break
-
-    def get_active_option(self):
-        for option in self.options:
-            if option.isHovered:
-                return option
-        else:  # if there are no options
-            return None
-
-
-class Menu_Option:
-    def __init__(self, text, pos, font, isHovered=False):
-        self.font = font
-        self.text = text
-        self.pos = pos
-        self.isHovered = isHovered
-        self.rend = None
-        self.set_rend()
-        self.rect = None
-        self.set_rect()
-
-    def draw(self, screen):
-        self.set_rend()
-        screen.surface.blit(self.rend, self.rect)
-
-    def set_rend(self):
-        if self.isHovered:
-            color = (255, 255, 255)
-        else:
-            color = (100, 100, 100)
-        self.rend = self.font.render(self.text, True, color)
-
-    def set_rect(self):
-        self.set_rend()
-        self.rect = self.rend.get_rect()
-        self.rect.topleft = self.pos
-
-
+    def prev(self):
+        self.set_highlighted_option_index(self.highlighted_option_index-1)

@@ -1,4 +1,5 @@
-from graphics.menu import Menu, Menu_Option
+from graphics.menu import Menu
+from graphics.menu_option import Menu_Option
 from graphics.text import Text
 from inventory_state_screen_updater import InventoryStateScreenUpdater
 

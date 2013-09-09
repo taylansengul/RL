@@ -1,4 +1,5 @@
-from graphics.menu import Menu, Menu_Option
+from graphics.menu import Menu
+from graphics.menu_option import Menu_Option
 from systems.time import Time
 from systems.message_logger import MessageLogger
 from objects.game_world import Game_World
@@ -14,13 +15,13 @@ class Main_Menu_State(object):
 
     def init(self):
         font = self.game.data.fonts.MAIN_MENU
-        self.newGameOption = Menu_Option("NEW GAME", (140, 105), font, isHovered=True)
-        self.loadGameOption = Menu_Option("LOAD GAME", (140, 155), font)
-        self.quitGameOption = Menu_Option("QUIT", (140, 205), font)
+        self.options = [
+            "NEW GAME",
+            "LOAD GAME",
+            "QUIT GAME"]
         self.menu = Menu(screen=self.screens['menu'],
-                         options=[self.newGameOption,
-                                  self.loadGameOption,
-                                  self.quitGameOption])
+                         options=self.options
+                         )
         self.updateScreen()
 
     def updateScreen(self):
@@ -31,17 +32,17 @@ class Main_Menu_State(object):
     def determineAction(self):
         event = self.game.io_handler.get_active_event()
         if event == 'down':
-            self.menu.select_next()
+            self.menu.next()
         elif event == 'up':
-            self.menu.select_prev()
+            self.menu.prev()
         elif event == 'select':
-            option = self.menu.get_active_option()
-            if option == self.newGameOption:
+            option = self.menu.highlighted_option
+            if option == "NEW GAME":
                 self._init_game_run()
                 self.game.state_manager.change_state(self.game.state_manager.map_state)
-            elif option == self.loadGameOption:
+            elif option == "LOAD GAME":
                 pass
-            elif option == self.quitGameOption:
+            elif option == "QUIT GAME":
                 self.game.is_in_loop = False
 
     # PRIVATE METHODS
