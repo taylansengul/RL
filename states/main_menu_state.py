@@ -1,5 +1,4 @@
 from graphics.menu import Menu
-from graphics.menu_option import Menu_Option
 from systems.time import Time
 from systems.message_logger import MessageLogger
 from objects.game_world import Game_World

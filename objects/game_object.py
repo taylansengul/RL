@@ -178,3 +178,10 @@ class Game_Object(object):
                  horizontal_align='center',
                  vertical_align='center')
         t.render()
+
+    @property
+    def inventory_repr(self):
+        if 'stackable' in self.properties:
+            return str(self.quantity) + ' ' + self.ID
+        else:
+            return self.ID

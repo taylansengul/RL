@@ -2,13 +2,14 @@ from graphics.text import Text
 
 
 class Menu(list):
-    def __init__(self, screen=None, options=None, font='console'):
+    def __init__(self, screen=None, options=None, font='console', empty_menu_message='Empty Menu'):
         super(Menu, self).__init__(options)
         self.screen = screen
         self.highlighted_option_index = 0
         self.highlighted_option_color = 'yellow'
         self.normal_option_color = 'white'
         self.font = font
+        self.empty_menu_message = empty_menu_message
 
     @property
     def highlighted_option(self):
@@ -26,9 +27,18 @@ class Menu(list):
         self.highlighted_option_index = new
 
     def draw(self):
-        # todo: get rid of this fill
         self.screen.clear()
         st = 18
+        if len(self) == 0:
+            t = Text(
+                screen=self.screen,
+                context=self.empty_menu_message,
+                coordinates=(0, 0),
+                color=self.normal_option_color,
+                font=self.font)
+            t.render()
+            return
+
         for j, option in enumerate(self):
             color = [self.normal_option_color, self.highlighted_option_color][j == self.highlighted_option_index]
             t = Text(
