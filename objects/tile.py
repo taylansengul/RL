@@ -62,7 +62,7 @@ class Tile(Game_Object):
         if not 'container' in self.properties:
             return
         for each in self.objects:
-            each.draw(screen)
+            each.render_icon_to(screen)
 
     def draw_tile_border(self, screen):
         self.game.pygame.draw.rect(screen, self.game.data.colors.palette['white'], self.screen_position, 1)

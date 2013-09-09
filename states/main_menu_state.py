@@ -24,7 +24,7 @@ class Main_Menu_State(object):
         self.updateScreen()
 
     def updateScreen(self):
-        self.menu.draw()
+        self.menu.render()
         self.screens['menu'].render()
         self.game.pygame.display.update()
 

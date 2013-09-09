@@ -16,7 +16,10 @@ class Inventory_State(object):
 
     @property
     def highlighted_item(self):
-        return self.inventory[self.menu.highlighted_option_index]
+        if len(self.inventory) == 0:
+            return None
+        else:
+            return self.inventory[self.menu.highlighted_option_index]
 
     def init(self):
         self.inventory = self.game.objects_handler.player.get_objects(self.key)
@@ -51,16 +54,7 @@ class Inventory_State(object):
                 self.game.state_manager.change_state(self.game.state_manager.map_state)
 
     def updateScreen(self):
-        screen = self.screens['menu']
-        screen.clear()
-        self._render_inventory()
-        screen.render()
-        if self.inventory:
-            screen = self.screens['details']
-            screen.clear()
-            self._render_item_properties()
-            screen.render()
-        self.game.pygame.display.flip()
+        self.screen_updater.run()
 
     # PRIVATE METHODS
     def _none(self):
@@ -94,13 +88,3 @@ class Inventory_State(object):
             options=menu_options,
             font='inventory',
             empty_menu_message='Empty Inventory')
-
-    def _render_inventory(self):
-        """Renders inventory if inventory is not empty otherwise display a message to self.screens['menu']"""
-        self.menu.draw()
-
-    def _render_item_properties(self):
-        screen = self.screens['details']
-        context = self.highlighted_item.description
-        t = Text(font='inventory', screen=screen, context=context, coordinates=(0, 0), color='white')
-        t.render()

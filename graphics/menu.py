@@ -26,7 +26,7 @@ class Menu(list):
             assert False, "Invalid menu item"
         self.highlighted_option_index = new
 
-    def draw(self):
+    def render(self):
         self.screen.clear()
         st = 18
         if len(self) == 0:
@@ -48,6 +48,7 @@ class Menu(list):
                 color=color,
                 font=self.font)
             t.render()
+        self.screen.render()
 
     def next(self):
         self.set_highlighted_option_index(self.highlighted_option_index+1)

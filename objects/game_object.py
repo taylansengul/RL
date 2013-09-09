@@ -169,7 +169,7 @@ class Game_Object(object):
             if not self.is_alive:
                 self.game.objects_handler.remove_NPC(self, self.tile)
 
-    def draw(self, screen):
+    def render_icon_to(self, screen):
         t = Text(screen=screen,
                  font='map object',
                  context=self.icon,
@@ -178,6 +178,13 @@ class Game_Object(object):
                  horizontal_align='center',
                  vertical_align='center')
         t.render()
+
+    def render_description_to(self, screen):
+        screen.clear()
+        context = self.description
+        t = Text(font='inventory', screen=screen, context=context, coordinates=(0, 0), color='white')
+        t.render()
+        screen.render()
 
     @property
     def inventory_repr(self):
