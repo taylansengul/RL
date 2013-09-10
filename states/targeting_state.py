@@ -1,6 +1,9 @@
+import constants
+
+
 class Targeting_State(object):
     def __init__(self, game):
-        self.ID = 'targeting state'
+        self.ID = constants.states.TARGETING
         self.game = game
         self.selected_tile = None
         self.highlighted_tile = None

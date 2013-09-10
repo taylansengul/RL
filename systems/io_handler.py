@@ -1,4 +1,5 @@
 import pygame.locals as pgl
+import constants
 
 
 class Io_Handler(object):
@@ -8,34 +9,39 @@ class Io_Handler(object):
         self.active_event = None
         self.click_coordinates = (-1, -1)
         self.hover_coordinates = (-1, -1)
-        self.keyboard_commands_dictionary = {'map state': {pgl.K_i: 'inventory',
-                                                           pgl.K_c: 'close door',
-                                                           pgl.K_e: 'eat item',
-                                                           pgl.K_g: 'pick up item',
-                                                           pgl.K_d: 'drop item',
-                                                           pgl.K_t: 'target',
-                                                           pgl.K_SPACE: 'descend',
-                                                           pgl.K_RIGHT: 'right',
-                                                           pgl.K_LEFT: 'left',
-                                                           pgl.K_DOWN: 'down',
-                                                           pgl.K_UP: 'up',
-                                                           pgl.K_ESCAPE: 'quit'},
-                                             'main menu state': {pgl.K_DOWN: 'down',
-                                                                 pgl.K_UP: 'up',
-                                                                 pgl.K_RETURN: 'select'},
-                                             'game_over_screen_state': {pgl.K_SPACE: 'pass'},
-                                             'initializing state': {},
-                                             'inventory state': {pgl.K_DOWN: 'down',
-                                                                 pgl.K_UP: 'up',
-                                                                 pgl.K_RETURN: 'select',
-                                                                 pgl.K_ESCAPE: 'quit',
-                                                                 pgl.K_e: 'show edible items',
-                                                                 pgl.K_u: 'show consumable items'},
-                                             'targeting state': {pgl.K_RIGHT: 'right',
-                                                                 pgl.K_LEFT: 'left',
-                                                                 pgl.K_DOWN: 'down',
-                                                                 pgl.K_UP: 'up',
-                                                                 pgl.K_RETURN: 'select'}}
+        self.keyboard_commands_dictionary = {
+            constants.states.MAP: {
+                pgl.K_i: 'inventory',
+                pgl.K_c: 'close door',
+                pgl.K_e: 'eat item',
+                pgl.K_g: 'pick up item',
+                pgl.K_d: 'drop item',
+                pgl.K_t: 'target',
+                pgl.K_SPACE: 'descend',
+                pgl.K_RIGHT: 'right',
+                pgl.K_LEFT: 'left',
+                pgl.K_DOWN: 'down',
+                pgl.K_UP: 'up',
+                pgl.K_ESCAPE: 'quit'},
+            constants.states.MAIN_MENU: {
+                pgl.K_DOWN: 'down',
+                pgl.K_UP: 'up',
+                pgl.K_RETURN: 'select'},
+            constants.states.GAME_OVER: {
+                pgl.K_SPACE: 'pass'},
+            constants.states.INVENTORY: {
+                pgl.K_DOWN: 'down',
+                pgl.K_UP: 'up',
+                pgl.K_RETURN: 'select',
+                pgl.K_ESCAPE: 'quit',
+                pgl.K_e: 'show edible items',
+                pgl.K_u: 'show consumable items'},
+            constants.states.TARGETING: {
+                pgl.K_RIGHT: 'right',
+                pgl.K_LEFT: 'left',
+                pgl.K_DOWN: 'down',
+                pgl.K_UP: 'up',
+                pgl.K_RETURN: 'select'}}
 
     def compute_active_event(self):
         """compute the active event"""

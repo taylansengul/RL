@@ -4,12 +4,13 @@ from systems.message_logger import MessageLogger
 from objects.game_world import Game_World
 from systems.objects_handler import Objects_Handler
 from systems.resource_manager import Resource_Manager
+import constants
 
 
 class Main_Menu_State(object):
     def __init__(self, game):
         self.game = game
-        self.ID = 'main menu state'
+        self.ID = constants.states.MAIN_MENU
         self.screens = {'menu': None}
 
     def init(self):
@@ -67,7 +68,7 @@ class Main_Menu_State(object):
         # self.game.ai = AI(self.game)
 
         # initialize map and inventory screens
-        self.game.state_manager.initialize_screens('inventory_state')
-        self.game.state_manager.initialize_screens('map_state')
+        self.game.state_manager.initialize_screens(constants.states.INVENTORY)
+        self.game.state_manager.initialize_screens(constants.states.MAP)
 
         self.game.logger.add_message('Main_Menu_State._init_game_run() finished.')

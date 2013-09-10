@@ -4,7 +4,7 @@ from data import screens
 class Screen(object):
     def __init__(self, game, **kwargs):
         self.game = game
-        self.ID = kwargs['state'] + kwargs['name']
+        self.ID = str(kwargs['state']) + kwargs['name']
         self.name = kwargs['name']
         self.state = kwargs['state']
         self.size = self.game.data.screens.screen_size[self.state][self.name]

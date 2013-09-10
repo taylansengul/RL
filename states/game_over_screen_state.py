@@ -1,11 +1,12 @@
 from graphics.text import Text
 from data import screens
+import constants
 
 
 class Game_Over_Screen_State(object):
     def __init__(self, game):
         self.game = game
-        self.ID = 'game_over_screen_state'
+        self.ID = constants.states.GAME_OVER
         self.screens = {'main': None}
 
     def init(self):
