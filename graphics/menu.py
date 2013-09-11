@@ -3,7 +3,8 @@ import globals as g
 
 
 class Menu(list):
-    def __init__(self, screen=None, options=None, font=g.FontID.CONSOLE, empty_menu_message='Empty Menu'):
+    def __init__(self, screen=None, options=None, font=g.FontID.CONSOLE, empty_menu_message='Empty Menu',
+                 line_height=18, left_padding=12, top_padding=12):
         super(Menu, self).__init__(options)
         self.screen = screen
         self.highlighted_option_index = 0
@@ -11,6 +12,9 @@ class Menu(list):
         self.normal_option_color = 'white'
         self.font = font
         self.empty_menu_message = empty_menu_message
+        self.line_height = line_height
+        self.left_padding = 12
+        self.top_padding = 12
 
     @property
     def highlighted_option(self):
@@ -29,12 +33,11 @@ class Menu(list):
 
     def render(self):
         self.screen.clear()
-        st = 18
         if len(self) == 0:
             t = Text(
                 screen=self.screen,
                 context=self.empty_menu_message,
-                coordinates=(0, 0),
+                coordinates=(self.left_padding, self.top_padding),
                 color=self.normal_option_color,
                 font=self.font)
             t.render()
@@ -45,7 +48,7 @@ class Menu(list):
             t = Text(
                 screen=self.screen,
                 context=option,
-                coordinates=(0, j*st),
+                coordinates=(self.left_padding, j*self.line_height + self.top_padding),
                 color=color,
                 font=self.font)
             t.render()

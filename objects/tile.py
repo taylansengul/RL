@@ -1,6 +1,7 @@
 import pygame as pg
 import globals as g
 from game_object import Game_Object
+import data
 
 
 class Tile(Game_Object):
@@ -46,10 +47,10 @@ class Tile(Game_Object):
         """returns a pygame.Rect object whose coordinates are normalized w.r.t. player position in the middle"""
         x, y = self.coordinates
         x1, y1 = self.game.objects_handler.player.tile.coordinates
-        x2, y2 = self.game.data.screens.map_center_x, self.game.data.screens.map_center_y
-        c1 = self.game.data.screens.tile_length * (x - x1 + x2)  # left border coordinate
-        c2 = self.game.data.screens.tile_length * (y - y1 + y2)  # top border coordinate
-        c3 = self.game.data.screens.tile_length  # length and width
+        x2, y2 = data.screen_properties.map_center_x, data.screen_properties.map_center_y
+        c1 = data.screen_properties.tile_length * (x - x1 + x2)  # left border coordinate
+        c2 = data.screen_properties.tile_length * (y - y1 + y2)  # top border coordinate
+        c3 = data.screen_properties.tile_length  # length and width
         return pg.Rect(c1, c2, c3, c3)
 
     def draw(self, screen):

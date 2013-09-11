@@ -20,7 +20,8 @@ class Main_Menu_State(object):
             "QUIT GAME"]
         self.menu = Menu(screen=self.screens[ScreenID.MAIN_MENU],
                          options=self.options,
-                         font=FontID.MAIN_MENU
+                         font=FontID.MAIN_MENU,
+                         line_height=60
                          )
         self.updateScreen()
 

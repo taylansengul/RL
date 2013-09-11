@@ -5,6 +5,7 @@ dictionary = {
         'description': 'yummy',
         'effects': [{'effects': 'hunger', 'change': [30], 'type': 'temporary'}],
         'icon': 'F',
+        'image': 'eggplant_32.png',
         'properties': 'pickable, edible, consumable, stackable',
         'type': 'game item'},
     'small medkit': {

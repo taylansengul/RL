@@ -1,4 +1,4 @@
-import screens
+import screen_properties
 
 NPCs = [{'id': 'orc', 'number': (5, 10)}, {'id': 'rat', 'number': (10, 15)}]
 
@@ -6,8 +6,8 @@ game_items = [{'id': 'apple', 'number': (5, 8)},
               {'id': 'small medkit', 'number': (5, 8)},
               {'id': 'large medkit', 'number': (2, 3)}]
 
-dungeon_level_1 = {'dungeon width': screens.tile_no_x,
-                   'dungeon height': screens.tile_no_y,
+dungeon_level_1 = {'dungeon width': screen_properties.tile_no_x,
+                   'dungeon height': screen_properties.tile_no_y,
                    'min_room_number': 60,
                    'max_room_number': 100,
                    'min room width': 1,

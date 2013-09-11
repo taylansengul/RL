@@ -1,5 +1,6 @@
 import pygame.locals as pgl
 import globals as g
+import data
 
 
 class Io_Handler(object):
@@ -54,8 +55,9 @@ class Io_Handler(object):
         event = self.game.pygame.event.wait()
         if event.type == self.game.pygame.MOUSEBUTTONDOWN:  # mouse click coordinates
             x, y = event.pos
-            x1, y1 = self.game.data.screens.screen_size[g.ScreenID.MAIN]
-            if x < x1 and y < y1:
+            w = data.screen_properties.width
+            h = data.screen_properties.height
+            if 0 < x < w and 0 < y < h:
                 self.active_event = 'moving'
                 self.click_coordinates = (x, y)
         elif event.type == self.game.pygame.MOUSEMOTION:

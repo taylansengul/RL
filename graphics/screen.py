@@ -1,21 +1,21 @@
-from data import screens
-import globals as g
+from data import screen_properties
+from globals import *
 
 
-class Screen(object):
+class Screen(dict):
     def __init__(self, game, **kwargs):
+        super(Screen, self).__init__(**kwargs)
+        self.x = kwargs['left']
+        self.y = kwargs['top']
+        self.w = kwargs['width']
+        self.h = kwargs['height']
         self.game = game
-        self.ID = str(kwargs['state']) + str(kwargs['name'])
-        self.name = kwargs['name']
-        self.state = kwargs['state']
-        self.size = self.game.data.screens.screen_size[self.state][self.name]
-        self.coordinates = self.game.data.screens.screen_coordinates[self.state][self.name]
-        self.surface = self.game.pygame.Surface(self.size)
+        self.surface = self.game.pygame.Surface((self.w, self.h))
 
     def render(self):
-        screens.MAIN.blit(self.surface, self.coordinates)
+        screen_properties.MAIN.blit(self.surface, (self.x, self.y))
 
     def clear(self, color='black'):
         if isinstance(color, str):
-            color = g.ColorID[color]
+            color = ColorID[color]
         self.surface.fill(color)

@@ -2,6 +2,7 @@ from rechargeable import Rechargeable
 from graphics.text import Text
 import globals as g
 import os
+import data
 
 
 class Game_Object(object):
@@ -17,7 +18,7 @@ class Game_Object(object):
         if 'container' in self.properties:
             self.objects = []
             for ID in kwargs.get('objects', []):  # creating self.objects from string list
-                item_kwargs = self.game.data.game_items.dictionary[ID]
+                item_kwargs = data.game_items.dictionary[ID]
                 new_item = Game_Object(self.game, tile=self.tile, **item_kwargs)
                 self.game.objects_handler.add_game_item(new_item, self)
         if 'stackable' in self.properties:
@@ -64,7 +65,7 @@ class Game_Object(object):
             if self_item:  # if self has the item
                 self_item.quantity += 1  # increase quantity
             else:
-                new_item = Game_Object(self.game, tile=self.tile, **self.game.data.game_items.dictionary[item.ID])
+                new_item = Game_Object(self.game, tile=self.tile, **data.game_items.dictionary[item.ID])
                 self.game.objects_handler.add_game_item(new_item, self)  # create and add item
         else:  # if item is not stackable
             self.objects.append(item)
