@@ -1,35 +1,44 @@
+"""
+# main screen:
+#  divided into two columns, at x = X
+#  second column divided into 4 rows at y = Y1, Y1+Y2, Y1+Y2+Y3
+#
+#              0 ---------X1------X1+X2=W
+#               |         |          |
+#             Y1|         |----------|
+#               |         |          |
+#          Y1+Y2|         |----------|
+#               |         |          |
+#       Y1+Y2+Y3|         |----------|
+#               |         |          |
+#  H=Y1+Y2+Y3+Y4---------------------
+#
+"""
 import pygame
 import globals as g
 print __name__, dir()
-
-# screen sizes
 width = 1200
 height = 720
 tile_length = 30
-left_bar_width = 8 * width / 10
-left_bar_height = height
-tile_no_x = left_bar_width / tile_length
-tile_no_y = left_bar_height / tile_length
-right_bar_width = .2 * width
-right_bar_height = height
-main_multiplier_x = width / tile_length
-main_multiplier_y = height / tile_length
-map_multiplier_x = left_bar_width / tile_length
-map_multiplier_y = left_bar_height / tile_length
-player_height = 3 * height / 10
-game_info_height = height / 10
-messages_height = 3 * height / 10
-enemy_height = 3 * height / 10
+X1 = int(.8 * width)
+tile_no_x = X1 / tile_length
+tile_no_y = height / tile_length
+X2 = int(.2 * width)
+
+Y1 = int(.3 * height)
+Y2 = int(.1 * height)
+Y3 = int(.3 * height)
+Y4 = height - Y1 - Y2 - Y3
 map_center_x, map_center_y = tile_no_x/2, tile_no_y/2
 
 screen_size = {
-    'main': (main_multiplier_x * tile_length, main_multiplier_y * tile_length),
+    'main': (width, height),
     g.states.MAP: {
-        'map': (map_multiplier_x * tile_length, map_multiplier_y * tile_length),
-        'player': (right_bar_width, player_height),
-        'game info': (right_bar_width, game_info_height),
-        'messages': (right_bar_width, messages_height),
-        'enemy': (right_bar_width, enemy_height)},
+        'map': (X1, height),
+        'player': (X2, Y1),
+        'game info': (X2, Y2),
+        'messages': (X2, Y3),
+        'enemy': (X2, Y4)},
     g.states.MAIN_MENU: {
         'menu': (width, height)},
     g.states.INVENTORY: {
@@ -42,10 +51,10 @@ screen_coordinates = {
     'main': (0, 0),
     g.states.MAP: {
         'map': (0, 0),
-        'player': (left_bar_width, 0),
-        'game info': (left_bar_width, player_height),
-        'messages': (left_bar_width, game_info_height + player_height),
-        'enemy': (left_bar_width, messages_height + game_info_height + player_height)},
+        'player': (X1, 0),
+        'game info': (X1, Y1),
+        'messages': (X1, Y2 + Y1),
+        'enemy': (X1, Y3 + Y2 + Y1)},
     g.states.MAIN_MENU: {
         'menu': (0, 0)},
     g.states.INVENTORY: {
