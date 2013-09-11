@@ -1,4 +1,4 @@
-import globals as g
+from globals import *
 from graphics.text import Text
 
 
@@ -28,13 +28,13 @@ class MessageLogger(object):
         if not self.has_unhandled_messages():
             return
         new_line_height = 12
-        screen = self.game.state_manager.map_state.screens['messages']
-        x, y = self.game.data.screens.screen_coordinates[g.StateID.MAP]['messages']
+        screen = self.game.state_manager.map_state.screens[ScreenID.MESSAGES]
+        x, y = self.game.data.screens.screen_coordinates[StateID.MAP][ScreenID.MESSAGES]
         while self.has_unhandled_messages():
             self.handle_message()
 
         screen.clear()
         for co, message in enumerate(self.game.logger.message_archive[-4:]):
             c = self.game.pygame.Rect(0, new_line_height*co, x, y),
-            t = Text(screen=screen, font=g.FontID.CONSOLE, context=message, coordinates=c, color='white')
+            t = Text(screen=screen, font=FontID.CONSOLE, context=message, coordinates=c, color='white')
             t.render()

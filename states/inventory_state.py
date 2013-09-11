@@ -1,16 +1,16 @@
-import globals as g
+from globals import *
 from graphics.menu import Menu
 from inventory_state_screen_updater import InventoryStateScreenUpdater
 
 
 class Inventory_State(object):
     def __init__(self, game):
-        self.ID = g.StateID.INVENTORY
+        self.ID = StateID.INVENTORY
         self.game = game
         self.inventory = None  # to be initialized later
         self.selected_item = None
         self.key = ''
-        self.screens = {'menu': None, 'details': None}
+        self.screens = {ScreenID.INVENTORY_MENU: None, ScreenID.INVENTORY_DETAILS: None}
         # todo: screen_updater
         self.screen_updater = InventoryStateScreenUpdater(game, self.screens)
 
@@ -84,7 +84,7 @@ class Inventory_State(object):
         """Builds a menu object from self.inventory"""
         menu_options = [item.inventory_repr for item in self.inventory]
         self.menu = Menu(
-            screen=self.screens['menu'],
+            screen=self.screens[ScreenID.INVENTORY_MENU],
             options=menu_options,
-            font=g.FontID.INVENTORY,
+            font=FontID.INVENTORY,
             empty_menu_message='Empty Inventory')

@@ -1,5 +1,4 @@
-import os
-import globals as g
+from globals import *
 from map_state_screen_updater import MapStateScreenUpdater
 from map_state_logic_engine import MapStateLogicEngine
 
@@ -7,8 +6,13 @@ from map_state_logic_engine import MapStateLogicEngine
 class Map_State(object):
     def __init__(self, game):
         self.game = game
-        self.ID = g.StateID.MAP
-        self.screens = {'map': None, 'player': None, 'game info': None, 'messages': None, 'enemy': None}
+        self.ID = StateID.MAP
+        self.screens = {
+            ScreenID.MAP: None,
+            ScreenID.PLAYER: None,
+            ScreenID.GAME_INFO: None,
+            ScreenID.MESSAGES: None,
+            ScreenID.ENEMY: None}
         self.images = {}
         self.screen_updater = MapStateScreenUpdater(game, self.screens)
         self.logic_engine = MapStateLogicEngine(game)

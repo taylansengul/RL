@@ -1,10 +1,13 @@
+from globals import *
+
+
 class MapStateScreenUpdater():
     def __init__(self, game, screens):
         self.game = game
         self.screens = screens
 
     def _draw_dungeon(self):
-        self.game.game_world.dungeon.draw(self.screens['map'])
+        self.game.game_world.dungeon.draw(self.screens[ScreenID.MAP])
 
     def _draw_message_console(self):
         self.game.logger.display_messages()

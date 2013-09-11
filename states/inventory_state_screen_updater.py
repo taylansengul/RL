@@ -1,3 +1,5 @@
+from globals import *
+
 class InventoryStateScreenUpdater():
     def __init__(self, game, screens):
         self.game = game
@@ -23,5 +25,5 @@ class InventoryStateScreenUpdater():
     def _render_highlighted_item_description(self):
         if not self.highlighted_item:
             return
-        screen = self.screens['details']
+        screen = self.screens[ScreenID.INVENTORY_DETAILS]
         self.highlighted_item.render_description_to(screen)

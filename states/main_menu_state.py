@@ -1,4 +1,4 @@
-import globals as g
+from globals import *
 from graphics.menu import Menu
 from systems.time import Time
 from systems.message_logger import MessageLogger
@@ -10,23 +10,23 @@ from systems.resource_manager import Resource_Manager
 class Main_Menu_State(object):
     def __init__(self, game):
         self.game = game
-        self.ID = g.StateID.MAIN_MENU
-        self.screens = {'menu': None}
+        self.ID = StateID.MAIN_MENU
+        self.screens = {ScreenID.MAIN_MENU: None}
 
     def init(self):
         self.options = [
             "NEW GAME",
             "LOAD GAME",
             "QUIT GAME"]
-        self.menu = Menu(screen=self.screens['menu'],
+        self.menu = Menu(screen=self.screens[ScreenID.MAIN_MENU],
                          options=self.options,
-                         font=g.FontID.MAIN_MENU
+                         font=FontID.MAIN_MENU
                          )
         self.updateScreen()
 
     def updateScreen(self):
         self.menu.render()
-        self.screens['menu'].render()
+        self.screens[ScreenID.MAIN_MENU].render()
         self.game.pygame.display.update()
 
     def determineAction(self):
@@ -68,7 +68,7 @@ class Main_Menu_State(object):
         # self.game.ai = AI(self.game)
 
         # initialize map and inventory screens
-        self.game.state_manager.initialize_screens(g.StateID.INVENTORY)
-        self.game.state_manager.initialize_screens(g.StateID.MAP)
+        self.game.state_manager.initialize_screens(StateID.INVENTORY)
+        self.game.state_manager.initialize_screens(StateID.MAP)
 
         self.game.logger.add_message('Main_Menu_State._init_game_run() finished.')

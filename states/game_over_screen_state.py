@@ -7,7 +7,7 @@ class Game_Over_Screen_State(object):
     def __init__(self, game):
         self.game = game
         self.ID = g.StateID.GAME_OVER
-        self.screens = {'main': None}
+        self.screens = {g.ScreenID.GAME_OVER: None}
 
     def init(self):
         self.game.state_manager.initialize_screens(self.ID)
@@ -20,7 +20,7 @@ class Game_Over_Screen_State(object):
 
     def updateScreen(self):
         screens.MAIN.fill((0, 0, 0))
-        screen = self.screens['main']
+        screen = self.screens[g.ScreenID.GAME_OVER]
         screen.clear()
         self._render_game_over_messages()
         screen.render()
@@ -28,7 +28,7 @@ class Game_Over_Screen_State(object):
 
     # PRIVATE METHODS
     def _render_game_over_messages(self):
-        screen = self.screens['main']
+        screen = self.screens[g.ScreenID.GAME_OVER]
         line_height = 40
         contexts = ['Game is over.',
                     self.game.logger.game_over_message,

@@ -1,7 +1,7 @@
 from game_object import Game_Object
 from systems.utils import get_line
 from graphics.text import Text
-import globals as g
+from globals import *
 
 
 class Player(Game_Object):
@@ -77,9 +77,9 @@ class Player(Game_Object):
                     'hunger: %d/%d' % (self.hunger.current, self.hunger.capacity),
                     'money: %d' % self.money]
         l = len(contexts)
-        screens = [self.game.state_manager.map_state.screens['player']]*l
+        screens = [self.game.state_manager.map_state.screens[ScreenID.PLAYER]]*l
         coordinates = [(0, j*line_height) for j in range(l)]
         colors = ['white']*l
         for _ in zip(screens, contexts, coordinates, colors):
-            t = Text(font=g.FontID.CONSOLE, screen=_[0], context=_[1], coordinates=_[2], color=_[3])
+            t = Text(font=FontID.CONSOLE, screen=_[0], context=_[1], coordinates=_[2], color=_[3])
             t.render()

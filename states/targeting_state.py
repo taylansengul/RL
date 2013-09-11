@@ -1,9 +1,9 @@
-import globals as g
+from globals import *
 
 
 class Targeting_State(object):
     def __init__(self, game):
-        self.ID = g.StateID.TARGETING
+        self.ID = StateID.TARGETING
         self.game = game
         self.selected_tile = None
         self.highlighted_tile = None
@@ -25,7 +25,7 @@ class Targeting_State(object):
     def updateScreen(self):
         self.game.state_manager.map_state.updateScreen()
         coordinates = self.highlighted_tile.screen_position
-        screen = self.screens['map']
-        self.game.pygame.draw.rect(screen.surface, g.colorID.ColorID['yellow'], coordinates, 5)  # tile border
+        screen = self.screens[ScreenID.MAP]
+        self.game.pygame.draw.rect(screen.surface, colorID.ColorID['yellow'], coordinates, 5)  # tile border
         screen.render()
         self.game.pygame.display.flip()
