@@ -26,7 +26,6 @@ def get_line(x1, y1, x2, y2):
     deltay = abs(y2-y1)
     error = int(deltax / 2)
     y = y1
-    ystep = None
     if y1 < y2:
         ystep = 1
     else:

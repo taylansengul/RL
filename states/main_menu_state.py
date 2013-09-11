@@ -62,7 +62,7 @@ class Main_Menu_State(object):
         self.game.objects_handler.create_player()  # create player
         # self.game.objects_handler.create_player_items()  # create player items
         self.game.objects_handler.populate_game_items()  # populate game world with game items
-        self.game.objects_handler.populate_NPCs()  # populate game world with NPCS
+        self.game.objects_handler.populate_NPCs()  # populate game world with NPCs
 
         # AI: do not need AI
         # self.game.ai = AI(self.game)

@@ -16,12 +16,12 @@ class Player(Game_Object):
         self.name = 'Numan'
 
     @property
-    def coordinates_of_tiles_in_visibility_radius(self, radius=5):
+    def coordinates_of_tiles_in_visibility_radius(self):
         return self.game.game_world.dungeon.get_neighboring_coordinates(self.tile.coordinates,
-                                                                          self.visibility_radius)
+                                                                        self.visibility_radius)
 
     @property
-    def tiles_in_visibility_radius(self, radius=5):
+    def tiles_in_visibility_radius(self):
         return self.game.game_world.dungeon.get_neighboring_tiles(self.tile, self.visibility_radius)
 
     def update_vision(self):

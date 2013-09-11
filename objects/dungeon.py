@@ -165,6 +165,7 @@ class Dungeon(object):
             return self.map2D[x][y]
 
     def get_random_room_floor_tile_with_no_objects(self):
+        tile = None
         while True:
             the_random_room = choice(self.rooms)
             coordinates_of_all_tiles_in_the_random_room = the_random_room.get_all()
