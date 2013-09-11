@@ -1,4 +1,4 @@
-from states import *
+from stateID import StateID
 from colors import *
 from fonts import *
 

@@ -7,7 +7,7 @@ from map_state_logic_engine import MapStateLogicEngine
 class Map_State(object):
     def __init__(self, game):
         self.game = game
-        self.ID = g.states.MAP
+        self.ID = g.StateID.MAP
         self.screens = {'map': None, 'player': None, 'game info': None, 'messages': None, 'enemy': None}
         self.images = {}
         self.screen_updater = MapStateScreenUpdater(game, self.screens)

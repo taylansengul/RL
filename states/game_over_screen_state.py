@@ -6,7 +6,7 @@ from data import screens
 class Game_Over_Screen_State(object):
     def __init__(self, game):
         self.game = game
-        self.ID = g.states.GAME_OVER
+        self.ID = g.StateID.GAME_OVER
         self.screens = {'main': None}
 
     def init(self):

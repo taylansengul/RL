@@ -1,2 +1,2 @@
-class states:
+class StateID:
     MAIN_MENU, INVENTORY, GAME_OVER, MAP, TARGETING = range(5)

@@ -33,34 +33,34 @@ map_center_x, map_center_y = tile_no_x/2, tile_no_y/2
 
 screen_size = {
     'main': (width, height),
-    g.states.MAP: {
+    g.StateID.MAP: {
         'map': (X1, height),
         'player': (X2, Y1),
         'game info': (X2, Y2),
         'messages': (X2, Y3),
         'enemy': (X2, Y4)},
-    g.states.MAIN_MENU: {
+    g.StateID.MAIN_MENU: {
         'menu': (width, height)},
-    g.states.INVENTORY: {
+    g.StateID.INVENTORY: {
         'menu': (width*.5, height),
         'details': (width*.5, height)},
-    g.states.GAME_OVER: {
+    g.StateID.GAME_OVER: {
         'main': (width, height)}}
 
 screen_coordinates = {
     'main': (0, 0),
-    g.states.MAP: {
+    g.StateID.MAP: {
         'map': (0, 0),
         'player': (X1, 0),
         'game info': (X1, Y1),
         'messages': (X1, Y2 + Y1),
         'enemy': (X1, Y3 + Y2 + Y1)},
-    g.states.MAIN_MENU: {
+    g.StateID.MAIN_MENU: {
         'menu': (0, 0)},
-    g.states.INVENTORY: {
+    g.StateID.INVENTORY: {
         'menu': (0, 0),
         'details': (width*.5, 0)},
-    g.states.GAME_OVER: {
+    g.StateID.GAME_OVER: {
         'main': (0, 0)}}
 
 # screen names

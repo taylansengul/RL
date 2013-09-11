@@ -5,7 +5,7 @@ from inventory_state_screen_updater import InventoryStateScreenUpdater
 
 class Inventory_State(object):
     def __init__(self, game):
-        self.ID = g.states.INVENTORY
+        self.ID = g.StateID.INVENTORY
         self.game = game
         self.inventory = None  # to be initialized later
         self.selected_item = None

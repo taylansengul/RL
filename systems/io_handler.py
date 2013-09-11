@@ -10,7 +10,7 @@ class Io_Handler(object):
         self.click_coordinates = (-1, -1)
         self.hover_coordinates = (-1, -1)
         self.keyboard_commands_dictionary = {
-            g.states.MAP: {
+            g.StateID.MAP: {
                 pgl.K_i: 'inventory',
                 pgl.K_c: 'close door',
                 pgl.K_e: 'eat item',
@@ -23,20 +23,20 @@ class Io_Handler(object):
                 pgl.K_DOWN: 'down',
                 pgl.K_UP: 'up',
                 pgl.K_ESCAPE: 'quit'},
-            g.states.MAIN_MENU: {
+            g.StateID.MAIN_MENU: {
                 pgl.K_DOWN: 'down',
                 pgl.K_UP: 'up',
                 pgl.K_RETURN: 'select'},
-            g.states.GAME_OVER: {
+            g.StateID.GAME_OVER: {
                 pgl.K_SPACE: 'pass'},
-            g.states.INVENTORY: {
+            g.StateID.INVENTORY: {
                 pgl.K_DOWN: 'down',
                 pgl.K_UP: 'up',
                 pgl.K_RETURN: 'select',
                 pgl.K_ESCAPE: 'quit',
                 pgl.K_e: 'show edible items',
                 pgl.K_u: 'show consumable items'},
-            g.states.TARGETING: {
+            g.StateID.TARGETING: {
                 pgl.K_RIGHT: 'right',
                 pgl.K_LEFT: 'left',
                 pgl.K_DOWN: 'down',
