@@ -1,6 +1,7 @@
 from rechargeable import Rechargeable
 from graphics.text import Text
 import globals as g
+import os
 
 
 class Game_Object(object):
@@ -33,6 +34,14 @@ class Game_Object(object):
                 getattr(self, condition['effects']).add_condition(condition)
             self.money = 1000
             self.visibility_radius = kwargs['visibility radius']
+
+        #todo: images
+        if kwargs.get('image', None):
+            print kwargs.get('image', None)
+            image_location = os.path.join('images', kwargs['image'])
+            self.image = self.game.pygame.image.load(image_location).convert_alpha()
+        else:
+            self.image = None
 
         # add self to game objects
         self.game.objects_handler.all_objects.append(self)
@@ -171,14 +180,17 @@ class Game_Object(object):
                 self.game.objects_handler.remove_NPC(self, self.tile)
 
     def render_icon_to(self, screen):
-        t = Text(screen=screen,
-                 font='map object',
-                 context=self.icon,
-                 coordinates=self.tile.screen_position,
-                 color=self.color,
-                 horizontal_align='center',
-                 vertical_align='center')
-        t.render()
+        if self.image:
+            screen.surface.blit(self.image, self.tile.screen_position)
+        else:
+            t = Text(screen=screen,
+                     font='map object',
+                     context=self.icon,
+                     coordinates=self.tile.screen_position,
+                     color=self.color,
+                     horizontal_align='center',
+                     vertical_align='center')
+            t.render()
 
     def render_description_to(self, screen):
         screen.clear()

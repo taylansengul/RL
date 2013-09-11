@@ -19,7 +19,7 @@ import globals as g
 print __name__, dir()
 width = 1200
 height = 720
-tile_length = 30
+tile_length = 32
 X1 = int(.8 * width)
 tile_no_x = X1 / tile_length
 tile_no_y = height / tile_length

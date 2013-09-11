@@ -14,8 +14,6 @@ class Map_State(object):
         self.logic_engine = MapStateLogicEngine(game)
 
     def init(self):
-        image_location = os.path.join('images', "floor_tile.png")
-        self.images['floor'] = self.game.pygame.image.load(image_location).convert_alpha()
         self.updateScreen()
 
     def determineAction(self):

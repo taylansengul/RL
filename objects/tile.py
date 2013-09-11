@@ -11,7 +11,7 @@ class Tile(Game_Object):
              'wall': {'icon': '#', 'color': 'red', 'properties': wall_properties},
              'entrance': {'icon': '>', 'color': 'yellow', 'properties': floor_properties},
              'exit': {'icon': '<', 'color': 'yellow', 'properties': floor_properties},
-             'floor': {'icon': ' ', 'color': 'blue', 'properties': 'container'},
+             'floor': {'icon': ' ', 'color': 'blue', 'properties': 'container', 'image': "floor_tile.png"},
              'open door': {'icon': '-', 'color': 'red'},
              'closed door': {'icon': '+', 'color': 'red'},
              'dirt': {'icon': ' ', 'color': 'black', 'properties': wall_properties}}
@@ -20,7 +20,8 @@ class Tile(Game_Object):
         kwargs = {'coordinates': coordinates,
                   'icon': Tile.tiles[tip]['icon'],
                   'color': Tile.tiles[tip]['color'],
-                  'properties': Tile.tiles[tip].get('properties', ''),
+                  'properties': Tile.tiles[tip].get('properties', None),
+                  'image': Tile.tiles[tip].get('image', None),
                   'ID': tip}
         super(Tile, self).__init__(game, **kwargs)
         self.coordinates = coordinates
@@ -52,8 +53,8 @@ class Tile(Game_Object):
         return pg.Rect(c1, c2, c3, c3)
 
     def draw(self, screen):
-        if self.tip == 'floor':
-            screen.surface.blit(self.game.state_manager.map_state.images['floor'], self.screen_position)
+        if self.image:
+            screen.surface.blit(self.image, self.screen_position)
         else:
             self.game.pygame.draw.rect(screen.surface, self.color, self.screen_position)  # tile background
         # self.draw_tile_border(screen)  # uncomment to draw tile border
