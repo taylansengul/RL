@@ -1,4 +1,5 @@
 from graphics.text import Text
+import globals as g
 
 
 class Time(object):
@@ -19,5 +20,5 @@ class Time(object):
 
     def render_turn(self):
         t = Text(screen=self.game.state_manager.map_state.screens['game info'],
-                 context='turn: %d' % self.turn, font='console', coordinates=(0, 0), color='white')
+                 context='turn: %d' % self.turn, font=g.FontID.CONSOLE, coordinates=(0, 0), color='white')
         t.render()

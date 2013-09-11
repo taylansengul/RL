@@ -1,11 +1,12 @@
 import pygame
 import globals as g
+import graphics
 
 
 class Text(object):
     """ A text surface
     """
-    def __init__(self, screen=None, context=None, coordinates=None, color=None, font='console',
+    def __init__(self, screen=None, context=None, coordinates=None, color=None, font=g.FontID.CONSOLE,
                  horizontal_align='left', vertical_align='top', anti_alias=False):
         """color can be a string or RGB-tuple"""
         self.screen = screen
@@ -20,16 +21,16 @@ class Text(object):
 
     @staticmethod
     def get_font(font_name):
-        fonts_dictionary = {'map object': g.fonts.MAP_OBJECT,
-                            'console': g.fonts.CONSOLE,
-                            'inventory': g.fonts.INVENTORY,
-                            'main menu': g.fonts.MAIN_MENU}
+        fonts_dictionary = {'map object': graphics.fonts.MAP_OBJECT,
+                            g.FontID.CONSOLE: graphics.fonts.CONSOLE,
+                            g.FontID.INVENTORY: graphics.fonts.INVENTORY,
+                            g.FontID.MAIN_MENU: graphics.fonts.MAIN_MENU}
         return fonts_dictionary[font_name]
 
     @staticmethod
     def get_color(color):
         if isinstance(color, str):
-            return g.colors.palette[color]
+            return g.colorID.ColorID[color]
         else:
             return color
 

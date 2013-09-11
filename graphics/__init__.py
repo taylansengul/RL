@@ -1,3 +1,4 @@
-from graphics.screen import Screen
-from graphics.menu import Menu
-from graphics.text import Text
+from screen import Screen
+from menu import Menu
+from text import Text
+import fonts

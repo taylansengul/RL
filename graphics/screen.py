@@ -17,5 +17,5 @@ class Screen(object):
 
     def clear(self, color='black'):
         if isinstance(color, str):
-            color = g.colors.palette[color]
+            color = g.ColorID[color]
         self.surface.fill(color)

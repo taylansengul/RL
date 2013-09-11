@@ -24,8 +24,8 @@ class Targeting_State(object):
 
     def updateScreen(self):
         self.game.state_manager.map_state.updateScreen()
-        coordinates = self.highlighted_tile.get_screen_position()
+        coordinates = self.highlighted_tile.screen_position
         screen = self.screens['map']
-        self.game.pygame.draw.rect(screen.surface, self.game.data.colors.palette['yellow'], coordinates, 5)  # tile border
+        self.game.pygame.draw.rect(screen.surface, g.colorID.ColorID['yellow'], coordinates, 5)  # tile border
         screen.render()
         self.game.pygame.display.flip()

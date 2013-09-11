@@ -39,5 +39,5 @@ class Game_Over_Screen_State(object):
         coordinates = [(0, j*line_height) for j in range(l)]
         colors = ['white']*l
         for _ in zip(screens, contexts, coordinates, colors):
-            t = Text(font='console', screen=_[0], context=_[1], coordinates=_[2], color=_[3])
+            t = Text(font=g.FontID.CONSOLE, screen=_[0], context=_[1], coordinates=_[2], color=_[3])
             t.render()

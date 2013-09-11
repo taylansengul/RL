@@ -1,4 +1,4 @@
-palette = {
+ColorID = {
     'black': (0, 0, 0),
     'yellow': (255, 174, 0),
     'green': (96, 162, 110),

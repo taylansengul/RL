@@ -9,7 +9,7 @@ class Game_Object(object):
         self.ID = kwargs['ID']
         self.tile = kwargs.get('tile', self)  # if no tile it must be a tile and hence it points to itself
         self.icon = kwargs['icon']
-        self.color = g.colors.palette[kwargs['color']]
+        self.color = g.colorID.ColorID[kwargs['color']]
         self.properties = kwargs.get('properties', '')
         self.effects = kwargs.get('effects', {})
         self.description = kwargs.get('description', '')
@@ -183,7 +183,7 @@ class Game_Object(object):
     def render_description_to(self, screen):
         screen.clear()
         context = self.description
-        t = Text(font='inventory', screen=screen, context=context, coordinates=(0, 0), color='white')
+        t = Text(font=g.FontID.INVENTORY, screen=screen, context=context, coordinates=(0, 0), color='white')
         t.render()
         screen.render()
 

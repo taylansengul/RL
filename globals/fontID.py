@@ -1,0 +1,2 @@
+class FontID:
+    CONSOLE, INVENTORY, MAIN_MENU, MAP_OBJECT = range(4)

@@ -1,6 +1,7 @@
 from game_object import Game_Object
 from systems.utils import get_line
 from graphics.text import Text
+import globals as g
 
 
 class Player(Game_Object):
@@ -80,5 +81,5 @@ class Player(Game_Object):
         coordinates = [(0, j*line_height) for j in range(l)]
         colors = ['white']*l
         for _ in zip(screens, contexts, coordinates, colors):
-            t = Text(font='console', screen=_[0], context=_[1], coordinates=_[2], color=_[3])
+            t = Text(font=g.FontID.CONSOLE, screen=_[0], context=_[1], coordinates=_[2], color=_[3])
             t.render()

@@ -60,10 +60,3 @@ class Objects_Handler():
         self.game_items.remove(item)
         self.all_objects.remove(item)
         game_object.objects.remove(item)
-
-
-def main():
-    o = Objects_Handler()
-
-if __name__ == '__main__':
-    main()

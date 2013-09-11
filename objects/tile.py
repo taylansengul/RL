@@ -1,5 +1,5 @@
 import pygame as pg
-
+import globals as g
 from game_object import Game_Object
 
 
@@ -65,4 +65,4 @@ class Tile(Game_Object):
             each.render_icon_to(screen)
 
     def draw_tile_border(self, screen):
-        self.game.pygame.draw.rect(screen, self.game.data.colors.palette['white'], self.screen_position, 1)
+        self.game.pygame.draw.rect(screen, g.colorID.ColorID['white'], self.screen_position, 1)

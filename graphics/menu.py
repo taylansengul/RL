@@ -1,8 +1,9 @@
 from graphics.text import Text
+import globals as g
 
 
 class Menu(list):
-    def __init__(self, screen=None, options=None, font='console', empty_menu_message='Empty Menu'):
+    def __init__(self, screen=None, options=None, font=g.FontID.CONSOLE, empty_menu_message='Empty Menu'):
         super(Menu, self).__init__(options)
         self.screen = screen
         self.highlighted_option_index = 0

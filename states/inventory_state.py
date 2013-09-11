@@ -86,5 +86,5 @@ class Inventory_State(object):
         self.menu = Menu(
             screen=self.screens['menu'],
             options=menu_options,
-            font='inventory',
+            font=g.FontID.INVENTORY,
             empty_menu_message='Empty Inventory')
