@@ -14,13 +14,13 @@ class Main_Menu_State(object):
         self.screens = {'menu': None}
 
     def init(self):
-        font = self.game.data.fonts.MAIN_MENU
         self.options = [
             "NEW GAME",
             "LOAD GAME",
             "QUIT GAME"]
         self.menu = Menu(screen=self.screens['menu'],
-                         options=self.options
+                         options=self.options,
+                         font='main menu'
                          )
         self.updateScreen()
 

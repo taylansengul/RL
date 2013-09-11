@@ -19,7 +19,7 @@ class Game(object):
         # Load data
         self.data = data
         # Setup fonts
-        # done in data.fonts
+        # done in globals.fonts
         print 'done.'
         print 'initializing random seed'
         seed_value = 0  # make this None to use the system time as a seed_value

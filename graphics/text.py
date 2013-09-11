@@ -1,6 +1,5 @@
 import pygame
-from data import fonts
-from globals import colors
+import globals as g
 
 
 class Text(object):
@@ -21,15 +20,16 @@ class Text(object):
 
     @staticmethod
     def get_font(font_name):
-        fonts_dictionary = {'map object': fonts.MAP_OBJECT,
-                            'console': fonts.CONSOLE,
-                            'inventory': fonts.INVENTORY}
+        fonts_dictionary = {'map object': g.fonts.MAP_OBJECT,
+                            'console': g.fonts.CONSOLE,
+                            'inventory': g.fonts.INVENTORY,
+                            'main menu': g.fonts.MAIN_MENU}
         return fonts_dictionary[font_name]
 
     @staticmethod
     def get_color(color):
         if isinstance(color, str):
-            return colors.palette[color]
+            return g.colors.palette[color]
         else:
             return color
 
