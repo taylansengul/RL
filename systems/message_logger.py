@@ -1,5 +1,5 @@
+import globals as g
 from graphics.text import Text
-import constants
 
 
 class MessageLogger(object):
@@ -29,7 +29,7 @@ class MessageLogger(object):
             return
         new_line_height = 12
         screen = self.game.state_manager.map_state.screens['messages']
-        x, y = self.game.data.screens.screen_coordinates[constants.states.MAP]['messages']
+        x, y = self.game.data.screens.screen_coordinates[g.states.MAP]['messages']
         while self.has_unhandled_messages():
             self.handle_message()
 

@@ -1,9 +1,9 @@
 import random
 import pygame
+import globals as g
 from systems.state_manager import State_Manager
 import data
 from systems.io_handler import Io_Handler
-import constants
 
 
 class Game(object):
@@ -25,7 +25,7 @@ class Game(object):
         seed_value = 0  # make this None to use the system time as a seed_value
         random.seed(seed_value)
         # initialize main menu screen
-        self.state_manager.initialize_screens(constants.states.MAIN_MENU)
+        self.state_manager.initialize_screens(g.states.MAIN_MENU)
 
         # initialized at main menu state:
         self.event_log = [None]

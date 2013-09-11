@@ -1,9 +1,9 @@
-import constants
+import globals as g
 
 
 class Targeting_State(object):
     def __init__(self, game):
-        self.ID = constants.states.TARGETING
+        self.ID = g.states.TARGETING
         self.game = game
         self.selected_tile = None
         self.highlighted_tile = None

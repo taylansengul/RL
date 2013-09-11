@@ -1,5 +1,6 @@
 from rechargeable import Rechargeable
 from graphics.text import Text
+import globals as g
 
 
 class Game_Object(object):
@@ -8,7 +9,7 @@ class Game_Object(object):
         self.ID = kwargs['ID']
         self.tile = kwargs.get('tile', self)  # if no tile it must be a tile and hence it points to itself
         self.icon = kwargs['icon']
-        self.color = self.game.data.colors.palette[kwargs['color']]
+        self.color = g.colors.palette[kwargs['color']]
         self.properties = kwargs.get('properties', '')
         self.effects = kwargs.get('effects', {})
         self.description = kwargs.get('description', '')

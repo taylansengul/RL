@@ -1,10 +1,11 @@
 from data import screens
+import globals as g
 
 
 class Screen(object):
     def __init__(self, game, **kwargs):
         self.game = game
-        self.ID = str(kwargs['state']) + kwargs['name']
+        self.ID = str(kwargs['state']) + str(kwargs['name'])
         self.name = kwargs['name']
         self.state = kwargs['state']
         self.size = self.game.data.screens.screen_size[self.state][self.name]
@@ -16,5 +17,5 @@ class Screen(object):
 
     def clear(self, color='black'):
         if isinstance(color, str):
-            color = self.game.data.colors.palette[color]
+            color = g.colors.palette[color]
         self.surface.fill(color)

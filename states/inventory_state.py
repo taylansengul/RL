@@ -1,12 +1,11 @@
+import globals as g
 from graphics.menu import Menu
-from graphics.text import Text
 from inventory_state_screen_updater import InventoryStateScreenUpdater
-import constants
 
 
 class Inventory_State(object):
     def __init__(self, game):
-        self.ID = constants.states.INVENTORY
+        self.ID = g.states.INVENTORY
         self.game = game
         self.inventory = None  # to be initialized later
         self.selected_item = None

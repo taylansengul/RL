@@ -1,5 +1,6 @@
 import pygame
-from data import fonts, colors
+from data import fonts
+from globals import colors
 
 
 class Text(object):
