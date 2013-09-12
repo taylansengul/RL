@@ -16,8 +16,6 @@ class Game(object):
         self.pygame = pygame
         self.pygame.init()
         self.io_handler = Io_Handler(self)
-        # Load data
-        self.data = data
         # Setup fonts
         # done in globals.fonts
         print 'done.'

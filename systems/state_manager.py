@@ -1,6 +1,6 @@
 from graphics import screen
 import states
-import data
+from settings import screen_settings
 
 
 class State_Manager(object):
@@ -13,18 +13,19 @@ class State_Manager(object):
         self.targeting_state = states.Targeting_State(game)
         self.current_state = None
         self._states = [self.main_menu_state, self.map_state, self.inventory_state, self.game_over_screen_state,
-                       self.targeting_state]
+                        self.targeting_state]
 
     def change_state(self, new_state):
         self.current_state = new_state
         self.current_state.init()
 
-    def initialize_screens(self, ID):
-        D = data.screen_properties.screens
-        state = self._get_state_by_ID(ID)
+    def initialize_screens(self, a_state_ID):
+        D = screen_settings.screens
+        state = self._get_state_by_ID(a_state_ID)
         for screen_ID in D:
-            if D[screen_ID]['state'] == ID:
-                state.screens[screen_ID] = screen.Screen(self.game, **D[screen_ID])
+            if D[screen_ID]['state'] == a_state_ID:
+                state.screens[screen_ID] = screen.Screen(**D[screen_ID])
+
 
     def _get_state_by_ID(self, ID):
         for state in self._states:

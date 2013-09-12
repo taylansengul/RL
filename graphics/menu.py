@@ -41,7 +41,6 @@ class Menu(list):
                 color=self.normal_option_color,
                 font=self.font)
             t.render()
-            return
 
         for j, option in enumerate(self):
             color = [self.normal_option_color, self.highlighted_option_color][j == self.highlighted_option_index]
@@ -52,7 +51,7 @@ class Menu(list):
                 color=color,
                 font=self.font)
             t.render()
-        self.screen.render()
+        self.screen.render_to_main()
 
     def next(self):
         self.set_highlighted_option_index(self.highlighted_option_index+1)

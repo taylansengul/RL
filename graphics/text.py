@@ -74,4 +74,4 @@ class Text(object):
                 fontRect.y = self.coordinates.y  # top
 
             self.screen.surface.blit(fontSurface, fontRect)
-        self.screen.render()
+        self.screen.render_to_main()

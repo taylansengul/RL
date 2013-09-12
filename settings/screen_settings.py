@@ -97,7 +97,14 @@ screens = {
                                      left=W/2,
                                      width=W/2,
                                      height=H,
-                                     border=1)}
+                                     border=1),
+    ScreenID.GAME_OVER: dict(state=StateID.GAME_OVER,
+                             screen=ScreenID.GAME_OVER,
+                             top=0,
+                             left=0,
+                             width=W,
+                             height=H,
+                             border=0)}
 # screen names
 # Main Screen
 MAIN = pygame.display.set_mode((W, H), 0, 32)

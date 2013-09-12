@@ -1,19 +1,20 @@
 from game_object import Game_Object
 from systems.utils import get_line
 from graphics.text import Text
-from globals import *
+import globals as g
+import data
 
 
 class Player(Game_Object):
     def __init__(self, game, key='Fighter', tile=None):
-        kwargs = dict(game.data.classes.dictionary[key].items())
+        kwargs = dict(data.classes.dictionary[key].items())
         kwargs['icon'] = '@'
         kwargs['tile'] = tile
         kwargs['color'] = 'red'
         kwargs['ID'] = 'player'
         super(Player, self).__init__(game, **kwargs)
         self.player_class = key
-        self.name = 'Numan'
+        self.name = 'George'
 
     @property
     def coordinates_of_tiles_in_visibility_radius(self):
@@ -77,9 +78,9 @@ class Player(Game_Object):
                     'hunger: %d/%d' % (self.hunger.current, self.hunger.capacity),
                     'money: %d' % self.money]
         l = len(contexts)
-        screens = [self.game.state_manager.map_state.screens[ScreenID.PLAYER]]*l
+        screens = [self.game.state_manager.map_state.screens[g.ScreenID.PLAYER]]*l
         coordinates = [(0, j*line_height) for j in range(l)]
         colors = ['white']*l
         for _ in zip(screens, contexts, coordinates, colors):
-            t = Text(font=FontID.CONSOLE, screen=_[0], context=_[1], coordinates=_[2], color=_[3])
+            t = Text(font=g.FontID.CONSOLE, screen=_[0], context=_[1], coordinates=_[2], color=_[3])
             t.render()

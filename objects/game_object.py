@@ -3,6 +3,7 @@ from graphics.text import Text
 import globals as g
 import os
 import data
+import pygame
 
 
 class Game_Object(object):
@@ -40,7 +41,7 @@ class Game_Object(object):
         if kwargs.get('image', None):
             print kwargs.get('image', None)
             image_location = os.path.join('images', kwargs['image'])
-            self.image = self.game.pygame.image.load(image_location).convert_alpha()
+            self.image = pygame.image.load(image_location).convert_alpha()
         else:
             self.image = None
 
@@ -198,7 +199,7 @@ class Game_Object(object):
         context = self.description
         t = Text(font=g.FontID.INVENTORY, screen=screen, context=context, coordinates=(0, 0), color='white')
         t.render()
-        screen.render()
+        screen.render_to_main()
 
     @property
     def inventory_repr(self):

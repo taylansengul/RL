@@ -1,7 +1,7 @@
-import pygame as pg
+import pygame
 import globals as g
 from game_object import Game_Object
-import data
+import settings
 
 
 class Tile(Game_Object):
@@ -47,17 +47,17 @@ class Tile(Game_Object):
         """returns a pygame.Rect object whose coordinates are normalized w.r.t. player position in the middle"""
         x, y = self.coordinates
         x1, y1 = self.game.objects_handler.player.tile.coordinates
-        x2, y2 = data.screen_properties.map_center_x, data.screen_properties.map_center_y
-        c1 = data.screen_properties.tile_length * (x - x1 + x2)  # left border coordinate
-        c2 = data.screen_properties.tile_length * (y - y1 + y2)  # top border coordinate
-        c3 = data.screen_properties.tile_length  # length and width
-        return pg.Rect(c1, c2, c3, c3)
+        x2, y2 = settings.screen_settings.map_center_x, settings.screen_settings.map_center_y
+        c1 = settings.screen_settings.tile_length * (x - x1 + x2)  # left border coordinate
+        c2 = settings.screen_settings.tile_length * (y - y1 + y2)  # top border coordinate
+        c3 = settings.screen_settings.tile_length  # length and width
+        return pygame.Rect(c1, c2, c3, c3)
 
     def draw(self, screen):
         if self.image:
             screen.surface.blit(self.image, self.screen_position)
         else:
-            self.game.pygame.draw.rect(screen.surface, self.color, self.screen_position)  # tile background
+            pygame.draw.rect(screen.surface, self.color, self.screen_position)  # tile background
         # self.draw_tile_border(screen)  # uncomment to draw tile border
 
     def draw_tile_objects(self, screen):
@@ -67,4 +67,4 @@ class Tile(Game_Object):
             each.render_icon_to(screen)
 
     def draw_tile_border(self, screen):
-        self.game.pygame.draw.rect(screen, g.colorID.ColorID['white'], self.screen_position, 1)
+        pygame.draw.rect(screen, g.colorID.ColorID['white'], self.screen_position, 1)

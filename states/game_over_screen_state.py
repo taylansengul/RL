@@ -1,6 +1,5 @@
 import globals as g
 from graphics.text import Text
-from data import screen_properties
 
 
 class Game_Over_Screen_State(object):
@@ -19,12 +18,11 @@ class Game_Over_Screen_State(object):
             self.game.state_manager.change_state(self.game.state_manager.main_menu_state)
 
     def updateScreen(self):
-        screen_properties.MAIN.fill((0, 0, 0))
         screen = self.screens[g.ScreenID.GAME_OVER]
         screen.clear()
         self._render_game_over_messages()
-        screen.render()
-        self.game.pygame.display.update()
+        # todo: get rid of below line
+        screen.force_screen_update()
 
     # PRIVATE METHODS
     def _render_game_over_messages(self):

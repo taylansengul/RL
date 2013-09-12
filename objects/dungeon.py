@@ -234,4 +234,4 @@ class Dungeon(object):
             if tile.is_explored:
                 tile.draw(screen)
                 tile.draw_tile_objects(screen)
-        screen.render()
+        screen.render_to_main()

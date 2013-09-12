@@ -1,4 +1,5 @@
-from globals import *
+import globals as g
+
 
 class InventoryStateScreenUpdater():
     def __init__(self, game, screens):
@@ -16,7 +17,9 @@ class InventoryStateScreenUpdater():
     def run(self):
         self._render_inventory_menu()
         self._render_highlighted_item_description()
-        self.game.pygame.display.flip()
+        # todo: get rid of below two lines
+        screen = self.screens[g.ScreenID.INVENTORY_MENU]
+        screen.force_screen_update()
 
     def _render_inventory_menu(self):
         """render inventory menu to """
@@ -25,5 +28,5 @@ class InventoryStateScreenUpdater():
     def _render_highlighted_item_description(self):
         if not self.highlighted_item:
             return
-        screen = self.screens[ScreenID.INVENTORY_DETAILS]
+        screen = self.screens[g.ScreenID.INVENTORY_DETAILS]
         self.highlighted_item.render_description_to(screen)
