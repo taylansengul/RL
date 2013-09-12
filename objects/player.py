@@ -38,6 +38,9 @@ class Player(Game_Object):
         for X in self.coordinates_of_tiles_in_visibility_radius:
             x1, y1 = X
             vision_ray_coordinates = get_line(x, y, x1, y1)
+            # todo: bug
+            # vision_ray_tiles = [game_world.dungeon.map2D[c[0]][c[1]] for c in vision_ray_coordinates]
+            # IndexError: list index out of range
             vision_ray_tiles = [game_world.dungeon.map2D[c[0]][c[1]] for c in vision_ray_coordinates]
             line_blocking_status = ['light blocking' in _.properties for _ in vision_ray_tiles]
             for j, b in enumerate(line_blocking_status):
@@ -68,8 +71,7 @@ class Player(Game_Object):
         self.game.objects_handler.player.update_vision()
 
         if not self.is_alive:  # player dead
-            sM = self.game.state_manager
-            sM.change_state(sM.game_over_screen_state)
+            self.game.change_state(self.game.game_over_screen_state)
 
     def render_stats(self):
         line_height = 16
@@ -78,7 +80,7 @@ class Player(Game_Object):
                     'hunger: %d/%d' % (self.hunger.current, self.hunger.capacity),
                     'money: %d' % self.money]
         l = len(contexts)
-        screens = [self.game.state_manager.map_state.screens[g.ScreenID.PLAYER]]*l
+        screens = [self.game.map_state.screens[g.ScreenID.PLAYER]]*l
         coordinates = [(0, j*line_height) for j in range(l)]
         colors = ['white']*l
         for _ in zip(screens, contexts, coordinates, colors):

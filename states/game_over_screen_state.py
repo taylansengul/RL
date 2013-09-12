@@ -9,13 +9,12 @@ class Game_Over_Screen_State(object):
         self.screens = {g.ScreenID.GAME_OVER: None}
 
     def init(self):
-        self.game.state_manager.initialize_screens(self.ID)
         self.updateScreen()
 
     def determineAction(self):
         event = self.game.io_handler.get_active_event()
         if event == 'pass':
-            self.game.state_manager.change_state(self.game.state_manager.main_menu_state)
+            self.game.change_state(self.game.main_menu_state)
 
     def updateScreen(self):
         screen = self.screens[g.ScreenID.GAME_OVER]

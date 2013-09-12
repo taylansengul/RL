@@ -57,16 +57,16 @@ class MapStateLogicEngine(object):
     def _descend(self):
         if self.tile.tip == 'exit':
             self.game.logger.game_over_message = 'Congratulations. You found the way out.'
-            self.game.state_manager.change_state(self.game.state_manager.game_over_screen_state)
+            self.game.change_state(self.game.game_over_screen_state)
 
     def _show_inventory(self):
-        self.game.state_manager.inventory_state.key = ''
-        self.game.state_manager.change_state(self.game.state_manager.inventory_state)
+        self.game.inventory_state.key = ''
+        self.game.change_state(self.game.inventory_state)
 
     def _eat_item(self):
-        self.game.state_manager.inventory_state.key = 'edible'
-        self.game.state_manager.change_state(self.game.state_manager.inventory_state)
-        item = self.game.state_manager.inventory_state.selected_item
+        self.game.inventory_state.key = 'edible'
+        self.game.change_state(self.game.inventory_state)
+        item = self.game.inventory_state.selected_item
         if item:
             self.player.consume(item)
 
@@ -83,10 +83,10 @@ class MapStateLogicEngine(object):
             self.player.transfer_to(self.tile, item)
 
     def _target(self):
-        self.game.state_manager.change_state(self.game.state_manager.targeting_state)
+        self.game.change_state(self.game.targeting_state)
 
     def _quit(self):
-        self.game.state_manager.change_state(self.game.state_manager.main_menu_state)
+        self.game.change_state(self.game.main_menu_state)
 
     def _invalid_action(self):
         self.game.io_handler.set_active_event(None)

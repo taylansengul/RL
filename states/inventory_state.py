@@ -64,7 +64,7 @@ class Inventory_State(object):
     # PRIVATE METHODS
     # ---- ACTIONS ----
     def _go_to_map_state(self):
-        self.game.state_manager.change_state(self.game.state_manager.map_state)
+        self.game.change_state(self.game.map_state)
 
     def _next(self):
         self.menu.next()

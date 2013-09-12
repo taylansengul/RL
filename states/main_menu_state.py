@@ -40,7 +40,7 @@ class Main_Menu_State(object):
             option = self.menu.highlighted_option
             if option == "NEW GAME":
                 self._init_game_run()
-                self.game.state_manager.change_state(self.game.state_manager.map_state)
+                self.game.change_state(self.game.map_state)
             elif option == "LOAD GAME":
                 pass
             elif option == "QUIT GAME":
@@ -67,9 +67,5 @@ class Main_Menu_State(object):
 
         # AI: do not need AI
         # self.game.ai = AI(self.game)
-
-        # initialize map and inventory_objects_list screens
-        self.game.state_manager.initialize_screens(StateID.INVENTORY)
-        self.game.state_manager.initialize_screens(StateID.MAP)
 
         self.game.logger.add_message('Main_Menu_State._init_game_run() finished.')

@@ -1,8 +1,10 @@
 import random
 import pygame
 import globals as g
-from systems.state_manager import State_Manager
 from systems.io_handler import Io_Handler
+import settings
+import states
+import graphics
 
 
 class Game(object):
@@ -10,7 +12,6 @@ class Game(object):
         self.is_in_loop = True
         # initializing systems
         print 'Initializing Systems...',
-        self.state_manager = State_Manager(self)
         pygame.init()
         self.io_handler = Io_Handler(self)
         # Setup fonts
@@ -19,9 +20,18 @@ class Game(object):
         print 'initializing random seed'
         seed_value = 0  # make this None to use the system time as a seed_value
         random.seed(seed_value)
-        # initialize main menu screen
-        self.state_manager.initialize_screens(g.StateID.MAIN_MENU)
+        # initialize states
+        self.main_menu_state = states.Main_Menu_State(self)
+        self.map_state = states.Map_State(self)
+        self.inventory_state = states.Inventory_State(self)
+        self.game_over_screen_state = states.Game_Over_Screen_State(self)
+        self.targeting_state = states.Targeting_State(self)
+        self.current_state = None
+        self._states = [self.main_menu_state, self.map_state, self.inventory_state, self.game_over_screen_state,
+                        self.targeting_state]
 
+        # initialize screens
+        self._initialize_screens()
         # initialized at main menu state:
         self.event_log = [None]
         self.time = None
@@ -33,18 +43,36 @@ class Game(object):
         # also player is created
 
     def loop(self):
-        SM = self.state_manager
         while self.is_in_loop:
             # get input
             self.io_handler.compute_active_event()
             # if there is input
             if self.io_handler.active_event:
                 # determine action
-                SM.current_state.determineAction()
+                self.current_state.determineAction()
                 # update graphics
-                SM.current_state.updateScreen()
+                self.current_state.updateScreen()
                 # refresh
                 self.refresh_main_screen()
+
+    def change_state(self, new_state):
+        self.current_state = new_state
+        self.current_state.init()
+
+    def _initialize_screens(self):
+        D = settings.screen_settings.screens
+        for screen_ID in D:
+            if screen_ID.name == 'MAIN':
+                continue
+            state_ID = D[screen_ID]['state']
+            state = self._get_state_by_ID(state_ID)
+            print state, state_ID, screen_ID.name
+            state.screens[screen_ID] = graphics.screen.Screen(**D[screen_ID])
+
+    def _get_state_by_ID(self, ID):
+        for state in self._states:
+            if state.ID == ID:
+                return state
 
     def refresh_main_screen(self):
         pygame.display.flip()

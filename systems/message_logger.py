@@ -29,7 +29,7 @@ class MessageLogger(object):
         if not self.has_unhandled_messages():
             return
         new_line_height = 12
-        screen = self.game.state_manager.map_state.screens[g.ScreenID.MESSAGES]
+        screen = self.game.map_state.screens[g.ScreenID.MESSAGES]
         x, y = screen.width, screen.height
         while self.has_unhandled_messages():
             self.handle_message()
