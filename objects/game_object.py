@@ -84,7 +84,7 @@ class Game_Object(object):
             self.objects.remove(item)
 
     def transfer_to(self, other, item):
-        self.remove_object(item)  # remove item from inventory
+        self.remove_object(item)  # remove item from inventory_objects_list
         other.add_object(item)
 
     def consume(self, item):

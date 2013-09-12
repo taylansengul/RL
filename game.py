@@ -1,8 +1,7 @@
 import random
 import pygame
-from globals import *
+import globals as g
 from systems.state_manager import State_Manager
-import data
 from systems.io_handler import Io_Handler
 
 
@@ -12,18 +11,16 @@ class Game(object):
         # initializing systems
         print 'Initializing Systems...',
         self.state_manager = State_Manager(self)
-        # setup pygame
-        self.pygame = pygame
-        self.pygame.init()
+        pygame.init()
         self.io_handler = Io_Handler(self)
         # Setup fonts
-        # done in globals.fonts
+        # done in graphics.fonts
         print 'done.'
         print 'initializing random seed'
         seed_value = 0  # make this None to use the system time as a seed_value
         random.seed(seed_value)
         # initialize main menu screen
-        self.state_manager.initialize_screens(StateID.MAIN_MENU)
+        self.state_manager.initialize_screens(g.StateID.MAIN_MENU)
 
         # initialized at main menu state:
         self.event_log = [None]
@@ -46,6 +43,11 @@ class Game(object):
                 SM.current_state.determineAction()
                 # update graphics
                 SM.current_state.updateScreen()
+                # refresh
+                self.refresh_main_screen()
+
+    def refresh_main_screen(self):
+        pygame.display.flip()
 
     def exit(self):
         # delete game engines

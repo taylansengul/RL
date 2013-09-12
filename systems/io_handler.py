@@ -1,5 +1,7 @@
 import pygame.locals as pgl
 import globals as g
+import settings
+import pygame
 
 
 class Io_Handler(object):
@@ -11,7 +13,7 @@ class Io_Handler(object):
         self.hover_coordinates = (-1, -1)
         self.keyboard_commands_dictionary = {
             g.StateID.MAP: {
-                pgl.K_i: 'inventory',
+                pgl.K_i: 'inventory_objects_list',
                 pgl.K_c: 'close door',
                 pgl.K_e: 'eat item',
                 pgl.K_g: 'pick up item',
@@ -51,15 +53,15 @@ class Io_Handler(object):
         self.click_coordinates = (-1, -1)
         self.hover_coordinates = (-1, -1)
         # wait for input
-        event = self.game.pygame.event.wait()
-        if event.type == self.game.pygame.MOUSEBUTTONDOWN:  # mouse click coordinates
+        event = pygame.event.wait()
+        if event.type == pygame.MOUSEBUTTONDOWN:  # mouse click coordinates
             x, y = event.pos
-            w = settings.screen_properties.width
-            h = settings.screen_properties.height
+            w = settings.screen_settings.width
+            h = settings.screen_settings.height
             if 0 < x < w and 0 < y < h:
                 self.active_event = 'moving'
                 self.click_coordinates = (x, y)
-        elif event.type == self.game.pygame.MOUSEMOTION:
+        elif event.type == pygame.MOUSEMOTION:
             self.input = 'mouse motion'
             self.hover_coordinates = event.pos
         elif event.type == pgl.QUIT:

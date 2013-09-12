@@ -13,23 +13,21 @@ class Menu(list):
         self.font = font
         self.empty_menu_message = empty_menu_message
         self.line_height = line_height
-        self.left_padding = 12
-        self.top_padding = 12
+        self.left_padding = left_padding
+        self.top_padding = top_padding
 
     @property
     def highlighted_option(self):
         return self[self.highlighted_option_index]
 
-    def set_highlighted_option_index(self, new):
-        if 0 <= new <= len(self) - 1:
-            pass
-        elif new == len(self):
-            new = 0
-        elif new == -1:
-            new = len(self) - 1
-        else:
-            assert False, "Invalid menu item"
-        self.highlighted_option_index = new
+    def set_highlighted_option_index(self, new_index):
+        """
+        sets the highlighted option index to new_index if
+
+        Inputs:
+        new_index -- int new index
+        """
+        self.highlighted_option_index = new_index % len(self)
 
     def render(self):
         self.screen.clear()
@@ -57,4 +55,5 @@ class Menu(list):
         self.set_highlighted_option_index(self.highlighted_option_index+1)
 
     def prev(self):
+        """highlight the previous item on the menu"""
         self.set_highlighted_option_index(self.highlighted_option_index-1)

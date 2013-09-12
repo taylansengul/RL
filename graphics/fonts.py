@@ -1,5 +1,5 @@
 import pygame
-
+#todo: don't like this
 pygame.font.init()
 CONSOLE = pygame.font.SysFont('arialunicodems', 12)
 INVENTORY = pygame.font.SysFont('arialunicodems', 16)

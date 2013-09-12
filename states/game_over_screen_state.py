@@ -21,8 +21,6 @@ class Game_Over_Screen_State(object):
         screen = self.screens[g.ScreenID.GAME_OVER]
         screen.clear()
         self._render_game_over_messages()
-        # todo: get rid of below line
-        screen.force_screen_update()
 
     # PRIVATE METHODS
     def _render_game_over_messages(self):

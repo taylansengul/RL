@@ -1,4 +1,4 @@
-from globals import *
+import globals as g
 
 
 class MapStateScreenUpdater():
@@ -7,7 +7,7 @@ class MapStateScreenUpdater():
         self.screens = screens
 
     def _draw_dungeon(self):
-        self.game.game_world.dungeon.draw(self.screens[ScreenID.MAP])
+        self.game.game_world.dungeon.draw(self.screens[g.ScreenID.MAP])
 
     def _draw_message_console(self):
         self.game.logger.display_messages()
@@ -17,9 +17,6 @@ class MapStateScreenUpdater():
 
     def _draw_turn_info(self):
         self.game.time.render_turn()
-
-    def _refresh_main_screen(self):
-        self.game.pygame.display.flip()
 
     def _clear_all_screens(self):
         for ID in self.screens:
@@ -31,4 +28,3 @@ class MapStateScreenUpdater():
         self._draw_message_console()
         self._draw_player_stats()
         self._draw_turn_info()
-        self._refresh_main_screen()

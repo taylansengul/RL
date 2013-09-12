@@ -8,7 +8,7 @@ class MapStateLogicEngine(object):
             'left': self._direction,
             'right': self._direction,
             'descend': self._descend,
-            'inventory': self._show_inventory,
+            'inventory_objects_list': self._show_inventory,
             'eat item': self._eat_item,
             'pick up item': self._pick_item,
             'drop item': self._drop_item,

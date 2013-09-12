@@ -24,11 +24,11 @@ class Main_Menu_State(object):
                          line_height=60
                          )
         self.updateScreen()
+        self.game.refresh_main_screen()
 
     def updateScreen(self):
         self.menu.render()
         self.screens[ScreenID.MAIN_MENU].render_to_main()
-        self.game.pygame.display.update()
 
     def determineAction(self):
         event = self.game.io_handler.get_active_event()
@@ -68,7 +68,7 @@ class Main_Menu_State(object):
         # AI: do not need AI
         # self.game.ai = AI(self.game)
 
-        # initialize map and inventory screens
+        # initialize map and inventory_objects_list screens
         self.game.state_manager.initialize_screens(StateID.INVENTORY)
         self.game.state_manager.initialize_screens(StateID.MAP)
 
