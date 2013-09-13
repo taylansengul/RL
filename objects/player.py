@@ -17,42 +17,38 @@ class Player(Game_Object):
         self.name = 'George'
 
     @property
-    def coordinates_of_tiles_in_visibility_radius(self):
-        return self.game.game_world.dungeon.get_neighboring_coordinates(self.tile.coordinates,
-                                                                        self.visibility_radius)
+    def tiles_in_visibility_radius(self):
+        """returns tiles in visibility radius"""
+        return self.game.game_world.dungeon.get_neighboring_tiles(self.tile, self.visibility_radius)
 
     @property
-    def tiles_in_visibility_radius(self):
-        return self.game.game_world.dungeon.get_neighboring_tiles(self.tile, self.visibility_radius)
+    def visible_tiles(self):
+        """returns tiles that are currently visible"""
+        return [tile for tile in self.tiles_in_visibility_radius if tile not in self.non_visible_tiles]
+
+    @property
+    def non_visible_tiles(self):
+        """returns tiles that are not currently visible"""
+        dungeon = self.game.game_world.dungeon
+        player_x, player_y = self.tile.coordinates
+        non_visible_tiles = []
+        for tile1 in self.tiles_in_visibility_radius:
+            x1, y1 = tile1.coordinates
+            vision_ray_coordinates = get_line(player_x, player_y, x1, y1)
+            vision_ray_tiles = dungeon.get_tiles(*vision_ray_coordinates)
+            for j, tile2 in enumerate(vision_ray_tiles):  # look at the tiles(tile2) on the ray from the player to tile1
+                if 'light blocking' in tile2.properties:  # if there is a tile2 which is light blocking
+                    for tile3 in vision_ray_tiles[j+1:]:  # all tiles(tile3) after tile2
+                        non_visible_tiles.append(tile3)   # are appended to non_visible_tiles list
+                    break
+        return non_visible_tiles
 
     def update_vision(self):
         # todo: optimize later (takes 1/1000~2/1000 secs)
-        game_world = self.game.game_world
-        x, y = self.tile.coordinates
-
-        for m in range(game_world.dungeon.dungeon_width):
-            for n in range(game_world.dungeon.dungeon_height):
-                game_world.dungeon.map2D[m][n].set_visibility(False)      # make every tile invisible
-
-        non_visible_tiles = []
-        for X in self.coordinates_of_tiles_in_visibility_radius:
-            x1, y1 = X
-            vision_ray_coordinates = get_line(x, y, x1, y1)
-            # todo: bug
-            # vision_ray_tiles = [game_world.dungeon.map2D[c[0]][c[1]] for c in vision_ray_coordinates]
-            # IndexError: list index out of range
-            vision_ray_tiles = [game_world.dungeon.map2D[c[0]][c[1]] for c in vision_ray_coordinates]
-            line_blocking_status = ['light blocking' in _.properties for _ in vision_ray_tiles]
-            for j, b in enumerate(line_blocking_status):
-                if b:  # if found a light blocking tile t
-                    for each in vision_ray_tiles[j+1:]:  # tiles after that tile
-                        non_visible_tiles.append(each)  # are appended to non_visible_tiles list
-                    break
-
-        for X in self.coordinates_of_tiles_in_visibility_radius:  # go over
-            x1, y1 = X
-            t = self.game.game_world.dungeon.map2D[x1][y1]
-            t.set_visibility(False) if t in non_visible_tiles else t.set_visibility(True)
+        dungeon = self.game.game_world.dungeon
+        dungeon.set_all_tiles_non_visible()
+        for tile in self.visible_tiles:
+            tile.set_visibility(True)
 
     def close_door(self, target_tile):
         if target_tile.tip != 'open door':

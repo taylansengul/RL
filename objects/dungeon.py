@@ -142,18 +142,25 @@ class Dungeon(object):
         y_bottom = min(y+radius, self.dungeon_height)
         for m in range(x_left, x_right+1):
             for n in range(y_top, y_bottom+1):
-                coordinates.append((m ,n))
+                coordinates.append((m, n))
         if not self_included:
             coordinates.remove((x, y))
         return coordinates
 
     def get_neighboring_tiles(self, tile, radius=1, self_included=True):
-        """Returns coordinates which are neighbors of given x, y and lies in the dungeon grid"""
-        coordinates = self.get_neighboring_coordinates(tile.coordinates, radius, self_included)
+        """Returns tiles which are neighbors of given tile and lies in the dungeon grid"""
+        neighboring_coordinates = self.get_neighboring_coordinates(tile.coordinates, radius, self_included)
+        return self.get_tiles(*neighboring_coordinates)
+
+    def get_tiles(self, *coordinates):
         tiles = []
-        for each in coordinates:
-            x, y = each[0], each[1]
-            tiles.append(self.map2D[x][y])
+        for c in coordinates:
+            print c
+            x, y = c
+            try:
+                tiles.append(self.map2D[x][y])
+            except IndexError:
+                pass
         return tiles
 
     def get_neighbor_tile(self, tile, direction):
@@ -235,3 +242,9 @@ class Dungeon(object):
                 tile.draw(screen)
                 tile.draw_tile_objects(screen)
         screen.render_to_main()
+
+    def set_all_tiles_non_visible(self):
+        """sets the visibility attribute of all tiles in the dungeon to False"""
+        for m in range(self.dungeon_width):
+            for n in range(self.dungeon_height):
+                self.map2D[m][n].set_visibility(False)
