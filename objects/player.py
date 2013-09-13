@@ -1,11 +1,11 @@
-from game_object import Game_Object
+from game_entity import Game_Entity
 from systems.utils import get_line
 from graphics.text import Text
 import globals as g
 import data
 
 
-class Player(Game_Object):
+class Player(Game_Entity):
     def __init__(self, game, key='Fighter', tile=None):
         kwargs = dict(data.classes.dictionary[key].items())
         kwargs['icon'] = '@'

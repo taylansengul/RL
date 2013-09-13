@@ -1,10 +1,10 @@
 import pygame
 import globals as g
-from game_object import Game_Object
+from game_entity import Game_Entity
 import settings
 
 
-class Tile(Game_Object):
+class Tile(Game_Entity):
     # todo: walkable tiles.
     floor_properties = 'container'
     wall_properties = 'movement blocking, light blocking'
@@ -28,15 +28,15 @@ class Tile(Game_Object):
         self.coordinates = coordinates
         self.tip = tip
         self.is_explored = False  # tiles which are currently or previously visible . once explored, always explored.
-        self.is_visible = False  # tiles which are currently visible. this is set to False every turn.
+        self.is_visible = False   # tiles which are currently visible. this is set to False every turn.
 
     def set_tip(self, tip):
         self.tip = tip
         self.icon = Tile.tiles[tip]['icon']
         self.color = Tile.tiles[tip]['color']
 
-    def set_visibility(self, b):
-        if b:
+    def set_visibility(self, bool):
+        if bool:
             self.is_visible = True
             self.is_explored = True
         else:

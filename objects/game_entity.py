@@ -6,7 +6,7 @@ import data
 import pygame
 
 
-class Game_Object(object):
+class Game_Entity(object):
     def __init__(self, game, **kwargs):
         self.game = game
         self.ID = kwargs['ID']
@@ -20,7 +20,7 @@ class Game_Object(object):
             self.objects = []
             for ID in kwargs.get('objects', []):  # creating self.objects from string list
                 item_kwargs = data.game_items.dictionary[ID]
-                new_item = Game_Object(self.game, tile=self.tile, **item_kwargs)
+                new_item = Game_Entity(self.game, tile=self.tile, **item_kwargs)
                 self.game.objects_handler.add_game_item(new_item, self)
         if 'stackable' in self.properties:
             self.quantity = kwargs.get('quantity', 1)
@@ -39,7 +39,6 @@ class Game_Object(object):
 
         #todo: images
         if kwargs.get('image', None):
-            print kwargs.get('image', None)
             image_location = os.path.join('images', kwargs['image'])
             self.image = pygame.image.load(image_location).convert_alpha()
         else:
@@ -66,7 +65,7 @@ class Game_Object(object):
             if self_item:  # if self has the item
                 self_item.quantity += 1  # increase quantity
             else:
-                new_item = Game_Object(self.game, tile=self.tile, **data.game_items.dictionary[item.ID])
+                new_item = Game_Entity(self.game, tile=self.tile, **data.game_items.dictionary[item.ID])
                 self.game.objects_handler.add_game_item(new_item, self)  # create and add item
         else:  # if item is not stackable
             self.objects.append(item)
