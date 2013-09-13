@@ -1,18 +1,20 @@
 from rechargeable import Rechargeable
 from graphics.text import Text
-import globals as g
+from globals import *
 import os
 import data
 import pygame
 
 
 class Game_Entity(object):
+    all_entities = []
+
     def __init__(self, game, **kwargs):
         self.game = game
         self.ID = kwargs['ID']
         self.tile = kwargs.get('tile', self)  # if no tile it must be a tile and hence it points to itself
-        self.icon = kwargs['icon']
-        self.color = g.colorID.ColorID[kwargs['color']]
+        self.icon = kwargs.get('icon', '?')
+        self.color = ColorID[kwargs['color']]
         self.properties = kwargs.get('properties', '')
         self.effects = kwargs.get('effects', {})
         self.description = kwargs.get('description', '')
@@ -196,7 +198,7 @@ class Game_Entity(object):
     def render_description_to(self, screen):
         screen.clear()
         context = self.description
-        t = Text(font=g.FontID.INVENTORY, screen=screen, context=context, coordinates=(0, 0), color='white')
+        t = Text(font=INVENTORY_FONT, screen=screen, context=context, coordinates=(0, 0), color='white')
         t.render()
         screen.render_to_main()
 

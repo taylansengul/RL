@@ -1,5 +1,5 @@
 import pygame.locals as pgl
-import globals as g
+from globals import *
 import settings
 import pygame
 
@@ -12,7 +12,7 @@ class Io_Handler(object):
         self.click_coordinates = (-1, -1)
         self.hover_coordinates = (-1, -1)
         self.keyboard_commands_dictionary = {
-            g.StateID.MAP: {
+            MAP_STATE: {
                 pgl.K_i: 'inventory_objects_list',
                 pgl.K_c: 'close door',
                 pgl.K_e: 'eat item',
@@ -25,20 +25,20 @@ class Io_Handler(object):
                 pgl.K_DOWN: 'down',
                 pgl.K_UP: 'up',
                 pgl.K_ESCAPE: 'quit'},
-            g.StateID.MAIN_MENU: {
+            MAIN_MENU_STATE: {
                 pgl.K_DOWN: 'down',
                 pgl.K_UP: 'up',
                 pgl.K_RETURN: 'select'},
-            g.StateID.GAME_OVER: {
+            GAME_OVER_STATE: {
                 pgl.K_SPACE: 'pass'},
-            g.StateID.INVENTORY: {
+            INVENTORY_STATE: {
                 pgl.K_DOWN: 'down',
                 pgl.K_UP: 'up',
                 pgl.K_RETURN: 'select',
                 pgl.K_ESCAPE: 'quit',
                 pgl.K_e: 'show edible items',
                 pgl.K_u: 'show consumable items'},
-            g.StateID.TARGETING: {
+            TARGETING_STATE: {
                 pgl.K_RIGHT: 'right',
                 pgl.K_LEFT: 'left',
                 pgl.K_DOWN: 'down',

@@ -1,17 +1,17 @@
-import globals as g
+from globals import *
 from graphics.menu import Menu
 
 
 class Inventory_State(object):
     """Inventory State of the game"""
     def __init__(self, game):
-        self.ID = g.StateID.INVENTORY
+        self.ID = INVENTORY_STATE
         self.game = game
         self.inventory_objects_list = None
         self.selected_item = None
         self.key = ''
         self.menu = None
-        self.screens = {g.ScreenID.INVENTORY_MENU: None, g.ScreenID.INVENTORY_DETAILS: None}
+        self.screens = {INVENTORY_MENU_SCREEN: None, INVENTORY_DETAILS_SCREEN: None}
 
     @property
     def highlighted_item(self):
@@ -27,7 +27,7 @@ class Inventory_State(object):
         self.menu = self._new_menu()
         self.updateScreen()
         # force a screen update
-        screen = self.screens[g.ScreenID.INVENTORY_MENU]
+        screen = self.screens[INVENTORY_MENU_SCREEN]
         screen.force_screen_update()
 
     def determineAction(self):
@@ -96,9 +96,9 @@ class Inventory_State(object):
         """
         menu_options = [item.inventory_repr for item in self.inventory_objects_list]
         return Menu(
-            screen=self.screens[g.ScreenID.INVENTORY_MENU],
+            screen=self.screens[INVENTORY_MENU_SCREEN],
             options=menu_options,
-            font=g.FontID.INVENTORY,
+            font=INVENTORY_FONT,
             empty_menu_message='Empty Inventory')
 
     def _new_inventory_objects_list(self):
@@ -112,5 +112,5 @@ class Inventory_State(object):
     def _render_highlighted_item_description(self):
         if not self.highlighted_item:
             return
-        screen = self.screens[g.ScreenID.INVENTORY_DETAILS]
+        screen = self.screens[INVENTORY_DETAILS_SCREEN]
         self.highlighted_item.render_description_to(screen)

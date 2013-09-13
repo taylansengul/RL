@@ -10,17 +10,17 @@ from systems.resource_manager import Resource_Manager
 class Main_Menu_State(object):
     def __init__(self, game):
         self.game = game
-        self.ID = StateID.MAIN_MENU
-        self.screens = {ScreenID.MAIN_MENU: None}
+        self.ID = MAIN_MENU_STATE
+        self.screens = {MAIN_MENU_SCREEN: None}
 
     def init(self):
         self.options = [
             "NEW GAME",
             "LOAD GAME",
             "QUIT GAME"]
-        self.menu = Menu(screen=self.screens[ScreenID.MAIN_MENU],
+        self.menu = Menu(screen=self.screens[MAIN_MENU_SCREEN],
                          options=self.options,
-                         font=FontID.MAIN_MENU,
+                         font=MAIN_MENU_FONT,
                          line_height=60
                          )
         self.updateScreen()
@@ -28,7 +28,7 @@ class Main_Menu_State(object):
 
     def updateScreen(self):
         self.menu.render()
-        self.screens[ScreenID.MAIN_MENU].render_to_main()
+        self.screens[MAIN_MENU_SCREEN].render_to_main()
 
     def determineAction(self):
         event = self.game.io_handler.get_active_event()

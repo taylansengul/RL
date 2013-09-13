@@ -1,13 +1,13 @@
 import pygame
 
-import globals as g
+from globals import *
 from settings import screen_settings
 
 
 class Screen(object):
     if not '_MAIN' in locals():
         __MAIN_SURFACE = pygame.display.set_mode((screen_settings.width, screen_settings.height), 0, 32)
-    _FILL_COLOR = g.ColorID['black']
+    _FILL_COLOR = BLACK
 
     def __init__(self, **kwargs):
         self.left = kwargs['left']

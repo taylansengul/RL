@@ -1,5 +1,5 @@
 import pygame
-import globals as g
+from globals import *
 from game_entity import Game_Entity
 import settings
 
@@ -67,4 +67,4 @@ class Tile(Game_Entity):
             each.render_icon_to(screen)
 
     def draw_tile_border(self, screen):
-        pygame.draw.rect(screen, g.colorID.ColorID['white'], self.screen_position, 1)
+        pygame.draw.rect(screen, WHITE, self.screen_position, 1)

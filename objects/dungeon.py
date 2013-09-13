@@ -148,14 +148,23 @@ class Dungeon(object):
         return coordinates
 
     def get_neighboring_tiles(self, tile, radius=1, self_included=True):
-        """Returns tiles which are neighbors of given tile and lies in the dungeon grid"""
+        """Returns tiles which are in a neighborhood of given radius and given tile and lies in the dungeon grid
+        :rtype : List of Tile Objects
+        :param tile: Tile
+        :param radius: Integer
+        :param self_included: Boolean,
+        """
         neighboring_coordinates = self.get_neighboring_coordinates(tile.coordinates, radius, self_included)
         return self.get_tiles(*neighboring_coordinates)
 
     def get_tiles(self, *coordinates):
+        """
+
+        :param coordinates:
+        :return:
+        """
         tiles = []
         for c in coordinates:
-            print c
             x, y = c
             try:
                 tiles.append(self.map2D[x][y])

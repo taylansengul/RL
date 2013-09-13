@@ -6,13 +6,13 @@ from map_state_logic_engine import MapStateLogicEngine
 class Map_State(object):
     def __init__(self, game):
         self.game = game
-        self.ID = StateID.MAP
+        self.ID = MAP_STATE
         self.screens = {
-            ScreenID.MAP: None,
-            ScreenID.PLAYER: None,
-            ScreenID.GAME_INFO: None,
-            ScreenID.MESSAGES: None,
-            ScreenID.ENEMY: None}
+            MAP_SCREEN: None,
+            PLAYER_SCREEN: None,
+            GAME_INFO_SCREEN: None,
+            MESSAGES_SCREEN: None,
+            ENEMY_SCREEN: None}
         self.images = {}
         self.screen_updater = MapStateScreenUpdater(game, self.screens)
         self.logic_engine = MapStateLogicEngine(game)

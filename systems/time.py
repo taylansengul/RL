@@ -19,6 +19,6 @@ class Time(object):
         self.game.resource_manager.manage()
 
     def render_turn(self):
-        t = Text(screen=self.game.map_state.screens[ScreenID.GAME_INFO],
-                 context='turn: %d' % self.turn, font=FontID.CONSOLE, coordinates=(0, 0), color='white')
+        t = Text(screen=self.game.map_state.screens[GAME_INFO_SCREEN],
+                 context='turn: %d' % self.turn, font=CONSOLE_FONT, coordinates=(0, 0), color='white')
         t.render()

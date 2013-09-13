@@ -1,6 +1,5 @@
 import random
 import pygame
-import globals as g
 from systems.io_handler import Io_Handler
 import settings
 import states
@@ -61,13 +60,13 @@ class Game(object):
 
     def _initialize_screens(self):
         D = settings.screen_settings.screens
-        for screen_ID in D:
-            if screen_ID.name == 'MAIN':
+        for a_screen_ID in D:
+            if a_screen_ID == 'MAIN_SCREEN':
                 continue
-            state_ID = D[screen_ID]['state']
-            state = self._get_state_by_ID(state_ID)
-            print state, state_ID, screen_ID.name
-            state.screens[screen_ID] = graphics.screen.Screen(**D[screen_ID])
+            a_state_ID = D[a_screen_ID]['state']
+            state = self._get_state_by_ID(a_state_ID)
+            print state, a_state_ID, a_screen_ID
+            state.screens[a_screen_ID] = graphics.screen.Screen(**D[a_screen_ID])
 
     def _get_state_by_ID(self, ID):
         for state in self._states:
