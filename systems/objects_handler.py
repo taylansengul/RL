@@ -1,5 +1,5 @@
 from objects.player import Player
-from objects.game_entity import Game_Entity
+from objects.entity import Entity
 from random import randint
 import data
 
@@ -27,8 +27,8 @@ class Objects_Handler():
             for _ in range(number_of_objects):
                 tile = self.game.game_world.dungeon.get_random_room_floor_tile_with_no_objects()
                 kwargs = data.game_items.dictionary[item['id']]
-                new_item = Game_Entity(self.game, tile=tile, **kwargs)
-                self.add_game_item(new_item, tile)
+                new_item = Entity(self.game, tile=tile, **kwargs)
+                tile.container.append(new_item)
         print 'done.'
 
     def populate_NPCs(self):
@@ -38,26 +38,6 @@ class Objects_Handler():
             for _ in range(number_of_objects):
                 tile = self.game.game_world.dungeon.get_random_room_floor_tile_with_no_objects()
                 kwargs = data.NPC.dictionary[item['id']]
-                new_NPC = Game_Entity(self.game, tile=tile, **kwargs)
-                self.add_NPC(new_NPC, tile)
+                new_NPC = Entity(self.game, tile=tile, **kwargs)
+                tile.container.add(new_NPC)
         print 'done.'
-
-    def add_NPC(self, NPC, game_object):
-        self.NPCs.append(NPC)
-        self.all_objects.append(NPC)
-        game_object.container.add(NPC)
-
-    def remove_NPC(self, NPC, game_object):
-        self.NPCs.remove(NPC)
-        self.all_objects.remove(NPC)
-        game_object.container.remove(NPC)
-
-    def add_game_item(self, item, game_object):
-        self.game_items.append(item)
-        self.all_objects.append(item)
-        game_object.container.append(item)
-
-    def remove_game_item(self, item, game_object):
-        self.game_items.remove(item)
-        self.all_objects.remove(item)
-        game_object.container.remove(item)

@@ -1,5 +1,6 @@
 from globals import *
 import pygame
+from objects.entity import Entity
 
 
 class Targeting_State(object):
@@ -13,7 +14,7 @@ class Targeting_State(object):
     def init(self):
         self.screens = self.game.map_state.screens
         self.selected_tile = None
-        self.highlighted_tile = self.game.objects_handler.player.tile
+        self.highlighted_tile = Entity.player.tile
 
     def determineAction(self):
         event = self.game.io_handler.get_active_event()

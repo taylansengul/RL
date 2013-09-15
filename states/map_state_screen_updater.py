@@ -1,4 +1,5 @@
 from globals import *
+from objects.entity import Entity
 
 
 class MapStateScreenUpdater():
@@ -13,7 +14,7 @@ class MapStateScreenUpdater():
         self.game.logger.display_messages()
 
     def _draw_player_stats(self):
-        self.game.objects_handler.player.render_stats()
+        Entity.player.render_stats()
 
     def _draw_turn_info(self):
         self.game.time.render_turn()

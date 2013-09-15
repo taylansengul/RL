@@ -1,7 +1,7 @@
 from tile import Tile
 from random import randint, choice
 from rectangle import Rectangle
-
+from entity import Entity
 
 class Dungeon(object):
     def __init__(self, game, **kwargs):
@@ -245,7 +245,7 @@ class Dungeon(object):
         print 'done.'
 
     def draw(self, screen):
-        player = self.game.objects_handler.player
+        player = Entity.player
         for tile in player.tiles_in_visibility_radius:
             if tile.is_explored:
                 tile.draw(screen)

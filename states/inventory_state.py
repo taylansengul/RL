@@ -1,5 +1,6 @@
 from globals import *
 from graphics.menu import Menu
+from objects.entity import Entity
 
 
 class Inventory_State(object):
@@ -51,11 +52,11 @@ class Inventory_State(object):
 
         if self.selected_item:
             if self.key == 'edible':
-                self.game.objects_handler.player.consume(self.selected_item)
+                Entity.player.consume(self.selected_item)
                 self._go_to_map_state()
 
             elif self.key == 'consumable':
-                self.game.objects_handler.player.consume(self.selected_item)
+                Entity.player.consume(self.selected_item)
                 self._go_to_map_state()
 
     def updateScreen(self):
@@ -104,7 +105,7 @@ class Inventory_State(object):
             empty_menu_message='Empty Inventory')
 
     def _new_inventory_objects_list(self):
-        return self.game.objects_handler.player.container.lookup(dict(properties=self.key), key='all')
+        return Entity.player.container.lookup(dict(properties=self.key), key='all')
 
     # ----- SCREEN UPDATE ------
     def _render_inventory_menu(self):

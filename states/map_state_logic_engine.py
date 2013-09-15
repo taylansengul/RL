@@ -1,3 +1,6 @@
+from objects.entity import Entity
+
+
 class MapStateLogicEngine(object):
     def __init__(self, game):
         self.game = game
@@ -19,7 +22,7 @@ class MapStateLogicEngine(object):
     def run(self):
         self.event = self.game.io_handler.get_active_event()
         self.game.event_log.append(self.event)
-        self.player = self.game.objects_handler.player
+        self.player = Entity.player
         self.tile = self.player.tile
         self.actions[self.event]()
 

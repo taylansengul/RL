@@ -7,8 +7,36 @@ import pygame
 import container
 
 
-class Game_Entity(object):
-    all_entities = []
+class Entity(object):
+    all_NPCs = []
+    all_things = []
+    player = None
+
+    @staticmethod
+    def add_new(entity):
+        P = entity.properties
+        if 'NPC' in P:
+            Entity.all_NPCs.append(entity)
+        elif 'thing' in P:
+            Entity.all_things.append(entity)
+        elif 'player' in P:
+            Entity.player = entity
+
+    @staticmethod
+    def remove_old(entity):
+        P = entity.properties
+        if 'NPC' in P:
+            Entity.all_NPCs.remove(entity)
+        elif 'thing' in P:
+            Entity.all_things.remove(entity)
+        elif 'player' in P:
+            Entity.player = None
+
+    @staticmethod
+    def erase_all_entities():
+        Entity.all_NPCs = []
+        Entity.all_things = []
+        Entity.player = None
 
     def __init__(self, game, **kwargs):
         self.game = game
@@ -23,7 +51,7 @@ class Game_Entity(object):
             self.container = container.Container()
             for ID in kwargs.get('objects', []):  # creating self.objects from string list
                 item_kwargs = data.game_items.dictionary[ID]
-                new_item = Game_Entity(self.game, tile=self.tile, **item_kwargs)
+                new_item = Entity(self.game, tile=self.tile, **item_kwargs)
                 self.container.add(new_item)
         if 'stackable' in self.properties:
             self.quantity = kwargs.get('quantity', 1)
@@ -47,8 +75,7 @@ class Game_Entity(object):
         else:
             self.image = None
 
-        # add self to game objects
-        self.game.objects_handler.all_objects.append(self)
+        Entity.add_new(self)
 
     # OBJECTS HANDLING
     # ---- start -----
@@ -129,7 +156,8 @@ class Game_Entity(object):
         # is self dead
         if 'NPC' in self.properties:
             if not self.is_alive:
-                self.game.objects_handler.remove_NPC(self, self.tile)
+                self.tile.container.remove(self)
+                Entity.remove_old(self)
 
     def render_icon_to(self, screen):
         print self.image, self.icon

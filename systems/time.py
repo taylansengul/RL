@@ -1,5 +1,6 @@
 from graphics.text import Text
 from globals import *
+from objects.entity import Entity
 
 
 class Time(object):
@@ -9,9 +10,9 @@ class Time(object):
 
     def new_turn(self):
         # update player status
-        self.game.objects_handler.player.update_status()
+        Entity.player.update_status()
         # player vision changes
-        self.game.objects_handler.player.update_vision()
+        Entity.player.update_vision()
         # ai action
         # do not need ai: self.game.ai.determine_total_action()
         self.turn += 1

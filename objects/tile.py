@@ -1,10 +1,10 @@
 import pygame
 from globals import *
-from game_entity import Game_Entity
+from entity import Entity
 import settings
 
 
-class Tile(Game_Entity):
+class Tile(Entity):
     # todo: walkable tiles.
     floor_properties = 'container'
     wall_properties = 'movement blocking, light blocking'
@@ -46,7 +46,7 @@ class Tile(Game_Entity):
     def screen_position(self):
         """returns a pygame.Rect object whose coordinates are normalized w.r.t. player position in the middle"""
         x, y = self.coordinates
-        x1, y1 = self.game.objects_handler.player.tile.coordinates
+        x1, y1 = Entity.player.tile.coordinates
         x2, y2 = settings.screen_settings.map_center_x, settings.screen_settings.map_center_y
         c1 = settings.screen_settings.tile_length * (x - x1 + x2)  # left border coordinate
         c2 = settings.screen_settings.tile_length * (y - y1 + y2)  # top border coordinate

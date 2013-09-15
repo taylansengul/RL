@@ -1,11 +1,11 @@
-from game_entity import Game_Entity
+from entity import Entity
 from systems.utils import get_line
 from graphics.text import Text
 from globals import *
 import data
 
 
-class Player(Game_Entity):
+class Player(Entity):
     def __init__(self, game, key='Fighter', tile=None):
         kwargs = dict(data.classes.dictionary[key].items())
         kwargs['icon'] = '@'
@@ -64,7 +64,7 @@ class Player(Game_Entity):
             self.is_alive = False
             self.game.logger.game_over_message = 'You died of hunger.'
         # player vision changes
-        self.game.objects_handler.player.update_vision()
+        Entity.player.update_vision()
 
         if not self.is_alive:  # player dead
             self.game.change_state(self.game.game_over_screen_state)
