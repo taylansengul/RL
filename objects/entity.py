@@ -1,4 +1,4 @@
-from rechargeable import Rechargeable
+from resource import Resource
 from graphics.text import Text
 from globals import *
 import os
@@ -58,11 +58,11 @@ class Entity(object):
         if 'NPC' in self.properties or 'player' in self.properties:
             self.attack = kwargs['attack']
             self.defense = kwargs['defense']
-            self.hp = Rechargeable(self.game, owner=self, capacity=kwargs['hp'])
+            self.hp = Resource(self.game, owner=self, maximum=kwargs['hp'])
             self.is_alive = True
             self.current_conditions = kwargs.get('conditions', '')
         if 'player' in self.properties:
-            self.hunger = Rechargeable(self.game, owner=self, capacity=100)
+            self.hunger = Resource(self.game, owner=self, maximum=100)
             for condition in kwargs.get('conditions', []):  # if there are conditions
                 getattr(self, condition['effects']).add_condition(condition)
             self.money = 1000

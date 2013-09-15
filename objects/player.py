@@ -72,8 +72,8 @@ class Player(Entity):
     def render_stats(self):
         line_height = 16
         contexts = [self.name,
-                    'hp: %d/%d' % (self.hp.current, self.hp.capacity),
-                    'hunger: %d/%d' % (self.hunger.current, self.hunger.capacity),
+                    'hp: %d/%d' % (self.hp.current, self.hp.maximum),
+                    'hunger: %d/%d' % (self.hunger.current, self.hunger.maximum),
                     'money: %d' % self.money]
         l = len(contexts)
         screens = [self.game.map_state.screens[PLAYER_SCREEN]]*l
