@@ -4,6 +4,7 @@ from globals import *
 import os
 import data
 import pygame
+import container
 
 
 class Game_Entity(object):
@@ -19,11 +20,11 @@ class Game_Entity(object):
         self.effects = kwargs.get('effects', {})
         self.description = kwargs.get('description', '')
         if 'container' in self.properties:
-            self.objects = []
+            self.container = container.Container()
             for ID in kwargs.get('objects', []):  # creating self.objects from string list
                 item_kwargs = data.game_items.dictionary[ID]
                 new_item = Game_Entity(self.game, tile=self.tile, **item_kwargs)
-                self.game.objects_handler.add_game_item(new_item, self)
+                self.container.add(new_item)
         if 'stackable' in self.properties:
             self.quantity = kwargs.get('quantity', 1)
         if 'NPC' in self.properties or 'player' in self.properties:
@@ -51,67 +52,13 @@ class Game_Entity(object):
 
     # OBJECTS HANDLING
     # ---- start -----
-    def get_item_by_id(self, ID):
-        for item in self.objects:
-            if item.ID == ID:
-                return item
-        else:
-            return None
-
-    def add_object(self, item):
-        assert 'container' in self.properties  # only applies if self container
-        item.tile = self.tile
-        if 'stackable' in item.properties:
-            # add item
-            self_item = self.get_item_by_id(item.ID)
-            if self_item:  # if self has the item
-                self_item.quantity += 1  # increase quantity
-            else:
-                new_item = Game_Entity(self.game, tile=self.tile, **data.game_items.dictionary[item.ID])
-                self.game.objects_handler.add_game_item(new_item, self)  # create and add item
-        else:  # if item is not stackable
-            self.objects.append(item)
-
-    def remove_object(self, item):
-        assert 'container' in self.properties and item in self.objects
-        item.tile = None
-        # remove item
-        if 'stackable' in item.properties:
-            if item.quantity > 1:       # if more than 1
-                item.quantity -= 1      # decrease quantity
-            elif item.quantity == 1:    # if 1
-                self.game.objects_handler.remove_game_item(item, self)  # destroy and remove item
-        else:
-            self.objects.remove(item)
-
-    def transfer_to(self, other, item):
-        self.remove_object(item)  # remove item from inventory_objects_list
-        other.add_object(item)
 
     def consume(self, item):
         assert 'consumable' in item.properties
         for condition in item.effects:
             getattr(self, condition['effects']).add_condition(condition)
-        self.remove_object(item)
+        self.container.remove(item)
         self.game.time.new_turn()
-
-    def has_an_object_which_is(self, a_property):
-        if self.has_objects():
-            for an_object in self.objects:
-                if a_property in an_object.properties:
-                    return True
-            else:
-                return False
-
-    def has_objects(self):
-        return self.objects != []
-
-    def get_objects(self, key):
-        return_list = []
-        for item in self.objects:
-            if key in item.properties:
-                return_list.append(item)
-        return return_list
 
     @staticmethod
     def get_condition(key, search_string):
@@ -144,10 +91,12 @@ class Game_Entity(object):
     def move(self, target_tile):
         b1 = 'movable' in self.properties
         b2 = not 'movement blocking' in target_tile.properties
-        b3 = not target_tile.has_an_object_which_is('movement blocking')
+        b3 = not target_tile.container.lookup(dict(properties='movement blocking'))
 
         if b1 and b2 and b3 and b3:
-            self.tile.transfer_to(target_tile, self)
+            self.tile.container.remove(self)
+            target_tile.container.add(self)
+            self.tile = target_tile
             self.game.time.new_turn()
 
     def open_door(self, target_tile):
@@ -183,6 +132,7 @@ class Game_Entity(object):
                 self.game.objects_handler.remove_NPC(self, self.tile)
 
     def render_icon_to(self, screen):
+        print self.image, self.icon
         if self.image:
             screen.surface.blit(self.image, self.tile.screen_position)
         else:

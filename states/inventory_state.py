@@ -22,6 +22,7 @@ class Inventory_State(object):
             return self.inventory_objects_list[index]
 
     def init(self):
+        print 'ere'
         self.inventory_objects_list = self._new_inventory_objects_list()
         self.selected_item = None
         self.menu = self._new_menu()
@@ -94,6 +95,7 @@ class Inventory_State(object):
         Return:
         -- Menu object
         """
+        print self.inventory_objects_list
         menu_options = [item.inventory_repr for item in self.inventory_objects_list]
         return Menu(
             screen=self.screens[INVENTORY_MENU_SCREEN],
@@ -102,7 +104,7 @@ class Inventory_State(object):
             empty_menu_message='Empty Inventory')
 
     def _new_inventory_objects_list(self):
-        return self.game.objects_handler.player.get_objects(self.key)
+        return self.game.objects_handler.player.container.lookup(dict(properties=self.key), key='all')
 
     # ----- SCREEN UPDATE ------
     def _render_inventory_menu(self):

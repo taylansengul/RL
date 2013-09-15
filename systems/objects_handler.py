@@ -17,7 +17,7 @@ class Objects_Handler():
         player_tile = self.game.game_world.dungeon.map2D[m][n]
         player = Player(self.game, key='fighter', tile=player_tile)
         self.player = player
-        player_tile.add_object(player)
+        player_tile.container.add(player)
         player.update_vision()
 
     def populate_game_items(self):
@@ -45,19 +45,19 @@ class Objects_Handler():
     def add_NPC(self, NPC, game_object):
         self.NPCs.append(NPC)
         self.all_objects.append(NPC)
-        game_object.add_object(NPC)
+        game_object.container.add(NPC)
 
     def remove_NPC(self, NPC, game_object):
         self.NPCs.remove(NPC)
         self.all_objects.remove(NPC)
-        game_object.remove_object(NPC)
+        game_object.container.remove(NPC)
 
     def add_game_item(self, item, game_object):
         self.game_items.append(item)
         self.all_objects.append(item)
-        game_object.objects.append(item)
+        game_object.container.append(item)
 
     def remove_game_item(self, item, game_object):
         self.game_items.remove(item)
         self.all_objects.remove(item)
-        game_object.objects.remove(item)
+        game_object.container.remove(item)

@@ -187,7 +187,7 @@ class Dungeon(object):
             coordinates_of_all_tiles_in_the_random_room = the_random_room.get_all()
             m, n = choice(coordinates_of_all_tiles_in_the_random_room)
             tile = self.map2D[m][n]
-            if not tile.has_objects():
+            if not not tile.container.is_empty():
                     break
         return tile
 

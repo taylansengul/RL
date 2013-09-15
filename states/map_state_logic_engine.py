@@ -35,13 +35,13 @@ class MapStateLogicEngine(object):
             self._close_door(target_tile)
         elif target_tile.tip == 'closed door':
             self._open_door(target_tile)
-        elif target_tile.has_an_object_which_is('NPC'):
+        elif target_tile.container.lookup(dict(properties='NPC')):
             self._attack(target_tile)
         else:
             self._move(target_tile)
 
     def _attack(self, target_tile):
-        NPC = target_tile.objects[0]
+        NPC = target_tile.container[0]
         self.player.attack_to(NPC)
         NPC.attack_to(self.player)
 
@@ -71,16 +71,18 @@ class MapStateLogicEngine(object):
             self.player.consume(item)
 
     def _pick_item(self):
-        if self.tile.has_objects():
-            for item in self.tile.objects:
+        if not self.tile.container.is_empty():
+            for item in self.tile.container:
                 if 'pickable' in item.properties:
-                    self.tile.transfer_to(self.player, item)
+                    self.tile.container.remove(item)
+                    self.player.container.add(item)
+                    item.tile = self.player.tile
                     break
 
     def _drop_item(self):
-        if self.player.has_objects():
-            item = self.player.objects[0]
-            self.player.transfer_to(self.tile, item)
+        if not self.player.container.is_empty():
+            item = self.player.container[0]
+            self.player.container.transfer_to(self.tile, item)
 
     def _target(self):
         self.game.change_state(self.game.targeting_state)
