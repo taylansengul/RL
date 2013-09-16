@@ -1,5 +1,5 @@
-from objects.player import Player
-from objects.entity import Entity
+from entities.player import Player
+from entities.entity import Entity
 from random import randint
 import data
 

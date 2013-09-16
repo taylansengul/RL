@@ -1,6 +1,6 @@
 from globals import *
 from graphics.menu import Menu
-from objects.entity import Entity
+from entities.entity import Entity
 from systems.IO import IO
 
 
@@ -104,7 +104,7 @@ class Inventory_State(object):
             empty_menu_message='Empty Inventory')
 
     def _new_inventory_objects_list(self):
-        return Entity.player.container.lookup(dict(properties=self.key), key='all')
+        return Entity.player.container.get(properties=self.key, key='all')
 
     # ----- SCREEN UPDATE ------
     def _render_inventory_menu(self):

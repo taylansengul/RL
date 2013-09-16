@@ -2,33 +2,39 @@ __author__ = 'Taylan Sengul'
 
 
 class Container(list):
-    # ========= OBJECTS HANDLING START =========
-    # methods here asserts 'container' to be in self.properties
     def __init__(self, **kwargs):
         super(Container, self).__init__(**kwargs)
 
-    def lookup(self, a_dict, key='1'):
+    def get(self, **kwargs):
         """
-        usage: container.get({'ID': 'apple'}), container.get({'properties': 'red', 'properties': 'edible'})
+        Return entities found in self satisfying the keywords given.
+        if no keywords given, return self
+        if key is 1, '1' or not given return first of the found entities.
+        if key is 'all' return all of the found entities.
+        usage:
+        -- container.get(ID='apple'})
+        -- container.get(properties='red', properties='red edible'})
+        -- container.get(properties='red', properties='red', key='all'})
         """
         # todo: shallow and deep search: an thing can be inside a container which is inside another container
-        if a_dict == {} or set(a_dict.values()) == set(['']):
+        if kwargs is None:
             return self
         return_list = []
+        key = kwargs.pop('key', None)
         for entity in self:
-            for search_attr in a_dict:
+            for search_attr in kwargs:
                 entity_attr = getattr(entity, search_attr, None)
-                if not (entity_attr and a_dict[search_attr] in entity_attr):
+                if not (entity_attr and kwargs[search_attr] in entity_attr):
                     break
             else:
                 return_list.append(entity)
         if key == 'all':
             return return_list
-        elif (key == '1' or key == 1) and return_list != []:
+        elif (not key or key == '1' or key == 1) and return_list != []:
             return return_list[0]
 
     def _add_stackable(self, entity):
-        existing_entity = self.lookup({'ID': entity.ID})
+        existing_entity = self.get(ID=entity.ID)
         if existing_entity:                             # entity exists in self
             existing_entity.quantity += 1
             entity.remove_old(entity)

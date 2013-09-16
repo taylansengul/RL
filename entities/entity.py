@@ -48,7 +48,7 @@ class Entity(object):
         self.description = kwargs.get('description', '')
         if 'container' in self.properties:
             self.container = container.Container()
-            for ID in kwargs.get('objects', []):  # creating self.objects from string list
+            for ID in kwargs.get('entities', []):  # creating self.entities from string list
                 item_kwargs = data.game_items.dictionary[ID]
                 new_item = Entity(tile=self.tile, **item_kwargs)
                 self.container.add(new_item)
@@ -119,7 +119,7 @@ class Entity(object):
         message = None
         b1 = 'movable' in self.properties
         b2 = not 'movement blocking' in target_tile.properties
-        b3 = not target_tile.container.lookup(dict(properties='movement blocking'))
+        b3 = not target_tile.container.get(properties='movement blocking')
 
         if b1 and b2 and b3 and b3:
             self.tile.container.remove(self)

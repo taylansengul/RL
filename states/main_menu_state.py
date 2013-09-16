@@ -2,7 +2,7 @@ from globals import *
 from graphics.menu import Menu
 from systems.time import Time
 from systems.logger import Logger
-from objects.game_world import Game_World
+from entities.game_world import Game_World
 from systems.objects_handler import Objects_Handler
 from systems.IO import IO
 
@@ -58,7 +58,7 @@ class Main_Menu_State(object):
         # set current dungeon in game world
         self.game.game_world.set_current_dungeon()
 
-        # objects
+        # entities
         self.game.objects_handler.create_player()  # create player
         # self.game.objects_handler.create_player_items()  # create player items
         self.game.objects_handler.populate_game_items()  # populate game world with game items

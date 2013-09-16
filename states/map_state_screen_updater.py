@@ -1,5 +1,5 @@
 from globals import *
-from objects.entity import Entity
+from entities.entity import Entity
 from systems import Logger
 
 

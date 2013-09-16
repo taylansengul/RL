@@ -1,6 +1,6 @@
 from graphics.text import Text
 from globals import *
-from objects.entity import Entity
+from entities.entity import Entity
 from systems.resource_manager import ResourceManager
 
 

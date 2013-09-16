@@ -1,6 +1,6 @@
 from globals import *
 import pygame
-from objects.entity import Entity
+from entities.entity import Entity
 from systems.IO import IO
 
 

@@ -1,4 +1,4 @@
-from objects.entity import Entity
+from entities.entity import Entity
 from systems.logger import Logger
 from systems.IO import IO
 
@@ -43,7 +43,7 @@ class MapStateLogicEngine(object):
             return self._close_door(target_tile)
         elif target_tile.tip == 'closed door':
             return self._open_door(target_tile)
-        elif target_tile.container.lookup(dict(properties='NPC')):
+        elif target_tile.container.get(properties='NPC'):
             return self._attack(target_tile)
         else:
             return self._move(target_tile)

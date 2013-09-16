@@ -13,6 +13,6 @@ dictionary = {
         'attack': 3,
         'defense': 2,
         'visibility radius': 2,
-        'objects': ['lantern', 'apple'],
+        'entities': ['lantern', 'apple'],
         'properties': common_player_properties,
         'conditions': [food_needing, regeneration, initial_poison]}}
