@@ -6,16 +6,6 @@ import data
 
 
 class Player(Entity):
-    def __init__(self, game, key='Fighter', tile=None):
-        kwargs = dict(data.classes.dictionary[key].items())
-        kwargs['icon'] = '@'
-        kwargs['tile'] = tile
-        kwargs['color'] = 'red'
-        kwargs['ID'] = 'player'
-        super(Player, self).__init__(game, **kwargs)
-        self.player_class = key
-        self.name = 'George'
-
     @property
     def tiles_in_visibility_radius(self):
         """returns tiles in visibility radius"""

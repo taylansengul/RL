@@ -7,16 +7,15 @@ import data
 class Objects_Handler():
     def __init__(self, game):
         self.game = game
-        self.player = None
-        self.NPCs = []
-        self.game_items = []
-        self.all_objects = []
 
     def create_player(self):
         m, n = self.game.game_world.dungeon.player_starting_coordinates
         player_tile = self.game.game_world.dungeon.map2D[m][n]
-        player = Player(self.game, key='fighter', tile=player_tile)
-        self.player = player
+        key = 'fighter'
+        kwargs = data.classes.dictionary[key]
+        kwargs.update(data.classes.player_settings)
+        kwargs['tile'] = player_tile
+        player = Player(self.game, **kwargs)
         player_tile.container.add(player)
         player.update_vision()
 

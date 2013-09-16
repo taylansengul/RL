@@ -67,6 +67,7 @@ class Entity(object):
                 getattr(self, condition['effects']).add_condition(condition)
             self.money = 1000
             self.visibility_radius = kwargs['visibility radius']
+            self.name = 'George'
 
         #todo: images
         if kwargs.get('image', None):
