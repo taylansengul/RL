@@ -45,7 +45,6 @@ class Container(list):
         if 'stackable' in entity.properties and entity.quantity > 1:
             entity.quantity -= 1
         else:  # either (entity is stackable but entity.quantity = 1) or entity is not stackable
-            print self, entity
             super(Container, self).remove(entity)
 
     def is_empty(self):

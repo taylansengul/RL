@@ -5,6 +5,7 @@ import os
 import data
 import pygame
 import container
+from systems.logger import Logger
 
 
 class Entity(object):
@@ -126,13 +127,14 @@ class Entity(object):
             target_tile.container.add(self)
             self.tile = target_tile
             self.game.time.new_turn()
+        Logger.add_message('Moved.')
 
     def open_door(self, target_tile):
         if target_tile.tip != 'open door':
             return False
         if 'can open doors' in self.properties:
             target_tile.set_tip('open door')
-            self.game.logger.add_message('A door has been opened.')
+            Logger.add_message('A door has been opened.')
             return True
         else:
             return False
@@ -143,6 +145,7 @@ class Entity(object):
     def attack_to(self, other):
         damage = max(self.attack - other.defense, 0)
         other.take_hit(damage)
+        Logger.add_message('%s hit %s for %d damage.' % (self.ID, other.ID, damage))
 
     def take_hit(self, damage):
         self.hp.change_current(-damage)
@@ -153,15 +156,15 @@ class Entity(object):
         if self.hp.is_zero():
             self.is_alive = False
             if 'player' in self.properties:
-                self.game.logger.game_over_message = 'You died of bleeding.'
+                Logger.game_over_message = 'You died of bleeding.'
         # is self dead
         if 'NPC' in self.properties:
             if not self.is_alive:
+                Logger.add_message('%s is dead.' % self.ID)
                 self.tile.container.remove(self)
                 Entity.remove_old(self)
 
     def render_icon_to(self, screen):
-        print self.image, self.icon
         if self.image:
             screen.surface.blit(self.image, self.tile.screen_position)
         else:

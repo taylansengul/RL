@@ -64,7 +64,6 @@ class Tile(Entity):
         if not 'container' in self.properties:
             return
         for each in self.container:
-            print 'still'
             each.render_icon_to(screen)
 
     def draw_tile_border(self, screen):

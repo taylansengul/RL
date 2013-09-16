@@ -1,4 +1,5 @@
 from objects.entity import Entity
+from systems.logger import Logger
 
 
 class MapStateLogicEngine(object):
@@ -59,7 +60,7 @@ class MapStateLogicEngine(object):
 
     def _descend(self):
         if self.tile.tip == 'exit':
-            self.game.logger.game_over_message = 'Congratulations. You found the way out.'
+            Logger.game_over_message = 'Congratulations. You found the way out.'
             self.game.change_state(self.game.game_over_screen_state)
 
     def _show_inventory(self):

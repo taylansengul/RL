@@ -1,5 +1,6 @@
 from globals import *
 from graphics.text import Text
+from systems.logger import Logger
 
 
 class Game_Over_Screen_State(object):
@@ -26,7 +27,7 @@ class Game_Over_Screen_State(object):
         screen = self.screens[GAME_OVER_SCREEN]
         line_height = 40
         contexts = ['Game is over.',
-                    self.game.logger.game_over_message,
+                    Logger.game_over_message,
                     'Press Space.']
         l = len(contexts)
 

@@ -1,7 +1,7 @@
 from globals import *
 from graphics.menu import Menu
 from systems.time import Time
-from systems.message_logger import MessageLogger
+from systems.logger import Logger
 from objects.game_world import Game_World
 from systems.objects_handler import Objects_Handler
 from systems.resource_manager import Resource_Manager
@@ -51,7 +51,6 @@ class Main_Menu_State(object):
         # initialize dungeon-run related things
         self.game.event_log = [None]
         self.game.time = Time(self.game)
-        self.game.logger = MessageLogger(self.game)
         self.game.game_world = Game_World(self.game)
         self.game.objects_handler = Objects_Handler(self.game)
         self.game.resource_manager = Resource_Manager(self.game)
@@ -68,4 +67,4 @@ class Main_Menu_State(object):
         # AI: do not need AI
         # self.game.ai = AI(self.game)
 
-        self.game.logger.add_message('Main_Menu_State._init_game_run() finished.')
+        Logger.add_message('Welcome to the dungeons.')

@@ -34,7 +34,6 @@ class Game(object):
         # initialized at main menu state:
         self.event_log = [None]
         self.time = None
-        self.logger = None
         self.game_world = None
         self.ai = None
         self.objects_handler = None
@@ -65,7 +64,6 @@ class Game(object):
                 continue
             a_state_ID = D[a_screen_ID]['state']
             state = self._get_state_by_ID(a_state_ID)
-            print state, a_state_ID, a_screen_ID
             state.screens[a_screen_ID] = graphics.screen.Screen(**D[a_screen_ID])
 
     def _get_state_by_ID(self, ID):

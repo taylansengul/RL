@@ -2,7 +2,7 @@ from entity import Entity
 from systems.utils import get_line
 from graphics.text import Text
 from globals import *
-import data
+from systems.logger import Logger
 
 
 class Player(Entity):
@@ -45,14 +45,14 @@ class Player(Entity):
             return
         else:
             target_tile.set_tip('closed door')
-            self.game.logger.add_message('Door closed.')
+            Logger.add_message('Door closed.')
 
     def update_status(self):
         # player hunger changes
         super(Player, self).update_status()
         if self.hunger.is_zero():
             self.is_alive = False
-            self.game.logger.game_over_message = 'You died of hunger.'
+            Logger.game_over_message = 'You died of hunger.'
         # player vision changes
         Entity.player.update_vision()
 
