@@ -26,9 +26,11 @@ class MapStateLogicEngine(object):
         self.game.event_log.append(self.event)
         self.player = Entity.player
         self.tile = self.player.tile
-        ticks = self.actions[self.event]()
+        ticks, message = self.actions[self.event]()
         if ticks:
             self.game.time.new_turn()
+        if message:
+            Logger.add_message(message)
 
     def _none(self):
         print 'Why None event'
@@ -54,8 +56,7 @@ class MapStateLogicEngine(object):
         return 1
 
     def _move(self, target_tile):
-        ticks = self.player.move(target_tile)
-        return ticks
+        return self.player.move(target_tile)
 
     def _open_door(self, door_tile):
         return self.player.open_door(door_tile)
@@ -67,12 +68,12 @@ class MapStateLogicEngine(object):
         if self.tile.tip == 'exit':
             Logger.game_over_message = 'Congratulations. You found the way out.'
             self.game.change_state(self.game.game_over_screen_state)
-        return 0
+        return 0, None
 
     def _show_inventory(self):
         self.game.inventory_state.key = ''
         self.game.change_state(self.game.inventory_state)
-        return 0
+        return 0, None
 
     def _eat_item(self):
         self.game.inventory_state.key = 'edible'
@@ -84,28 +85,37 @@ class MapStateLogicEngine(object):
             return 0
 
     def _pick_item(self):
+        ticks = 0
+        message = None
         if not self.tile.container.is_empty():
             for item in self.tile.container:
                 if 'pickable' in item.properties:
                     self.tile.container.remove(item)
                     self.player.container.add(item)
                     item.tile = self.player.tile
-                    return 1
+                    message = 'You picked up %s' % item.ID
+                    break
+        return ticks, message
 
     def _drop_item(self):
+        ticks = 0
+        message = None
         if not self.player.container.is_empty():
             item = self.player.container[0]
-            self.player.container.transfer_to(self.tile, item)
-            return 1
+            self.player.container.remove(item)
+            self.player.tile.container.add(item)
+
+            message = 'You dropped %s' % item.ID
+        return ticks, message
 
     def _target(self):
         self.game.change_state(self.game.targeting_state)
-        return 0
+        return 0, None
 
     def _quit(self):
         self.game.change_state(self.game.main_menu_state)
-        return 0
+        return 0, None
 
     def _invalid_action(self):
         IO.set_active_event(None)
-        return 0
+        return 0, None

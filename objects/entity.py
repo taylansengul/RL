@@ -5,7 +5,6 @@ import os
 import data
 import pygame
 import container
-from systems.logger import Logger
 
 
 class Entity(object):
@@ -118,6 +117,7 @@ class Entity(object):
     #----- start ------
     def move(self, target_tile):
         ticks = 0
+        message = None
         b1 = 'movable' in self.properties
         b2 = not 'movement blocking' in target_tile.properties
         b3 = not target_tile.container.lookup(dict(properties='movement blocking'))
@@ -127,16 +127,17 @@ class Entity(object):
             target_tile.container.add(self)
             self.tile = target_tile
             ticks = 1
-        Logger.add_message('Moved.')
-        return ticks
+            message = 'Moved'
+        return ticks, message
 
     def open_door(self, target_tile):
         ticks = 0
+        message = None
         if 'can open doors' in self.properties and target_tile.tip == 'open door':
             target_tile.set_tip('open door')
-            Logger.add_message('A door has been opened.')
             ticks = 1
-        return ticks
+            message = 'A door has been opened.'
+        return ticks, message
     #----- end -----
 
     # ATTACK - TAKE HIT - DIE
@@ -145,25 +146,30 @@ class Entity(object):
         ticks = 1
         damage = max(self.attack - other.defense, 0)
         other.take_hit(damage)
-        Logger.add_message('%s hit %s for %d damage.' % (self.ID, other.ID, damage))
-        return ticks
+        message = '%s hit %s for %d damage.' % (self.ID, other.ID, damage)
+        return ticks, message
 
     def take_hit(self, damage):
         self.hp.change_current(-damage)
-        self.update_status()
+        ticks, message = self.update_status()
+        return ticks, message
 
     def update_status(self):
+        ticks = 0
+        message = None
         assert 'NPC' in self.properties or 'player' in self.properties
         if self.hp.is_zero():
             self.is_alive = False
             if 'player' in self.properties:
-                Logger.game_over_message = 'You died of bleeding.'
+                # todo: should go to game_over_message
+                message = 'You died.'
         # is self dead
         if 'NPC' in self.properties:
             if not self.is_alive:
-                Logger.add_message('%s is dead.' % self.ID)
+                message = '%s is dead.' % self.ID
                 self.tile.container.remove(self)
                 Entity.remove_old(self)
+        return ticks, message
 
     def render_icon_to(self, screen):
         if self.image:
@@ -176,6 +182,7 @@ class Entity(object):
                      color=self.color,
                      horizontal_align='center',
                      vertical_align='center')
+            print self.ID, self.tile.screen_position
             t.render()
 
     def render_description_to(self, screen):
