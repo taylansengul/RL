@@ -42,14 +42,12 @@ class Game(object):
         while self.is_in_loop:
             # get input
             IO.compute_active_event(self.current_state.ID)
-            # if there is input
-            if IO.active_event:
-                # determine action
-                self.current_state.determineAction()
-                # update graphics
-                self.current_state.updateScreen()
-                # refresh
-                self.refresh_main_screen()
+            # determine action
+            self.current_state.determineAction()
+            # update graphics
+            self.current_state.updateScreen()
+            # refresh
+            self.refresh_main_screen()
 
     def change_state(self, new_state):
         self.current_state = new_state

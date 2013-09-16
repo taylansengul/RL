@@ -6,25 +6,33 @@ from systems.IO import IO
 class MapStateLogicEngine(object):
     def __init__(self, game):
         self.game = game
+        self.to_do = None
         self.actions = {
             None: self._none,
             'up': self._direction,
             'down': self._direction,
+            'drop item': self._choose_to_drop,
             'left': self._direction,
             'right': self._direction,
             'descend': self._descend,
             'inventory_objects_list': self._show_inventory,
             'eat item': self._eat_item,
             'pick up item': self._pick_item,
-            'drop item': self._drop_item,
             'target': self._target,
             'quit': self._quit,
         }
 
     def run(self):
-        self.event = IO.get_active_event()
-        self.game.event_log.append(self.event)
-        ticks, message = self.actions[self.event]()
+        ticks, message = 0, None
+        if self.to_do == 'drop from inventory':
+            item = self.game.inventory_state.selected_item
+            self.to_do = None
+            ticks, message = Entity.player.drop(item)
+        else:
+            self.event = IO.get_active_event()
+            self.game.event_log.append(self.event)
+            ticks, message = self.actions[self.event]()
+
         if ticks:
             self.game.time.new_turn()
         if message:
@@ -32,7 +40,7 @@ class MapStateLogicEngine(object):
 
     def _none(self):
         print 'Why None event'
-        return 0
+        return 0, None
 
     def _direction(self):
         print Entity.player, Entity.player.tile
@@ -95,16 +103,11 @@ class MapStateLogicEngine(object):
                 break
         return ticks, message
 
-    def _drop_item(self):
-        ticks = 0
-        message = None
-        if not Entity.player.container.is_empty():
-            item = Entity.player.container[0]
-            Entity.player.container.remove(item)
-            Entity.player.tile.container.add(item)
-
-            message = 'You dropped %s' % item.ID
-        return ticks, message
+    def _choose_to_drop(self):
+        self._choose_item_from_inventory('')
+        self.to_do = 'drop from inventory'
+        IO.set_active_event(None)
+        return 0, None
 
     def _target(self):
         self.game.change_state(self.game.targeting_state)
@@ -117,3 +120,7 @@ class MapStateLogicEngine(object):
     def _invalid_action(self):
         IO.set_active_event(None)
         return 0, None
+
+    def _choose_item_from_inventory(self, key):
+        self.game.inventory_state.key = key
+        self.game.change_state(self.game.inventory_state)

@@ -53,11 +53,10 @@ class Inventory_State(object):
         if self.selected_item:
             if self.key == 'edible':
                 Entity.player.consume(self.selected_item)
-                self._go_to_map_state()
-
             elif self.key == 'consumable':
                 Entity.player.consume(self.selected_item)
-                self._go_to_map_state()
+
+            self._go_to_map_state()
 
     def updateScreen(self):
         self._render_inventory_menu()

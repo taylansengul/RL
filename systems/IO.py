@@ -48,10 +48,13 @@ class IO(object):
         """compute the active event"""
         # reset variables
         IO.previous_event = IO.active_event  # previous event = previous active event
-        IO.active_event = None
         IO.click_coordinates = (-1, -1)
         IO.hover_coordinates = (-1, -1)
         # wait for input
+        if IO.active_event == 'pass':
+            IO.active_event = None
+            return
+        IO.active_event = None
         event = pygame.event.wait()
         if event.type == pygame.MOUSEBUTTONDOWN:  # mouse click coordinates
             x, y = event.pos

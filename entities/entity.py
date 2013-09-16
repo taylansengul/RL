@@ -79,6 +79,16 @@ class Entity(object):
 
     # OBJECTS HANDLING
     # ---- start -----
+    def drop(self, item):
+        ticks = 0
+        message = None
+        if item is None or item not in self.container:
+            return ticks, message
+        self.container.remove(item)
+        self.tile.container.add(item)
+        item.tile = self.tile
+        message = 'You dropped %s' % item.ID
+        return ticks, message
 
     def consume(self, item):
         assert 'consumable' in item.properties
@@ -181,7 +191,6 @@ class Entity(object):
                      color=self.color,
                      horizontal_align='center',
                      vertical_align='center')
-            print self.ID, self.tile.screen_position
             t.render()
 
     def render_description_to(self, screen):
