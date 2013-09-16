@@ -1,14 +1,15 @@
+common_NPC_properties = 'NPC, can open doors, container, movable, alive, movement blocking'
 dictionary = {'rat':{'ID': 'rat',
                      'icon': 'r',
                      'color': 'red',
-                     'properties': 'NPC, movable, is alive, movement blocking',
+                     'properties': common_NPC_properties,
                      'hp': 1,
                      'attack': 3,
                      'defense': 1},
               'orc':{'ID': 'orc',
                      'icon': 'o',
                      'color': 'red',
-                     'properties': 'NPC, is alive, movement blocking',
+                     'properties': common_NPC_properties,
                      'hp': 3,
                      'attack': 3,
                      'defense': 2}}

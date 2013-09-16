@@ -40,33 +40,32 @@ class Entity(object):
 
     def __init__(self, **kwargs):
         self.ID = kwargs['ID']  # every entity must have an ID
+        self.properties = kwargs.get('properties', '')
         self.tile = kwargs.get('tile', self)  # if no tile it must be a tile and hence it points to itself
         self.icon = kwargs.get('icon', '?')
         self.color = kwargs.get('color', None)
-        self.properties = kwargs.get('properties', '')
         self.effects = kwargs.get('effects', {})
         self.description = kwargs.get('description', '')
         if 'container' in self.properties:
             self.container = container.Container()
-            for ID in kwargs.get('entities', []):  # creating self.entities from string list
-                item_kwargs = data.game_items.dictionary[ID]
-                new_item = Entity(tile=self.tile, **item_kwargs)
-                self.container.add(new_item)
         if 'stackable' in self.properties:
             self.quantity = kwargs.get('quantity', 1)
         if 'NPC' in self.properties or 'player' in self.properties:
             self.attack = kwargs['attack']
             self.defense = kwargs['defense']
-            self.hp = Resource(owner=self, maximum=kwargs['hp'])
+        if 'alive' in self.properties:
+            self.hp = Resource(maximum=kwargs['hp'])
             self.is_alive = True
-            self.current_conditions = kwargs.get('conditions', '')
         if 'player' in self.properties:
-            self.hunger = Resource(owner=self, maximum=100)
-            for condition in kwargs.get('conditions', []):  # if there are conditions
-                getattr(self, condition['effects']).add_condition(condition)
-            self.money = 1000
-            self.visibility_radius = kwargs['visibility radius']
             self.name = 'George'
+        if 'needs food' in self.properties:
+            self.hunger = Resource(maximum=kwargs['hunger'])
+        if 'has vision' in self.properties:
+            self.visibility_radius = kwargs['visibility radius']
+
+        self.current_conditions = kwargs.get('conditions', '')
+        for condition in kwargs.get('conditions', []):  # if there are conditions
+            getattr(self, condition['effects']).add_condition(condition)
 
         #todo: images
         if kwargs.get('image', None):

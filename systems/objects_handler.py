@@ -16,6 +16,10 @@ class Objects_Handler():
         kwargs.update(data.classes.player_settings)
         kwargs['tile'] = player_tile
         player = Player(self.game, **kwargs)
+        for ID in kwargs.get('inventory', None):  # creating self.container from string list
+            item_kwargs = data.game_items.dictionary[ID]
+            new_item = Entity(tile=player.tile, **item_kwargs)
+            player.container.add(new_item)
         player_tile.container.add(player)
         player.update_vision()
 

@@ -67,8 +67,7 @@ class Player(Entity):
         line_height = 16
         contexts = [self.name,
                     'hp: %d/%d' % (self.hp.current, self.hp.maximum),
-                    'hunger: %d/%d' % (self.hunger.current, self.hunger.maximum),
-                    'money: %d' % self.money]
+                    'hunger: %d/%d' % (self.hunger.current, self.hunger.maximum)]
         l = len(contexts)
         screens = [self.game.map_state.screens[PLAYER_SCREEN]]*l
         coordinates = [(0, j*line_height) for j in range(l)]
