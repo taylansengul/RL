@@ -36,7 +36,6 @@ class Game(object):
         self.game_world = None
         self.ai = None
         self.objects_handler = None
-        self.resource_manager = None
         # also player is created
 
     def loop(self):

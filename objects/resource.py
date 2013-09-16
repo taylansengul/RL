@@ -1,4 +1,5 @@
 import copy
+from systems.resource_manager import ResourceManager
 
 
 class Resource(object):
@@ -33,12 +34,12 @@ class Resource(object):
         # need to make a deepcopy in order to not mutate the properties of a stackable game item
         condition_copy = copy.deepcopy(condition)
         self.current_conditions.append(condition_copy)
-        self.game.resource_manager.add_resource(self)
+        ResourceManager.add_resource(self)
 
     def remove_condition(self, condition):
         self.current_conditions.remove(condition)
         if not self.current_conditions:
-            self.game.resource_manager.remove_resource(self)
+            ResourceManager.remove_resource(self)
 
     def update(self):
         total_change = 0

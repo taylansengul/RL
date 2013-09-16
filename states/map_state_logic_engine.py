@@ -24,8 +24,6 @@ class MapStateLogicEngine(object):
     def run(self):
         self.event = IO.get_active_event()
         self.game.event_log.append(self.event)
-        self.player = Entity.player
-        self.tile = self.player.tile
         ticks, message = self.actions[self.event]()
         if ticks:
             self.game.time.new_turn()
@@ -37,7 +35,8 @@ class MapStateLogicEngine(object):
         return 0
 
     def _direction(self):
-        target_tile = self.game.game_world.dungeon.get_neighbor_tile(self.tile, self.event)
+        print Entity.player, Entity.player.tile
+        target_tile = self.game.game_world.dungeon.get_neighbor_tile(Entity.player.tile, self.event)
         if not target_tile or 'movement blocking' in target_tile.properties:
             return self._invalid_action()
         elif self.game.event_log[-2] == 'close door':
@@ -51,21 +50,21 @@ class MapStateLogicEngine(object):
 
     def _attack(self, target_tile):
         NPC = target_tile.container[0]
-        self.player.attack_to(NPC)
-        NPC.attack_to(self.player)
+        Entity.player.attack_to(NPC)
+        NPC.attack_to(Entity.player)
         return 1
 
     def _move(self, target_tile):
-        return self.player.move(target_tile)
+        return Entity.player.move(target_tile)
 
     def _open_door(self, door_tile):
-        return self.player.open_door(door_tile)
+        return Entity.player.open_door(door_tile)
 
     def _close_door(self, door_tile):
-        return self.player.close_door(door_tile)
+        return Entity.player.close_door(door_tile)
 
     def _descend(self):
-        if self.tile.tip == 'exit':
+        if Entity.player.tile.tip == 'exit':
             Logger.game_over_message = 'Congratulations. You found the way out.'
             self.game.change_state(self.game.game_over_screen_state)
         return 0, None
@@ -80,30 +79,29 @@ class MapStateLogicEngine(object):
         self.game.change_state(self.game.inventory_state)
         item = self.game.inventory_state.selected_item
         if item:
-            return self.player.consume(item)
+            return Entity.player.consume(item)
         else:
             return 0
 
     def _pick_item(self):
         ticks = 0
         message = None
-        if not self.tile.container.is_empty():
-            for item in self.tile.container:
-                if 'pickable' in item.properties:
-                    self.tile.container.remove(item)
-                    self.player.container.add(item)
-                    item.tile = self.player.tile
-                    message = 'You picked up %s' % item.ID
-                    break
+        for item in Entity.player.tile.container:
+            if 'pickable' in item.properties:
+                Entity.player.tile.container.remove(item)
+                Entity.player.container.add(item)
+                item.tile = Entity.player.tile
+                message = 'You picked up %s' % item.ID
+                break
         return ticks, message
 
     def _drop_item(self):
         ticks = 0
         message = None
-        if not self.player.container.is_empty():
-            item = self.player.container[0]
-            self.player.container.remove(item)
-            self.player.tile.container.add(item)
+        if not Entity.player.container.is_empty():
+            item = Entity.player.container[0]
+            Entity.player.container.remove(item)
+            Entity.player.tile.container.add(item)
 
             message = 'You dropped %s' % item.ID
         return ticks, message

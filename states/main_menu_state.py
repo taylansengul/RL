@@ -4,7 +4,6 @@ from systems.time import Time
 from systems.logger import Logger
 from objects.game_world import Game_World
 from systems.objects_handler import Objects_Handler
-from systems.resource_manager import Resource_Manager
 from systems.IO import IO
 
 
@@ -55,7 +54,6 @@ class Main_Menu_State(object):
         self.game.time = Time(self.game)
         self.game.game_world = Game_World(self.game)
         self.game.objects_handler = Objects_Handler(self.game)
-        self.game.resource_manager = Resource_Manager(self.game)
 
         # set current dungeon in game world
         self.game.game_world.set_current_dungeon()

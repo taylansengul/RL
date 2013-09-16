@@ -1,6 +1,7 @@
 from graphics.text import Text
 from globals import *
 from objects.entity import Entity
+from systems.resource_manager import ResourceManager
 
 
 class Time(object):
@@ -17,7 +18,7 @@ class Time(object):
         # do not need ai: self.game.ai.determine_total_action()
         self.turn += 1
         # run resource manager
-        self.game.resource_manager.manage()
+        ResourceManager.manage()
 
     def render_turn(self):
         t = Text(screen=self.game.map_state.screens[GAME_INFO_SCREEN],
