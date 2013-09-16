@@ -1,6 +1,6 @@
 import random
 import pygame
-from systems.io_handler import Io_Handler
+from systems.IO import IO
 import settings
 import states
 import graphics
@@ -12,7 +12,6 @@ class Game(object):
         # initializing systems
         print 'Initializing Systems...',
         pygame.init()
-        self.io_handler = Io_Handler(self)
         # Setup fonts
         # done in graphics.fonts
         print 'done.'
@@ -32,7 +31,7 @@ class Game(object):
         # initialize screens
         self._initialize_screens()
         # initialized at main menu state:
-        self.event_log = [None]
+        self.event_log = [None]  # todo: clear this
         self.time = None
         self.game_world = None
         self.ai = None
@@ -43,9 +42,9 @@ class Game(object):
     def loop(self):
         while self.is_in_loop:
             # get input
-            self.io_handler.compute_active_event()
+            IO.compute_active_event(self.current_state.ID)
             # if there is input
-            if self.io_handler.active_event:
+            if IO.active_event:
                 # determine action
                 self.current_state.determineAction()
                 # update graphics

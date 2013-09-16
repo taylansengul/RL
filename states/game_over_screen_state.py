@@ -1,6 +1,7 @@
 from globals import *
 from graphics.text import Text
 from systems.logger import Logger
+from systems.IO import IO
 
 
 class Game_Over_Screen_State(object):
@@ -13,7 +14,7 @@ class Game_Over_Screen_State(object):
         self.updateScreen()
 
     def determineAction(self):
-        event = self.game.io_handler.get_active_event()
+        event = IO.get_active_event()
         if event == 'pass':
             self.game.change_state(self.game.main_menu_state)
 

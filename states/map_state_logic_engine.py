@@ -1,5 +1,6 @@
 from objects.entity import Entity
 from systems.logger import Logger
+from systems.IO import IO
 
 
 class MapStateLogicEngine(object):
@@ -21,7 +22,7 @@ class MapStateLogicEngine(object):
         }
 
     def run(self):
-        self.event = self.game.io_handler.get_active_event()
+        self.event = IO.get_active_event()
         self.game.event_log.append(self.event)
         self.player = Entity.player
         self.tile = self.player.tile
@@ -95,4 +96,4 @@ class MapStateLogicEngine(object):
         self.game.change_state(self.game.main_menu_state)
 
     def _invalid_action(self):
-        self.game.io_handler.set_active_event(None)
+        IO.set_active_event(None)

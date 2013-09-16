@@ -1,6 +1,7 @@
 from globals import *
 from graphics.menu import Menu
 from objects.entity import Entity
+from systems.IO import IO
 
 
 class Inventory_State(object):
@@ -33,7 +34,7 @@ class Inventory_State(object):
 
     def determineAction(self):
         self.selected_item = None
-        event = self.game.io_handler.get_active_event()
+        event = IO.get_active_event()
         menu_actions = {
             None: self._none,
             'down': self._next,

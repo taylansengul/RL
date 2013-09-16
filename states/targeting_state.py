@@ -1,6 +1,7 @@
 from globals import *
 import pygame
 from objects.entity import Entity
+from systems.IO import IO
 
 
 class Targeting_State(object):
@@ -17,7 +18,7 @@ class Targeting_State(object):
         self.highlighted_tile = Entity.player.tile
 
     def determineAction(self):
-        event = self.game.io_handler.get_active_event()
+        event = IO.get_active_event()
         if event in ['left', 'right', 'up', 'down']:
             self.highlighted_tile = self.game.game_world.dungeon.get_neighbor_tile(self.highlighted_tile, event)
         elif event == 'select':
