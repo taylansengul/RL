@@ -7,8 +7,7 @@ class Resource(object):
     Pair object consists of two elements (current and maximum) where first element is the current status and the second
     element is the maximum maximum.
     """
-    def __init__(self, game, owner=None, minimum=0, current=None, maximum=0):
-        self.game = game
+    def __init__(self, owner=None, minimum=0, current=None, maximum=0):
         self.owner = owner
         self.minimum = minimum
         self.maximum = maximum
@@ -55,5 +54,3 @@ class Resource(object):
 
     def __str__(self):
         return str(self.current) + ' / ' + str(self.maximum)
-
-

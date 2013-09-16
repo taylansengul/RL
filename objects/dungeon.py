@@ -130,7 +130,7 @@ class Dungeon(object):
         """Transfer from self.pre_map2D to self.map2D"""
         for m in range(0, self.dungeon_width):
             for n in range(0, self.dungeon_height):
-                self.map2D[m][n] = Tile(self.game, coordinates=(m, n), tip=self.pre_map2D[m][n])
+                self.map2D[m][n] = Tile(coordinates=(m, n), tip=self.pre_map2D[m][n])
 
     def get_neighboring_coordinates(self, center, radius=1, self_included=True):
         """Returns coordinates which are neighbors of given x, y and lies in the dungeon grid"""

@@ -17,14 +17,14 @@ class Tile(Entity):
              'closed door': {'icon': '+', 'color': 'red'},
              'dirt': {'icon': ' ', 'color': 'black', 'properties': wall_properties}}
 
-    def __init__(self, game, coordinates=None, tip=''):
+    def __init__(self, coordinates=None, tip=''):
         kwargs = {'coordinates': coordinates,
                   'icon': Tile.tiles[tip]['icon'],
                   'color': Tile.tiles[tip]['color'],
                   'properties': Tile.tiles[tip].get('properties', None),
                   'image': Tile.tiles[tip].get('image', None),
                   'ID': tip}
-        super(Tile, self).__init__(game, **kwargs)
+        super(Tile, self).__init__(**kwargs)
         self.coordinates = coordinates
         self.tip = tip
         self.is_explored = False  # tiles which are currently or previously visible . once explored, always explored.
@@ -57,7 +57,7 @@ class Tile(Entity):
         if self.image:
             screen.surface.blit(self.image, self.screen_position)
         else:
-            pygame.draw.rect(screen.surface, self.color, self.screen_position)  # tile background
+            pygame.draw.rect(screen.surface, ColorID[self.color], self.screen_position)  # tile background
         # self.draw_tile_border(screen)  # uncomment to draw tile border
 
     def draw_tile_objects(self, screen):

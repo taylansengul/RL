@@ -6,6 +6,10 @@ from systems.logger import Logger
 
 
 class Player(Entity):
+    def __init__(self, game, **kwargs):
+        self.game = game
+        super(Player, self).__init__(**kwargs)
+
     @property
     def tiles_in_visibility_radius(self):
         """returns tiles in visibility radius"""

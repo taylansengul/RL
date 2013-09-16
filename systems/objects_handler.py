@@ -26,7 +26,7 @@ class Objects_Handler():
             for _ in range(number_of_objects):
                 tile = self.game.game_world.dungeon.get_random_room_floor_tile_with_no_objects()
                 kwargs = data.game_items.dictionary[item['id']]
-                new_item = Entity(self.game, tile=tile, **kwargs)
+                new_item = Entity(tile=tile, **kwargs)
                 tile.container.append(new_item)
         print 'done.'
 
@@ -37,6 +37,6 @@ class Objects_Handler():
             for _ in range(number_of_objects):
                 tile = self.game.game_world.dungeon.get_random_room_floor_tile_with_no_objects()
                 kwargs = data.NPC.dictionary[item['id']]
-                new_NPC = Entity(self.game, tile=tile, **kwargs)
+                new_NPC = Entity(tile=tile, **kwargs)
                 tile.container.add(new_NPC)
         print 'done.'
