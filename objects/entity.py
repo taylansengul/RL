@@ -87,7 +87,6 @@ class Entity(object):
         for condition in item.effects:
             getattr(self, condition['effects']).add_condition(condition)
         self.container.remove(item)
-        self.game.time.new_turn()
 
     @staticmethod
     def get_condition(key, search_string):
@@ -118,6 +117,7 @@ class Entity(object):
     # MOVEMENT HANDLING
     #----- start ------
     def move(self, target_tile):
+        ticks = 0
         b1 = 'movable' in self.properties
         b2 = not 'movement blocking' in target_tile.properties
         b3 = not target_tile.container.lookup(dict(properties='movement blocking'))
@@ -126,26 +126,27 @@ class Entity(object):
             self.tile.container.remove(self)
             target_tile.container.add(self)
             self.tile = target_tile
-            self.game.time.new_turn()
+            ticks = 1
         Logger.add_message('Moved.')
+        return ticks
 
     def open_door(self, target_tile):
-        if target_tile.tip != 'open door':
-            return False
-        if 'can open doors' in self.properties:
+        ticks = 0
+        if 'can open doors' in self.properties and target_tile.tip == 'open door':
             target_tile.set_tip('open door')
             Logger.add_message('A door has been opened.')
-            return True
-        else:
-            return False
+            ticks = 1
+        return ticks
     #----- end -----
 
     # ATTACK - TAKE HIT - DIE
     # ---- start ----
     def attack_to(self, other):
+        ticks = 1
         damage = max(self.attack - other.defense, 0)
         other.take_hit(damage)
         Logger.add_message('%s hit %s for %d damage.' % (self.ID, other.ID, damage))
+        return ticks
 
     def take_hit(self, damage):
         self.hp.change_current(-damage)
