@@ -39,7 +39,7 @@ class Entity(object):
         Entity.player = None
 
     def __init__(self, **kwargs):
-        self.ID = kwargs['ID']  # every entity must have an ID
+        self.ID = kwargs.get('ID', None)
         self.properties = kwargs.get('properties', '')
         self.tile = kwargs.get('tile', self)  # if no tile it must be a tile and hence it points to itself
         self.icon = kwargs.get('icon', '?')
@@ -51,8 +51,8 @@ class Entity(object):
         if 'stackable' in self.properties:
             self.quantity = kwargs.get('quantity', 1)
         if 'NPC' in self.properties or 'player' in self.properties:
-            self.attack = kwargs['attack']
-            self.defense = kwargs['defense']
+            self.attack = kwargs.get('attack', None)
+            self.defense = kwargs.get('defense', None)
         if 'alive' in self.properties:
             self.hp = Resource(maximum=kwargs['hp'])
             self.is_alive = True
@@ -84,9 +84,12 @@ class Entity(object):
         if item is None or item not in self.container:
             return ticks, message
         self.container.remove(item)
+        print self.tile.ID, self.ID
         self.tile.container.add(item)
+        print self.tile.ID, self.ID
         item.tile = self.tile
         message = 'You dropped %s' % item.ID
+
         return ticks, message
 
     def consume(self, item):
