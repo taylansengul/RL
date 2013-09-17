@@ -40,11 +40,10 @@ class Entity(object):
     def __init__(self, **kwargs):
         self.ID = kwargs.get('ID', None)
         self.properties = kwargs.get('properties', '')
-        self.tile = kwargs.get('tile', self)  # if no tile it must be a tile and hence it points to itself
-        self.icon = kwargs.get('icon', '?')
-        self.color = kwargs.get('color', None)
-        self.effects = kwargs.get('effects', {})
-        self.description = kwargs.get('description', '')
+        if 'tile' in self.properties:
+            self.tile = self
+        else:
+            self.tile = kwargs.get('tile', None)
         if 'container' in self.properties:
             self.container = container.Container()
         if 'stackable' in self.properties:
@@ -61,34 +60,41 @@ class Entity(object):
             self.hunger = Resource(maximum=kwargs['hunger'])
         if 'has vision' in self.properties:
             self.visibility_radius = kwargs['visibility radius']
+        if 'drawable' in self.properties:
+            self.icon = kwargs.get('icon', '?')
+            self.description = kwargs.get('description', '')
+            self.color = kwargs.get('color', None)
+            if kwargs.get('image', None):
+                image_location = os.path.join('images', kwargs['image'])
+                self.image = pygame.image.load(image_location).convert_alpha()
+            else:
+                self.image = None
 
+        self.effects = kwargs.get('effects', {})
         self.current_conditions = kwargs.get('conditions', '')
         for condition in kwargs.get('conditions', []):  # if there are conditions
             getattr(self, condition['effects']).add_condition(condition)
 
         #todo: images
-        if kwargs.get('image', None):
-            image_location = os.path.join('images', kwargs['image'])
-            self.image = pygame.image.load(image_location).convert_alpha()
-        else:
-            self.image = None
 
         Entity.add_new(self)
 
     # OBJECTS HANDLING
     # ---- start -----
+    def change_tile(self, new_tile):
+        if self.tile and self in self.tile.container:
+            self.tile.container.remove(self)
+        new_tile.container.add(self)
+        self.tile = new_tile
+
     def drop(self, item):
         ticks = 0
         message = None
         if item is None or item not in self.container:
             return ticks, message
         self.container.remove(item)
-        print self.tile.ID, self.ID
-        self.tile.container.add(item)
-        print self.tile.ID, self.ID
-        item.tile = self.tile
+        item.change_tile(self.tile)
         message = 'You dropped %s' % item.ID
-
         return ticks, message
 
     def consume(self, item):

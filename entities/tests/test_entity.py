@@ -71,6 +71,7 @@ class TestEntity(TestCase):
         tile.container.add(player)
         thing = self.new_thing()
         player.container.add(thing)
+        self.assertEquals(player.container, [thing])
         player.drop(thing)
         self.assertEquals(player.container, [])
-        self.assertEquals(player.tile.container, [thing])
+        self.assertEquals(player.tile.container, [player, thing])

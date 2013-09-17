@@ -6,8 +6,8 @@ import settings
 
 class Tile(Entity):
     # todo: walkable tiles.
-    floor_properties = 'container'
-    wall_properties = 'movement blocking, light blocking'
+    floor_properties = 'tile, drawable, container'
+    wall_properties = 'tile, drawable, movement blocking, light blocking'
     tiles = {'': {'icon': '', 'color': 'white'},
              'wall': {'icon': '#', 'color': 'red', 'properties': wall_properties},
              'entrance': {'icon': '>', 'color': 'yellow', 'properties': floor_properties},

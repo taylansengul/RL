@@ -1,4 +1,4 @@
-common_NPC_properties = 'NPC, can open doors, container, movable, alive, movement blocking'
+common_NPC_properties = 'NPC, can open doors, container, movable, alive, movement blocking, drawable'
 dictionary = {'rat':{'ID': 'rat',
                      'icon': 'r',
                      'color': 'red',

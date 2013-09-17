@@ -1,3 +1,4 @@
+pickable_item_properties = 'pickable, drawable'
 dictionary = {
     'apple': {
         'ID': 'apple',
@@ -6,7 +7,7 @@ dictionary = {
         'effects': [{'effects': 'hunger', 'change': [30], 'type': 'temporary'}],
         'icon': 'F',
         'image': 'eggplant_32.png',
-        'properties': 'pickable, edible, consumable, stackable',
+        'properties': pickable_item_properties + 'edible, consumable, stackable',
         'type': 'game item'},
     'small medkit': {
         'ID': 'small medkit',
@@ -15,7 +16,7 @@ dictionary = {
         'effects': [{'effects': 'hp', 'change': [1, 1], 'type': 'temporary'}],
         'icon': 'm',
         'image': 'medkit_32.png',
-        'properties': 'pickable, drinkable, consumable, stackable',
+        'properties': pickable_item_properties + 'drinkable, consumable, stackable',
         'type': 'game item'},
     'large medkit': {
         'ID': 'large medkit',
@@ -24,12 +25,12 @@ dictionary = {
         'effects': [{'effects': 'hp', 'change': [2, 2], 'type': 'temporary'}],
         'icon': 'M',
         'image': 'medkit_32.png',
-        'properties': 'pickable, drinkable, consumable, stackable',
+        'properties': pickable_item_properties + 'drinkable, consumable, stackable',
         'type': 'game item'},
     'lantern': {
         'ID': 'lantern',
         'color': 'blue',
         'description': 'no usage',
         'icon': 'L',
-        'properties': 'pickable',
+        'properties': pickable_item_properties,
         'type': 'game item'}}

@@ -1,5 +1,5 @@
 # CONDITIONS
-common_player_properties = 'player, can open doors, container, movable, alive, has vision, needs food'
+common_player_properties = 'player, can open doors, container, movable, alive, has vision, needs food, drawable'
 food_needing = {'effects': 'hunger', 'change': [-1], 'type': 'permanent'}
 regeneration = {'effects': 'hp', 'change': [.1], 'type': 'permanent'}
 initial_poison = {'effects': 'hp', 'change': [-1, -1], 'type': 'temporary'}
