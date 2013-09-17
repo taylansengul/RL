@@ -15,6 +15,9 @@ class TestEntity(TestCase):
     def new_thing(self):
         return Entity(properties='thing')
 
+    def new_pickable_thing(self):
+        return Entity(properties='pickable, thing')
+
     def new_tile(self):
         return Entity(ID='tile', properties='container')
 
@@ -75,3 +78,16 @@ class TestEntity(TestCase):
         player.drop(thing)
         self.assertEquals(player.container, [])
         self.assertEquals(player.tile.container, [player, thing])
+
+    def test_pick(self):
+        player = self.new_player()
+        tile = self.new_tile()
+        player.set_tile(tile)
+        thing = self.new_pickable_thing()
+        thing.set_tile(tile)
+        self.assertEquals(player.container, [])
+        player.pick(thing)
+        self.assertEquals(player.container, [thing])
+        self.assertEquals(player.tile.container, [player])
+        self.assertEquals(player.tile, tile)
+        self.assertEquals(thing.tile, None)

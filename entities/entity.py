@@ -81,9 +81,11 @@ class Entity(object):
 
     # OBJECTS HANDLING
     # ---- start -----
-    def change_tile(self, new_tile):
-        if self.tile and self in self.tile.container:
-            self.tile.container.remove(self)
+    def remove_tile(self):
+        self.tile.container.remove(self)
+        self.tile = None
+
+    def set_tile(self, new_tile):
         new_tile.container.add(self)
         self.tile = new_tile
 
@@ -93,8 +95,16 @@ class Entity(object):
         if item is None or item not in self.container:
             return ticks, message
         self.container.remove(item)
-        item.change_tile(self.tile)
+        item.set_tile(self.tile)
         message = 'You dropped %s' % item.ID
+        return ticks, message
+
+    def pick(self, item):
+        ticks = 1
+        message = 'You picked up %s' % item.ID
+        assert 'pickable' in item.properties
+        item.remove_tile()
+        self.container.add(item)
         return ticks, message
 
     def consume(self, item):

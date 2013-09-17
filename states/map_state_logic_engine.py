@@ -94,13 +94,16 @@ class MapStateLogicEngine(object):
     def _pick_item(self):
         ticks = 0
         message = None
-        for item in Entity.player.tile.container:
-            if 'pickable' in item.properties:
-                Entity.player.tile.container.remove(item)
-                Entity.player.container.add(item)
-                item.tile = Entity.player.tile
-                message = 'You picked up %s' % item.ID
-                break
+        C = Entity.player.tile.container
+        items = [item for item in Entity.player.tile.container if 'pickable' in item.properties]
+        if len(items) == 0:
+            return ticks, message
+        elif len(items) == 1:
+            item = items[0]
+            return Entity.player.pick(item)
+        elif len(items) > 1:
+            self._choose_item_from_inventory('')
+            self.to_do = 'pick up item'
         return ticks, message
 
     def _choose_to_drop(self):
