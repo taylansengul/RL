@@ -9,5 +9,5 @@ class Game_World(object):
 
     def set_current_dungeon(self):
         kwargs = data.level_design.dungeon_level_1
-        self.dungeon = Dungeon(self.game, **kwargs)
+        self.dungeon = Dungeon(kwargs)
         self.dungeon.create_map()

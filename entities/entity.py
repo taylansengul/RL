@@ -2,7 +2,6 @@ from resource import Resource
 from graphics.text import Text
 from globals import *
 import os
-import data
 import pygame
 import container
 

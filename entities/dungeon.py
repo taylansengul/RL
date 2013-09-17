@@ -3,9 +3,9 @@ from random import randint, choice
 from rectangle import Rectangle
 from entity import Entity
 
+
 class Dungeon(object):
-    def __init__(self, game, **kwargs):
-        self.game = game
+    def __init__(self, kwargs):
         self.rooms = []
         self.room_number = 0  # to be set in self.create._dungeon
         self.min_room_number = kwargs['min_room_number']
@@ -18,7 +18,6 @@ class Dungeon(object):
         self.dungeon_height = kwargs['dungeon height']
         self.pre_map2D = [[None for _ in range(self.dungeon_height)] for _ in range(self.dungeon_width)]
         self.map2D = [[None for _ in range(self.dungeon_height)] for _ in range(self.dungeon_width)]
-        self.tiles = []
 
     def _add_room(self, rectangle):
         """ 1. Make each coordinate of the pre map which coincide with those given in rectangle a floor tile
