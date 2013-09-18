@@ -11,7 +11,7 @@ class IO(object):
     hover_coordinates = (-1, -1)
     keyboard_commands_dictionary = {
         MAP_STATE: {
-            pgl.K_i: 'inventory_objects_list',
+            pgl.K_i: 'show inventory',
             pgl.K_c: 'close door',
             pgl.K_e: 'eat item',
             pgl.K_g: 'pick up item',

@@ -113,9 +113,13 @@ class Entity(object):
 
     def consume(self, item):
         assert 'consumable' in item.properties
+        ticks = 1
+        message = '%s consumed a %s' % (self.ID, item.ID)
         for condition in item.effects:
             getattr(self, condition['effects']).add_condition(condition)
+
         self.container.rem(item)
+        return ticks, message
 
     @staticmethod
     def get_condition(key, search_string):

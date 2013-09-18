@@ -35,8 +35,8 @@ class Tile(Entity):
         self.icon = Tile.tiles[tip]['icon']
         self.color = Tile.tiles[tip]['color']
 
-    def set_visibility(self, bool):
-        if bool:
+    def set_visibility(self, a_boolean):
+        if a_boolean:
             self.is_visible = True
             self.is_explored = True
         else:

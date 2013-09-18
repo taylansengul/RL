@@ -3,10 +3,17 @@ from graphics.menu import Menu
 from entities.entity import Entity
 from systems.IO import IO
 
+DEFAULT_STATE = 'DEFAULT_STATE'
+CHOOSING_ITEM_FROM_MAP_STATE = 'CHOOSING_ITEM_FROM_MAP_STATE'
+DEFAULT_WITH_EMPTY_INVENTORY_STATE = 'DEFAULT_WITH_EMPTY_INVENTORY_STATE'
+SHOW_EDIBLE_ITEMS_STATE = 'SHOW_EDIBLE_ITEMS_STATE'
+SHOW_CONSUMABLE_ITEMS_STATE = 'SHOW_CONSUMABLE_ITEMS_STATE'
+
 
 class Inventory_State(object):
     """Inventory State of the game"""
     def __init__(self, game):
+        self.current_state = DEFAULT_STATE
         self.ID = INVENTORY_STATE
         self.game = game
         self.inventory_objects_list = None
@@ -35,28 +42,40 @@ class Inventory_State(object):
     def determineAction(self):
         self.selected_item = None
         event = IO.get_active_event()
-        menu_actions = {
+        choosing_actions = {
             None: self._none,
             'down': self._next,
             'up': self._prev,
-            'select': self._select,
-            'show edible items': self._show_edible_items,
-            'show consumable items': self._show_consumable_items,
-            'quit': self._go_to_map_state
+            'select': self._select
         }
-        if self.inventory_objects_list:  # if inventory_objects_list is non-empty
-            menu_actions[event]()
-        else:  # if inventory_objects_list is empty
-            if event == 'quit':
-                self._go_to_map_state()
+        menu_actions = {
+            CHOOSING_ITEM_FROM_MAP_STATE: choosing_actions,
+            DEFAULT_STATE: {
+                None: self._none,
+                'down': self._next,
+                'up': self._prev,
+                'show edible items': self._show_edible_items,
+                'show consumable items': self._show_consumable_items,
+                'quit': self._go_to_map_state
+            },
+            SHOW_EDIBLE_ITEMS_STATE: choosing_actions,
+            SHOW_CONSUMABLE_ITEMS_STATE: choosing_actions,
+            DEFAULT_WITH_EMPTY_INVENTORY_STATE: {
+                'quit': self._go_to_map_state
+            }
+        }
+        print self.current_state, event
+        menu_actions[self.current_state][event]()
 
         if self.selected_item:
-            if self.key == 'edible':
+            if self.current_state == CHOOSING_ITEM_FROM_MAP_STATE:
+                self._go_to_map_state()
+            elif self.current_state == SHOW_EDIBLE_ITEMS_STATE:
                 Entity.player.consume(self.selected_item)
-            elif self.key == 'consumable':
+                self._go_to_map_state()
+            elif self.current_state == SHOW_CONSUMABLE_ITEMS_STATE:
                 Entity.player.consume(self.selected_item)
-
-            self._go_to_map_state()
+                self._go_to_map_state()
 
     def updateScreen(self):
         self._render_inventory_menu()
@@ -66,6 +85,7 @@ class Inventory_State(object):
     # ---- ACTIONS ----
     def _go_to_map_state(self):
         self.game.change_state(self.game.map_state)
+        self.current_state = DEFAULT_STATE
 
     def _next(self):
         self.menu.next()
@@ -81,10 +101,12 @@ class Inventory_State(object):
 
     def _show_edible_items(self):
         self.key = 'edible'
+        self.current_state = SHOW_EDIBLE_ITEMS_STATE
         self.init()
 
     def _show_consumable_items(self):
         self.key = 'consumable'
+        self.current_state = SHOW_CONSUMABLE_ITEMS_STATE
         self.init()
 
     # ---------------------
