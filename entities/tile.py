@@ -54,11 +54,7 @@ class Tile(Entity):
         return pygame.Rect(c1, c2, c3, c3)
 
     def draw(self, screen):
-        if self.image:
-            screen.surface.blit(self.image, self.screen_position)
-        else:
-            pygame.draw.rect(screen.surface, ColorID[self.color], self.screen_position)  # tile background
-        # self.draw_tile_border(screen)  # uncomment to draw tile border
+        self.render_icon_to(screen)
 
     def draw_tile_objects(self, screen):
         if not 'container' in self.properties:

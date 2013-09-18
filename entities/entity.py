@@ -4,6 +4,7 @@ from globals import *
 import os
 import pygame
 import container
+import copy
 
 
 class Entity(object):
@@ -64,11 +65,7 @@ class Entity(object):
             self.icon = kwargs.get('icon', '?')
             self.description = kwargs.get('description', '')
             self.color = kwargs.get('color', None)
-            if kwargs.get('image', None):
-                image_location = os.path.join('images', kwargs['image'])
-                self.image = pygame.image.load(image_location).convert_alpha()
-            else:
-                self.image = None
+            self.image = kwargs.get('image', None)
 
         self.effects = kwargs.get('effects', {})
         self.current_conditions = kwargs.get('conditions', '')
@@ -82,7 +79,7 @@ class Entity(object):
     # OBJECTS HANDLING
     # ---- start -----
     def remove_tile(self):
-        self.tile.container.remove(self)
+        self.tile.container.rem(self)
         self.tile = None
 
     def set_tile(self, new_tile):
@@ -90,12 +87,19 @@ class Entity(object):
         self.tile = new_tile
 
     def drop(self, item):
+        # todo: move stackable into container
         ticks = 0
         message = None
         if item is None or item not in self.container:
             return ticks, message
-        self.container.remove(item)
-        item.set_tile(self.tile)
+        if 'stackable' in item.properties and item.quantity > 1:
+            self.container.rem(item)
+            new_item = copy.deepcopy(item)
+            new_item.quantity = 1
+            new_item.set_tile(self.tile)
+        else:
+            self.container.rem(item)
+            item.set_tile(self.tile)
         message = 'You dropped %s' % item.ID
         return ticks, message
 
@@ -111,7 +115,7 @@ class Entity(object):
         assert 'consumable' in item.properties
         for condition in item.effects:
             getattr(self, condition['effects']).add_condition(condition)
-        self.container.remove(item)
+        self.container.rem(item)
 
     @staticmethod
     def get_condition(key, search_string):
@@ -149,7 +153,7 @@ class Entity(object):
         b3 = not target_tile.container.get(properties='movement blocking')
 
         if b1 and b2 and b3 and b3:
-            self.tile.container.remove(self)
+            self.tile.container.rem(self)
             target_tile.container.add(self)
             self.tile = target_tile
             ticks = 1
@@ -193,13 +197,15 @@ class Entity(object):
         if 'NPC' in self.properties:
             if not self.is_alive:
                 message = '%s is dead.' % self.ID
-                self.tile.container.remove(self)
+                self.tile.container.rem(self)
                 Entity.remove_old(self)
         return ticks, message
 
     def render_icon_to(self, screen):
         if self.image:
-            screen.surface.blit(self.image, self.tile.screen_position)
+            image_location = os.path.join('images', self.image)
+            image = pygame.image.load(image_location).convert_alpha()
+            screen.surface.blit(image, self.tile.screen_position)
         else:
             t = Text(screen=screen,
                      font='map object',

@@ -47,11 +47,11 @@ class Container(list):
         else:
             self.append(entity)
 
-    def remove(self, entity):
+    def rem(self, entity):
         if 'stackable' in entity.properties and entity.quantity > 1:
             entity.quantity -= 1
         else:  # either (entity is stackable but entity.quantity = 1) or entity is not stackable
-            super(Container, self).remove(entity)
+            self.remove(entity)
 
     def is_empty(self):
         return self == []

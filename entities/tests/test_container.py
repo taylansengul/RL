@@ -87,14 +87,14 @@ class TestContainer(TestCase):
         container = self.new_container()
         container.add(apple)
         self.assertNotEquals(container, [])
-        container.remove(apple)
+        container.rem(apple)
         self.assertEquals(container, [])
 
     def test_remove_stackable1(self):
         a_stackable1 = self.new_stackable()
         container = self.new_container()
         container.add(a_stackable1)
-        container.remove(a_stackable1)
+        container.rem(a_stackable1)
         self.assertEquals(container, [])
 
     def test_remove_stackable2(self):
@@ -103,8 +103,8 @@ class TestContainer(TestCase):
         container = self.new_container()
         container.add(a_stackable1)
         container.add(a_stackable2)
-        container.remove(container.get(properties='stackable'))
-        container.remove(container.get(properties='stackable'))
+        container.rem(container.get(properties='stackable'))
+        container.rem(container.get(properties='stackable'))
         self.assertEquals(container, [])
 
     def transfer(self):
