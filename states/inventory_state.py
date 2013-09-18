@@ -71,20 +71,27 @@ class Inventory_State(object):
     def change_state(self):
         if self.current_state == CHOOSING_ITEM_FROM_MAP_STATE:
             self.game.change_state(self.game.map_state)
+            self.key = ''
+            self.current_state = DEFAULT_STATE
         elif self.current_state == SHOWING_EDIBLE_ITEMS_STATE:
             if self.selected_item:
                 Entity.player.consume(self.selected_item)
+            self.key = ''
+            self.current_state = DEFAULT_STATE
+            self.init()
         elif self.current_state == SHOWING_CONSUMABLE_ITEMS_STATE:
             if self.selected_item:
                 Entity.player.consume(self.selected_item)
+            self.key = ''
+            self.current_state = DEFAULT_STATE
+            self.init()
         elif self.current_state == DEFAULT_STATE:
             self.game.change_state(self.game.map_state)
+            self.key = ''
         elif self.current_state == EMPTY_STATE:
             self.game.change_state(self.game.map_state)
-
-        self.key = ''
-        self.current_state = DEFAULT_STATE
-        self.init()
+            self.key = ''
+            self.current_state = DEFAULT_STATE
 
     def determineAction(self):
         user_input = IO.active_event  # get user_input

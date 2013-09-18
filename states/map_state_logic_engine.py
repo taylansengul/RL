@@ -13,7 +13,6 @@ class MapStateLogicEngine(object):
         self.game = game
         self.current_state = DEFAULT_STATE
         self.actions = {
-            None: self._none,
             # DIRECTIONS
             'left': self._direction,
             'right': self._direction,
@@ -35,27 +34,25 @@ class MapStateLogicEngine(object):
         if S == DROP_ITEM_STATE:
             item = self.game.inventory_state.selected_item
             self.current_state = DEFAULT_STATE
-            ticks, message = Entity.player.drop(item)
+            if item:
+                ticks, message = Entity.player.drop(item)
         elif S == EAT_ITEM_STATE:
             item = self.game.inventory_state.selected_item
             self.current_state = DEFAULT_STATE
-            ticks, message = Entity.player.consume(item)
+            if item:
+                ticks, message = Entity.player.consume(item)
         elif S == DEFAULT_STATE:
             self.event = IO.active_event
-            self.game.event_log.append(self.event)
-            ticks, message = self.actions[self.event]()
+            if self.event:
+                self.game.event_log.append(self.event)
+                ticks, message = self.actions[self.event]()
 
         if ticks:
             self.game.time.new_turn()
         if message:
             Logger.add_message(message)
 
-    def _none(self):
-        print 'Why None event'
-        return 0, None
-
     def _direction(self):
-        print Entity.player, Entity.player.tile
         target_tile = self.game.game_world.dungeon.get_neighbor_tile(Entity.player.tile, self.event)
         if not target_tile or 'movement blocking' in target_tile.properties:
             return self._invalid_action()
