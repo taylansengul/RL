@@ -51,22 +51,10 @@ class Player(Entity):
             target_tile.set_tip('closed door')
             Logger.add_message('Door closed.')
 
-    def update_status(self):
-        # player hunger changes
-        super(Player, self).update_status()
-        if self.hunger.is_zero():
-            self.is_alive = False
-            Logger.game_over_message = 'You died of hunger.'
-        # player vision changes
-        Entity.player.update_vision()
-
-        if not self.is_alive:  # player dead
-            self.game.change_state(self.game.game_over_screen_state)
-
     def render_stats(self):
         line_height = 16
         contexts = [self.name,
-                    'hp: %d/%d' % (self.hp.current, self.hp.maximum),
+                    'hp: %2.1f/%d' % (self.hp.current, self.hp.maximum),
                     'hunger: %d/%d' % (self.hunger.current, self.hunger.maximum)]
         l = len(contexts)
         screens = [self.game.map_state.screens[PLAYER_SCREEN]]*l

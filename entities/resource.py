@@ -20,13 +20,10 @@ class Resource(object):
         if amount >= 0:
             self.current = min(self.current + amount, self.maximum)
         else:
-            self.current = max(self.current + amount, self.minimum)
+            self.current = self.current + amount
 
-    def is_zero(self):
-        if isinstance(self.current, int):
-            return self.current == 0
-        elif isinstance(self.current, float):
-            return self.current < 0.00001
+    def less_than_minimum(self):
+        return self.current <= self.minimum
 
     def add_condition(self, condition):
         # need to make a deepcopy in order to not mutate the properties of a stackable game item

@@ -178,32 +178,36 @@ class Entity(object):
     # ---- start ----
     def attack_to(self, other):
         ticks = 1
-        damage = max(self.attack - other.defense, 0)
-        other.take_hit(damage)
-        message = '%s hit %s for %d damage.' % (self.ID, other.ID, damage)
+        message1 = self.hit(other)
+        message2 = other.hit(self)
+        message = message1 + ' ' + message2
         return ticks, message
 
-    def take_hit(self, damage):
-        self.hp.change_current(-damage)
-        ticks, message = self.update_status()
-        return ticks, message
+    def hit(self, other):
+        damage = max(self.attack - other.defense, 0)
+        other.hp.change_current(-damage)
+        message = '%s hit %s for %d damage.' % (self.ID, other.ID, damage)
+        return message
 
     def update_status(self):
-        ticks = 0
-        message = None
         assert 'NPC' in self.properties or 'player' in self.properties
-        if self.hp.is_zero():
+        message = None
+        game_over = False
+        if 'needs food' in self.properties and self.hunger.less_than_minimum():
             self.is_alive = False
-            if 'player' in self.properties:
-                # todo: should go to game_over_message
-                message = 'You died.'
+            message = '%s died of hunger.' % self.ID
+        elif self.hp.less_than_minimum():
+            self.is_alive = False
+            message = '%s is dead.' % self.ID
         # is self dead
-        if 'NPC' in self.properties:
-            if not self.is_alive:
-                message = '%s is dead.' % self.ID
-                self.tile.container.rem(self)
+        if not self.is_alive:
+            if 'NPC' in self.properties:
+                self.remove_tile()
                 Entity.remove_old(self)
-        return ticks, message
+            elif 'player' in self.properties:
+                game_over = True
+
+        return message, game_over
 
     def render_icon_to(self, screen):
         if self.image:

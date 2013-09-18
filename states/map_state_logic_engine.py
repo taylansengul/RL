@@ -69,10 +69,8 @@ class MapStateLogicEngine(object):
             return self._move(target_tile)
 
     def _attack(self, target_tile):
-        NPC = target_tile.container[0]
-        Entity.player.attack_to(NPC)
-        NPC.attack_to(Entity.player)
-        return 1
+        NPC = target_tile.container.get(properties='NPC')
+        return Entity.player.attack_to(NPC)
 
     def _move(self, target_tile):
         return Entity.player.move(target_tile)

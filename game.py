@@ -50,6 +50,7 @@ class Game(object):
             self.refresh_main_screen()
 
     def change_state(self, new_state):
+
         self.current_state = new_state
         self.current_state.init()
 
