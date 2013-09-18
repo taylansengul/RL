@@ -31,7 +31,7 @@ class Main_Menu_State(object):
         self.screens[MAIN_MENU_SCREEN].render_to_main()
 
     def determineAction(self):
-        event = IO.get_active_event()
+        event = IO.active_event
         if event == 'down':
             self.menu.next()
         elif event == 'up':

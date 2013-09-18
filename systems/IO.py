@@ -76,10 +76,6 @@ class IO(object):
                     IO.active_event = IO.keyboard_commands_dictionary[keyboard][key]
 
     @staticmethod
-    def get_active_event():
-        return IO.active_event
-
-    @staticmethod
     def get_click_coordinates():
         return IO.click_coordinates
 

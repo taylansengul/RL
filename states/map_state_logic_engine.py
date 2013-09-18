@@ -4,7 +4,7 @@ from systems.IO import IO
 
 DEFAULT_STATE = 'DEFAULT_STATE'
 DROP_ITEM_STATE = 'DROP_ITEM_STATE'
-EAT_ITEM_STATE = 'SHOW_EDIBLE_ITEMS_STATE'
+EAT_ITEM_STATE = 'SHOWING_EDIBLE_ITEMS_STATE'
 PICK_ITEM_STATE = 'PICK_ITEM_STATE'
 
 
@@ -41,7 +41,7 @@ class MapStateLogicEngine(object):
             self.current_state = DEFAULT_STATE
             ticks, message = Entity.player.consume(item)
         elif S == DEFAULT_STATE:
-            self.event = IO.get_active_event()
+            self.event = IO.active_event
             self.game.event_log.append(self.event)
             ticks, message = self.actions[self.event]()
 
