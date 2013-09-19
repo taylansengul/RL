@@ -66,6 +66,8 @@ class Entity(object):
             self.description = kwargs.get('description', '')
             self.color = kwargs.get('color', None)
             self.image = kwargs.get('image', None)
+        if 'equipable' in self.properties:
+            self.equipped = False
 
         self.effects = kwargs.get('effects', {})
         self.current_conditions = kwargs.get('conditions', '')
@@ -102,6 +104,8 @@ class Entity(object):
             item.set_tile(self.tile)
         message = 'You dropped %s' % item.ID
         return ticks, message
+
+
 
     def pick(self, item):
         ticks = 1

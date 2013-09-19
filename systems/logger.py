@@ -15,7 +15,8 @@ class Logger(object):
         add a new message to unhandled_messages.
         :type message: str
         """
-        Logger.unhandled_messages.append(message)
+        if message:
+            Logger.unhandled_messages.append(message)
 
     @staticmethod
     def _has_unhandled_messages():
