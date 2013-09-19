@@ -1,6 +1,7 @@
 from globals import *
 from entities.entity import Entity
 from systems import Logger
+from systems.draw import Draw
 
 
 class MapStateScreenUpdater():
@@ -9,7 +10,7 @@ class MapStateScreenUpdater():
         self.screens = screens
 
     def _draw_dungeon(self):
-        self.game.game_world.dungeon.draw(self.screens[MAP_SCREEN])
+        Draw.dungeon(Entity.player, self.screens[MAP_SCREEN])
 
     def _draw_message_console(self):
         screen = self.screens[MESSAGES_SCREEN]

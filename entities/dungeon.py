@@ -243,14 +243,6 @@ class Dungeon(object):
         self._set_map_from_pre_map()
         print 'done.'
 
-    def draw(self, screen):
-        player = Entity.player
-        for tile in player.tiles_in_visibility_radius:
-            if tile.is_explored:
-                tile.draw(screen)
-                tile.draw_tile_objects(screen)
-        screen.render_to_main()
-
     def set_all_tiles_non_visible(self):
         """sets the visibility attribute of all tiles in the dungeon to False"""
         for m in range(self.dungeon_width):

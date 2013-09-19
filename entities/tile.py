@@ -53,14 +53,5 @@ class Tile(Entity):
         c3 = settings.screen_settings.tile_length  # length and width
         return pygame.Rect(c1, c2, c3, c3)
 
-    def draw(self, screen):
-        self.render_icon_to(screen)
-
-    def draw_tile_objects(self, screen):
-        if not 'container' in self.properties:
-            return
-        for each in self.container:
-            each.render_icon_to(screen)
-
     def draw_tile_border(self, screen):
         pygame.draw.rect(screen, WHITE, self.screen_position, 1)

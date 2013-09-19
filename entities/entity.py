@@ -1,8 +1,6 @@
 from resource import Resource
 from graphics.text import Text
 from globals import *
-import os
-import pygame
 import container
 import copy
 
@@ -68,13 +66,11 @@ class Entity(object):
             self.image = kwargs.get('image', None)
         if 'equipable' in self.properties:
             self.equipped = False
+        if 'consumable' in self.properties:
+            self.effects = kwargs.get('effects', {})
 
-        self.effects = kwargs.get('effects', {})
-        self.current_conditions = kwargs.get('conditions', '')
-        for condition in kwargs.get('conditions', []):  # if there are conditions
-            getattr(self, condition['effects']).add_condition(condition)
-
-        #todo: images
+        for condition in kwargs.get('conditions', []):
+            self.add_condition(condition)
 
         Entity.add_new(self)
 
@@ -105,8 +101,6 @@ class Entity(object):
         message = 'You dropped %s' % item.ID
         return ticks, message
 
-
-
     def pick(self, item):
         ticks = 1
         message = 'You picked up %s' % item.ID
@@ -120,36 +114,14 @@ class Entity(object):
         ticks = 1
         message = '%s consumed a %s' % (self.ID, item.ID)
         for condition in item.effects:
-            getattr(self, condition['effects']).add_condition(condition)
-
+            self.add_condition(condition)
         self.container.rem(item)
         return ticks, message
-
-    @staticmethod
-    def get_condition(key, search_string):
-        term = key+'('
-        start = search_string.find(term) + len(term)
-        end = search_string.find(')', start)
-        return search_string[start: end]
-
-    @staticmethod
-    def remove_condition(key, search_string):
-        start = search_string.find(key)
-        end = search_string.find(')', start)
-        if end == len(search_string):
-            new = search_string[:start]
-        else:
-            new = search_string[:start] + search_string[end+1:]
-        return new
-
-    @staticmethod
-    def add_condition(key, search_string):
-        if search_string == '':
-            search_string = key
-        else:
-            search_string = search_string + ', ' + key
-        return search_string
     #----- end ------
+
+    # CONDITIONS HANDLING
+    def add_condition(self, condition):
+        getattr(self, condition['effects']).add_condition(condition)
 
     # MOVEMENT HANDLING
     #----- start ------
@@ -212,21 +184,6 @@ class Entity(object):
                 game_over = True
 
         return message, game_over
-
-    def render_icon_to(self, screen):
-        if self.image:
-            image_location = os.path.join('images', self.image)
-            image = pygame.image.load(image_location).convert_alpha()
-            screen.surface.blit(image, self.tile.screen_position)
-        else:
-            t = Text(screen=screen,
-                     font='map object',
-                     context=self.icon,
-                     coordinates=self.tile.screen_position,
-                     color=self.color,
-                     horizontal_align='center',
-                     vertical_align='center')
-            t.render()
 
     def render_description_to(self, screen):
         screen.clear()
