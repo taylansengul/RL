@@ -2,7 +2,7 @@ from globals import *
 from graphics.menu import Menu
 from entities.entity import Entity
 from systems.IO import IO
-from systems.draw import Draw
+from systems import draw
 
 DEFAULT_STATE = 'DEFAULT_STATE'
 CHOOSING_ITEM_FROM_MAP_STATE = 'CHOOSING_ITEM_FROM_MAP_STATE'
@@ -103,6 +103,7 @@ class Inventory_State(object):
     def updateScreen(self):
         self._render_inventory_menu()
         self._render_highlighted_item_description()
+        draw.update()
 
     # PRIVATE METHODS
     # ---- ACTIONS ----
@@ -149,10 +150,10 @@ class Inventory_State(object):
     # ----- SCREEN UPDATE ------
     def _render_inventory_menu(self):
         """render inventory_objects_list menu to """
-        Draw.menu(self.menu)
+        draw.menu(self.menu)
 
     def _render_highlighted_item_description(self):
         if not self.highlighted_item:
             return
         screen = self.screens[INVENTORY_DETAILS_SCREEN]
-        Draw.description(self.highlighted_item, screen)
+        draw.description(self.highlighted_item, screen)

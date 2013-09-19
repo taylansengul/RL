@@ -46,8 +46,6 @@ class Game(object):
             self.current_state.determineAction()
             # update graphics
             self.current_state.updateScreen()
-            # refresh
-            self.refresh_main_screen()
 
     def change_state(self, new_state):
 
@@ -67,9 +65,6 @@ class Game(object):
         for state in self._states:
             if state.ID == ID:
                 return state
-
-    def refresh_main_screen(self):
-        pygame.display.flip()
 
     def exit(self):
         # delete game engines

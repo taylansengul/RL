@@ -1,5 +1,5 @@
 from globals import *
-from systems.draw import Draw
+from systems import draw
 from systems.IO import IO
 
 
@@ -19,4 +19,5 @@ class Game_Over_Screen_State(object):
 
     def updateScreen(self):
         screen = self.screens[GAME_OVER_SCREEN]
-        Draw.game_over_messages(screen)
+        draw.game_over_messages(screen)
+        draw.update()
