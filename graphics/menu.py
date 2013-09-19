@@ -1,4 +1,3 @@
-from graphics.text import Text
 from globals import *
 
 
@@ -28,28 +27,6 @@ class Menu(list):
         new_index -- int new index
         """
         self.highlighted_option_index = new_index % len(self)
-
-    def render(self):
-        self.screen.clear()
-        if len(self) == 0:
-            t = Text(
-                screen=self.screen,
-                context=self.empty_menu_message,
-                coordinates=(self.left_padding, self.top_padding),
-                color=self.normal_option_color,
-                font=self.font)
-            t.render()
-
-        for j, option in enumerate(self):
-            color = [self.normal_option_color, self.highlighted_option_color][j == self.highlighted_option_index]
-            t = Text(
-                screen=self.screen,
-                context=option,
-                coordinates=(self.left_padding, j*self.line_height + self.top_padding),
-                color=color,
-                font=self.font)
-            t.render()
-        self.screen.render_to_main()
 
     def next(self):
         self.set_highlighted_option_index(self.highlighted_option_index+1)

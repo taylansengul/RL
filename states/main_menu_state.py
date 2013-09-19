@@ -5,6 +5,7 @@ from systems.logger import Logger
 from entities.game_world import Game_World
 from systems.objects_handler import Objects_Handler
 from systems.IO import IO
+from systems.draw import Draw
 
 
 class Main_Menu_State(object):
@@ -27,7 +28,7 @@ class Main_Menu_State(object):
         self.game.refresh_main_screen()
 
     def updateScreen(self):
-        self.menu.render()
+        Draw.menu(self.menu)
         self.screens[MAIN_MENU_SCREEN].render_to_main()
 
     def determineAction(self):

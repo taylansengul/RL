@@ -50,16 +50,3 @@ class Player(Entity):
         else:
             target_tile.set_tip('closed door')
             Logger.add_message('Door closed.')
-
-    def render_stats(self):
-        line_height = 16
-        contexts = [self.name,
-                    'hp: %2.1f/%d' % (self.hp.current, self.hp.maximum),
-                    'hunger: %d/%d' % (self.hunger.current, self.hunger.maximum)]
-        l = len(contexts)
-        screens = [self.game.map_state.screens[PLAYER_SCREEN]]*l
-        coordinates = [(0, j*line_height) for j in range(l)]
-        colors = ['white']*l
-        for _ in zip(screens, contexts, coordinates, colors):
-            t = Text(font=CONSOLE_FONT, screen=_[0], context=_[1], coordinates=_[2], color=_[3])
-            t.render()

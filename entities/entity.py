@@ -185,13 +185,6 @@ class Entity(object):
 
         return message, game_over
 
-    def render_description_to(self, screen):
-        screen.clear()
-        context = self.description
-        t = Text(font=INVENTORY_FONT, screen=screen, context=context, coordinates=(0, 0), color='white')
-        t.render()
-        screen.render_to_main()
-
     @property
     def inventory_repr(self):
         if 'stackable' in self.properties:

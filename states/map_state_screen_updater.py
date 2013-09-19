@@ -17,7 +17,7 @@ class MapStateScreenUpdater():
         Logger.display_messages(screen)
 
     def _draw_player_stats(self):
-        Entity.player.render_stats()
+        Draw.player_stats(Entity.player)
 
     def _draw_turn_info(self):
         self.game.time.render_turn()
