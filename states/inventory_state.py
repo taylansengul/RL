@@ -101,8 +101,10 @@ class Inventory_State(object):
             self.change_state()
 
     def updateScreen(self):
-        self._render_inventory_menu()
-        self._render_highlighted_item_description()
+        """render 1. inventory_objects_list menu, 2.description of highlighted item, 3. update screen"""
+        draw.menu(self.menu)
+        if self.highlighted_item:
+            draw.description(self.highlighted_item, self.screens[INVENTORY_DETAILS_SCREEN])
         draw.update()
 
     # PRIVATE METHODS
@@ -146,14 +148,3 @@ class Inventory_State(object):
 
     def _new_inventory_objects_list(self):
         return Entity.player.container.get(properties=self.key, key='all')
-
-    # ----- SCREEN UPDATE ------
-    def _render_inventory_menu(self):
-        """render inventory_objects_list menu to """
-        draw.menu(self.menu)
-
-    def _render_highlighted_item_description(self):
-        if not self.highlighted_item:
-            return
-        screen = self.screens[INVENTORY_DETAILS_SCREEN]
-        draw.description(self.highlighted_item, screen)

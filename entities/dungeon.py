@@ -1,7 +1,6 @@
 from tile import Tile
 from random import randint, choice
 from rectangle import Rectangle
-from entity import Entity
 
 
 class Dungeon(object):
