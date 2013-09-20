@@ -1,6 +1,7 @@
 from entities.entity import Entity
 from systems.logger import Logger
 from systems.IO import IO
+from systems.time import Time
 
 DEFAULT_STATE = 'DEFAULT_STATE'
 DROP_ITEM_STATE = 'DROP_ITEM_STATE'
@@ -29,7 +30,9 @@ class MapStateLogicEngine(object):
         }
 
     def run(self):
-        ticks, message = 0, None
+        ticks = 0
+        messages = []
+        message = None
         S = self.current_state
         if S == DROP_ITEM_STATE:
             item = self.game.inventory_state.selected_item
@@ -47,8 +50,13 @@ class MapStateLogicEngine(object):
                 self.game.event_log.append(self.event)
                 ticks, message = self.actions[self.event]()
 
+        messages.append(message)
         if ticks:
-            self.game.time.new_turn()
+            turn_messages, game_over, game_over_message = Time.new_turn()
+            messages.append(turn_messages)
+            if game_over:
+                Logger.game_over_message = game_over_message
+                self.game.change_state(self.game.game_over_screen_state)
         if message:
             Logger.add_message(message)
 

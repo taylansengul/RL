@@ -2,6 +2,7 @@ from globals import *
 from entities.entity import Entity
 from systems import Logger
 from systems import draw
+from systems.time import Time
 
 
 class MapStateScreenUpdater():
@@ -20,7 +21,8 @@ class MapStateScreenUpdater():
         draw.player_stats(Entity.player)
 
     def _draw_turn_info(self):
-        self.game.time.render_turn()
+        screen = self.screens[GAME_INFO_SCREEN]
+        draw.render_turn(Time.turn, screen)
 
     def _clear_all_screens(self):
         for ID in self.screens:

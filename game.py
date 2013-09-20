@@ -32,7 +32,6 @@ class Game(object):
         self._initialize_screens()
         # initialized at main menu state:
         self.event_log = [None]  # todo: clear this
-        self.time = None
         self.game_world = None
         self.ai = None
         self.objects_handler = None

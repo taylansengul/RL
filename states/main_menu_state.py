@@ -1,6 +1,5 @@
 from globals import *
 from graphics.menu import Menu
-from systems.time import Time
 from systems.logger import Logger
 from systems.objects_handler import Objects_Handler
 from systems.IO import IO
@@ -53,7 +52,6 @@ class Main_Menu_State(object):
         # initialize dungeon-run related things
 
         self.game.event_log = [None]  # todo: clear
-        self.game.time = Time(self.game)
 
         kwargs = data.level_design.dungeon_level_1
 
@@ -68,7 +66,6 @@ class Main_Menu_State(object):
         self.game.objects_handler.populate_game_items()  # populate game world with game items
         self.game.objects_handler.populate_NPCs()  # populate game world with NPCs
 
-        # AI: do not need AI
-        # self.game.ai = AI(self.game)
+        # todo: AI
 
         Logger.add_message('Welcome to the dungeons.')

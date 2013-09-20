@@ -12,10 +12,14 @@ class Logger(object):
     @staticmethod
     def add_message(message):
         """
-        add a new message to unhandled_messages.
-        :type message: str
+        add a new message or messages to unhandled_messages.
+        :type message: str or list
         """
-        if message:
+        if message is None:
+            return
+        elif isinstance(message, list):
+            Logger.unhandled_messages.extend(message)
+        elif isinstance(message, str):
             Logger.unhandled_messages.append(message)
 
     @staticmethod

@@ -100,5 +100,11 @@ def game_over_messages(screen):
         t.render()
 
 
+def render_turn(turn_info, screen):
+    t = Text(screen=screen,
+             context='turn: %d' % turn_info, font=CONSOLE_FONT, coordinates=(0, 0), color='white')
+    t.render()
+
+
 def update():
     pygame.display.flip()
