@@ -69,7 +69,7 @@ class IO(object):
         elif event.type == pgl.QUIT:
             IO.active_event = 'quit'
         elif event.type == pgl.KEYDOWN:  # pressed keyboard key
-            # find out the active event from keyboard commands dictionary
+            # find out the active event from keyboard commands screen_dict
             keyboard = current_state_ID
             for key in IO.keyboard_commands_dictionary[keyboard]:
                 if event.key == key:

@@ -1,6 +1,4 @@
 from resource import Resource
-from graphics.text import Text
-from globals import *
 import container
 import copy
 

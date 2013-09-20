@@ -1,10 +1,11 @@
+from graphics.screen import Screen
+
 __author__ = 'Taylan Sengul'
 import pygame
 import os
 from graphics.text import Text
 from globals import *
 from logger import Logger
-from graphics.screens import Screens
 
 
 def dungeon(player, screen):
@@ -14,7 +15,7 @@ def dungeon(player, screen):
             if 'container' in tile.properties:
                 for each in tile.container:
                     entity(each, screen)
-        Screens.screens[screen].render_to_main()
+        Screen.dictionary[screen].render_to_main()
 
 
 def draw_tile_border(tile, screen):
@@ -25,7 +26,7 @@ def entity(entity, screen):
     if entity.image:
         image_location = os.path.join('images', entity.image)
         image = pygame.image.load(image_location).convert_alpha()
-        Screens.screens[screen].surface.blit(image, entity.tile.screen_position)
+        Screen.dictionary[screen].surface.blit(image, entity.tile.screen_position)
     else:
         t = Text(screen=screen,
                  font='map object',
@@ -38,15 +39,15 @@ def entity(entity, screen):
 
 
 def description(entity, screen):
-    Screens.screens[screen].clear()
+    Screen.dictionary[screen].clear()
     context = entity.description
     t = Text(font=INVENTORY_FONT, screen=screen, context=context, coordinates=(0, 0), color='white')
     t.render()
-    Screens.screens[screen].render_to_main()
+    Screen.dictionary[screen].render_to_main()
 
 
 def menu(menu_to_draw):
-    Screens.screens[menu_to_draw.screen].clear()
+    Screen.dictionary[menu_to_draw.screen].clear()
     if len(menu_to_draw) == 0:
         t = Text(
             screen=menu_to_draw.screen,
@@ -66,7 +67,7 @@ def menu(menu_to_draw):
             font=menu_to_draw.font)
         t.render()
 
-    Screens.screens[menu_to_draw.screen].render_to_main()
+    Screen.dictionary[menu_to_draw.screen].render_to_main()
 
 
 def inventory_description(item):
@@ -76,7 +77,7 @@ def inventory_description(item):
 
 
 def inventory_menu(menu_to_draw):
-    screen = Screens.screens[INVENTORY_MENU_SCREEN]
+    screen = Screen.dictionary[INVENTORY_MENU_SCREEN]
     screen.force_screen_update()
     menu(menu_to_draw)
 
@@ -97,7 +98,7 @@ def player_stats(player):
 
 
 def game_over_messages():
-    screen = Screens.screens[GAME_OVER_SCREEN]
+    screen = Screen.dictionary[GAME_OVER_SCREEN]
     screen.clear()
     line_height = 40
     contexts = [
@@ -131,7 +132,7 @@ def highlighted_tile_border(coordinates):
     :param coordinates: tuple
     """
     screen = MAP_SCREEN
-    screen_object = Screens.screens[screen]
+    screen_object = Screen.dictionary[screen]
     pygame.draw.rect(screen_object.surface, YELLOW, coordinates, 5)  # tile border
     screen_object.render_to_main()
 
@@ -142,11 +143,11 @@ def messages_screen():
     if not Logger._has_unhandled_messages():
         return
     new_line_height = 12
-    x, y = Screens.screens[screen].width, Screens.screens[screen].height
+    x, y = Screen.dictionary[screen].width, Screen.dictionary[screen].height
     while Logger._has_unhandled_messages():
         Logger._handle_message()
 
-    Screens.screens[screen].clear()
+    Screen.dictionary[screen].clear()
     for co, message in enumerate(Logger.message_archive[-4:]):
         c = pygame.Rect(0, new_line_height*co, x, y)
         t = Text(screen=screen, font=CONSOLE_FONT, context=message, coordinates=c, color='white')
@@ -154,7 +155,7 @@ def messages_screen():
 
 
 def clear_all_screens():
-    Screens.screens[MAP_SCREEN].clear()
-    Screens.screens[ENEMY_SCREEN].clear()
-    Screens.screens[PLAYER_SCREEN].clear()
-    Screens.screens[MESSAGES_SCREEN].clear()
+    Screen.dictionary[MAP_SCREEN].clear()
+    Screen.dictionary[ENEMY_SCREEN].clear()
+    Screen.dictionary[PLAYER_SCREEN].clear()
+    Screen.dictionary[MESSAGES_SCREEN].clear()

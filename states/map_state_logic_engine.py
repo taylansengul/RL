@@ -100,7 +100,6 @@ class MapStateLogicEngine(object):
     def _pick_item(self):
         ticks = 0
         message = None
-        C = Entity.player.tile.container
         items = [item for item in Entity.player.tile.container if 'pickable' in item.properties]
         if len(items) == 0:
             return ticks, message

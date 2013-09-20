@@ -1,8 +1,8 @@
 import random
 import pygame
+from graphics.screen import Screen
 from systems.IO import IO
 import states
-from graphics.screens import Screens
 
 
 class Game(object):
@@ -27,8 +27,8 @@ class Game(object):
         self._states = [self.main_menu_state, self.map_state, self.inventory_state, self.game_over_screen_state,
                         self.targeting_state]
 
-        # initialize screens
-        Screens._initialize_screens()
+        # initialize screen_dict
+        Screen.initialize_screens()
         # initialized at main menu state:
         self.event_log = [None]  # todo: clear this
         self.game_world = None

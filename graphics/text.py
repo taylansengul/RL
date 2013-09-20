@@ -1,7 +1,7 @@
 import pygame
 from globals import *
 import fonts
-from screens import Screens
+from graphics.screen import Screen
 
 
 class Text(object):
@@ -56,7 +56,7 @@ class Text(object):
         """
         fontSurface = self.font.render(self.context, self.anti_alias, self.color)
         if isinstance(self.coordinates, tuple):
-            Screens.screens[self.screen].surface.blit(fontSurface, self.coordinates)
+            Screen.dictionary[self.screen].surface.blit(fontSurface, self.coordinates)
         elif isinstance(self.coordinates, pygame.Rect):
             fontRect = fontSurface.get_rect()
             # align horizontally
@@ -74,5 +74,5 @@ class Text(object):
             else:
                 fontRect.y = self.coordinates.y  # top
 
-            Screens.screens[self.screen].surface.blit(fontSurface, fontRect)
-        Screens.screens[self.screen].render_to_main()
+            Screen.dictionary[self.screen].surface.blit(fontSurface, fontRect)
+        Screen.dictionary[self.screen].render_to_main()
