@@ -2,10 +2,11 @@ from globals import *
 from graphics.menu import Menu
 from systems.time import Time
 from systems.logger import Logger
-from entities.game_world import Game_World
 from systems.objects_handler import Objects_Handler
 from systems.IO import IO
 from systems import draw
+import data
+from entities.dungeon import Dungeon
 
 
 class Main_Menu_State(object):
@@ -53,11 +54,13 @@ class Main_Menu_State(object):
 
         self.game.event_log = [None]  # todo: clear
         self.game.time = Time(self.game)
-        self.game.game_world = Game_World(self.game)
-        self.game.objects_handler = Objects_Handler(self.game)
 
-        # set current dungeon in game world
-        self.game.game_world.set_current_dungeon()
+        kwargs = data.level_design.dungeon_level_1
+
+        self.game.game_world = Dungeon(kwargs)
+        self.game.game_world.create_map()
+
+        self.game.objects_handler = Objects_Handler(self.game)
 
         # entities
         self.game.objects_handler.create_player()  # create player

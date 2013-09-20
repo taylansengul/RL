@@ -53,7 +53,7 @@ class MapStateLogicEngine(object):
             Logger.add_message(message)
 
     def _direction(self):
-        target_tile = self.game.game_world.dungeon.get_neighbor_tile(Entity.player.tile, self.event)
+        target_tile = self.game.game_world.get_neighbor_tile(Entity.player.tile, self.event)
         if not target_tile or 'movement blocking' in target_tile.properties:
             return self._invalid_action()
         elif self.game.event_log[-2] == 'close door':

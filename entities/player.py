@@ -1,7 +1,5 @@
 from entity import Entity
 from systems.utils import get_line
-from graphics.text import Text
-from globals import *
 from systems.logger import Logger
 
 
@@ -13,7 +11,7 @@ class Player(Entity):
     @property
     def tiles_in_visibility_radius(self):
         """returns tiles in visibility radius"""
-        return self.game.game_world.dungeon.get_neighboring_tiles(self.tile, self.visibility_radius)
+        return self.game.game_world.get_neighboring_tiles(self.tile, self.visibility_radius)
 
     @property
     def visible_tiles(self):
@@ -23,7 +21,7 @@ class Player(Entity):
     @property
     def non_visible_tiles(self):
         """returns tiles that are not currently visible"""
-        dungeon = self.game.game_world.dungeon
+        dungeon = self.game.game_world
         player_x, player_y = self.tile.coordinates
         non_visible_tiles = []
         for tile1 in self.tiles_in_visibility_radius:
@@ -39,7 +37,7 @@ class Player(Entity):
 
     def update_vision(self):
         # todo: optimize later (takes 1/1000~2/1000 secs)
-        dungeon = self.game.game_world.dungeon
+        dungeon = self.game.game_world
         dungeon.set_all_tiles_non_visible()
         for tile in self.visible_tiles:
             tile.set_visibility(True)

@@ -21,7 +21,7 @@ class Targeting_State(object):
     def determineAction(self):
         event = IO.active_event
         if event in ['left', 'right', 'up', 'down']:
-            self.highlighted_tile = self.game.game_world.dungeon.get_neighbor_tile(self.highlighted_tile, event)
+            self.highlighted_tile = self.game.game_world.get_neighbor_tile(self.highlighted_tile, event)
         elif event == 'select':
             self.selected_tile = self.highlighted_tile
             self.game.change_state(self.game.map_state)
