@@ -1,9 +1,8 @@
 import random
 import pygame
 from systems.IO import IO
-import settings
 import states
-import graphics
+from graphics.screens import Screens
 
 
 class Game(object):
@@ -29,7 +28,7 @@ class Game(object):
                         self.targeting_state]
 
         # initialize screens
-        self._initialize_screens()
+        Screens._initialize_screens()
         # initialized at main menu state:
         self.event_log = [None]  # todo: clear this
         self.game_world = None
@@ -50,15 +49,6 @@ class Game(object):
 
         self.current_state = new_state
         self.current_state.init()
-
-    def _initialize_screens(self):
-        D = settings.screen_settings.screens
-        for a_screen_ID in D:
-            if a_screen_ID == 'MAIN_SCREEN':
-                continue
-            a_state_ID = D[a_screen_ID]['state']
-            state = self._get_state_by_ID(a_state_ID)
-            state.screens[a_screen_ID] = graphics.screen.Screen(**D[a_screen_ID])
 
     def _get_state_by_ID(self, ID):
         for state in self._states:

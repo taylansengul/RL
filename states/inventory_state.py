@@ -21,7 +21,6 @@ class Inventory_State(object):
         self.selected_item = None
         self.key = ''
         self.menu = None
-        self.screens = {INVENTORY_MENU_SCREEN: None, INVENTORY_DETAILS_SCREEN: None}
 
     @property
     def highlighted_item(self):
@@ -39,9 +38,6 @@ class Inventory_State(object):
         self.change_state_flag = False
         self.menu = self._new_menu()
         self.updateScreen()
-        # force a screen update
-        screen = self.screens[INVENTORY_MENU_SCREEN]
-        screen.force_screen_update()
 
     def process_event(self, user_input):
         choosing_actions = {
@@ -102,9 +98,9 @@ class Inventory_State(object):
 
     def updateScreen(self):
         """render 1. inventory_objects_list menu, 2.description of highlighted item, 3. update screen"""
-        draw.menu(self.menu)
-        if self.highlighted_item:
-            draw.description(self.highlighted_item, self.screens[INVENTORY_DETAILS_SCREEN])
+        # force a screen update
+        draw.inventory_menu(self.menu)
+        draw.inventory_description(self.highlighted_item)
         draw.update()
 
     # PRIVATE METHODS
@@ -141,7 +137,7 @@ class Inventory_State(object):
         """
         menu_options = [item.inventory_repr for item in self.inventory_objects_list]
         return Menu(
-            screen=self.screens[INVENTORY_MENU_SCREEN],
+            screen=INVENTORY_MENU_SCREEN,
             options=menu_options,
             font=INVENTORY_FONT,
             empty_menu_message='Empty Inventory')

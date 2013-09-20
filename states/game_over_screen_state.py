@@ -7,7 +7,6 @@ class Game_Over_Screen_State(object):
     def __init__(self, game):
         self.game = game
         self.ID = GAME_OVER_STATE
-        self.screens = {GAME_OVER_SCREEN: None}
 
     def init(self):
         self.updateScreen()
@@ -18,6 +17,4 @@ class Game_Over_Screen_State(object):
             self.game.change_state(self.game.main_menu_state)
 
     def updateScreen(self):
-        screen = self.screens[GAME_OVER_SCREEN]
-        draw.game_over_messages(screen)
-        draw.update()
+        draw.game_over_messages()

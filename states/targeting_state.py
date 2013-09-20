@@ -10,10 +10,8 @@ class Targeting_State(object):
         self.game = game
         self.selected_tile = None
         self.highlighted_tile = None
-        self.screens = None
 
     def init(self):
-        self.screens = self.game.map_state.screens
         self.selected_tile = None
         self.highlighted_tile = Entity.player.tile
 
@@ -28,6 +26,5 @@ class Targeting_State(object):
     def updateScreen(self):
         self.game.map_state.updateScreen()
         coordinates = self.highlighted_tile.screen_position
-        screen = self.screens[MAP_SCREEN]
-        draw.target(screen, coordinates)
+        draw.highlighted_tile_border(coordinates)
         draw.update()

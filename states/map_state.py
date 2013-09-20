@@ -7,13 +7,6 @@ class Map_State(object):
     def __init__(self, game):
         self.game = game
         self.ID = MAP_STATE
-        self.screens = {
-            MAP_SCREEN: None,
-            PLAYER_SCREEN: None,
-            GAME_INFO_SCREEN: None,
-            MESSAGES_SCREEN: None,
-            ENEMY_SCREEN: None}
-        self.screen_updater = MapStateScreenUpdater(self.screens)
         self.logic_engine = MapStateLogicEngine(game)
 
     def init(self):
@@ -23,4 +16,4 @@ class Map_State(object):
         self.logic_engine.run()
 
     def updateScreen(self):
-        self.screen_updater.run()
+        MapStateScreenUpdater.run()

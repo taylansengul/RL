@@ -1,7 +1,4 @@
 #todo: add message with color
-from globals import *
-from graphics.text import Text
-import pygame
 
 
 class Logger(object):
@@ -40,19 +37,3 @@ class Logger(object):
         message = Logger.unhandled_messages.pop()
         Logger.message_archive.append(message)
         return message
-
-    @staticmethod
-    def display_messages(screen):
-        #todo: refactor display_messages
-        if not Logger._has_unhandled_messages():
-            return
-        new_line_height = 12
-        x, y = screen.width, screen.height
-        while Logger._has_unhandled_messages():
-            Logger._handle_message()
-
-        screen.clear()
-        for co, message in enumerate(Logger.message_archive[-4:]):
-            c = pygame.Rect(0, new_line_height*co, x, y)
-            t = Text(screen=screen, font=CONSOLE_FONT, context=message, coordinates=c, color='white')
-            t.render()

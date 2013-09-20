@@ -12,14 +12,13 @@ class Main_Menu_State(object):
     def __init__(self, game):
         self.game = game
         self.ID = MAIN_MENU_STATE
-        self.screens = {MAIN_MENU_SCREEN: None}
 
     def init(self):
         self.options = [
             "NEW GAME",
             "LOAD GAME",
             "QUIT GAME"]
-        self.menu = Menu(screen=self.screens[MAIN_MENU_SCREEN],
+        self.menu = Menu(screen=MAIN_MENU_SCREEN,
                          options=self.options,
                          font=MAIN_MENU_FONT,
                          line_height=60
@@ -28,7 +27,6 @@ class Main_Menu_State(object):
 
     def updateScreen(self):
         draw.menu(self.menu)
-        self.screens[MAIN_MENU_SCREEN].render_to_main()
         draw.update()
 
     def determineAction(self):
