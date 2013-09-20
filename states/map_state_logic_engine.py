@@ -3,6 +3,7 @@ from systems.logger import Logger
 from systems.IO import IO
 from systems.time import Time
 from entities.game_world import Game_World
+from globals import *
 
 DEFAULT_STATE = 'DEFAULT_STATE'
 DROP_ITEM_STATE = 'DROP_ITEM_STATE'
@@ -56,7 +57,7 @@ class MapStateLogicEngine(object):
             messages.append(turn_messages)
             if game_over:
                 Logger.game_over_message = game_over_message
-                self.game.change_state(self.game.game_over_screen_state)
+                self.game.change_state(GAME_OVER_STATE)
         if message:
             Logger.add_message(message)
 
@@ -89,12 +90,12 @@ class MapStateLogicEngine(object):
     def _descend(self):
         if Entity.player.tile.tip == 'exit':
             Logger.game_over_message = 'Congratulations. You found the way out.'
-            self.game.change_state(self.game.game_over_screen_state)
+            self.game.change_state(GAME_OVER_STATE)
         return 0, None
 
     def _show_inventory(self):
         self.game.inventory_state.key = ''
-        self.game.change_state(self.game.inventory_state)
+        self.game.change_state(GAME_OVER_STATE)
         return 0, None
 
     def _pick_item(self):
@@ -124,11 +125,11 @@ class MapStateLogicEngine(object):
         return 0, None
 
     def _target(self):
-        self.game.change_state(self.game.targeting_state)
+        self.game.change_state(TARGETING_STATE)
         return 0, None
 
     def _quit(self):
-        self.game.change_state(self.game.main_menu_state)
+        self.game.change_state(MAIN_MENU_STATE)
         return 0, None
 
     def _invalid_action(self):
@@ -138,4 +139,4 @@ class MapStateLogicEngine(object):
     def _choose_item_from_inventory(self, key):
         self.game.inventory_state.key = key
         self.game.inventory_state.current_state = 'CHOOSING_ITEM_FROM_MAP_STATE'
-        self.game.change_state(self.game.inventory_state)
+        self.game.change_state(INVENTORY_STATE)

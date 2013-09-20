@@ -14,7 +14,7 @@ class Game_Over_Screen_State(object):
     def determineAction(self):
         event = IO.active_event
         if event == 'pass':
-            self.game.change_state(self.game.main_menu_state)
+            self.game.change_state(MAIN_MENU_STATE)
 
     def updateScreen(self):
         draw.game_over_messages()

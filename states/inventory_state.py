@@ -67,7 +67,7 @@ class Inventory_State(object):
 
     def change_state(self):
         if self.current_state == CHOOSING_ITEM_FROM_MAP_STATE:
-            self.game.change_state(self.game.map_state)
+            self.game.change_state(MAP_STATE)
             self.key = ''
             self.current_state = DEFAULT_STATE
         elif self.current_state == SHOWING_EDIBLE_ITEMS_STATE:
@@ -83,10 +83,10 @@ class Inventory_State(object):
             self.current_state = DEFAULT_STATE
             self.init()
         elif self.current_state == DEFAULT_STATE:
-            self.game.change_state(self.game.map_state)
+            self.game.change_state(MAP_STATE)
             self.key = ''
         elif self.current_state == EMPTY_STATE:
-            self.game.change_state(self.game.map_state)
+            self.game.change_state(MAP_STATE)
             self.key = ''
             self.current_state = DEFAULT_STATE
 

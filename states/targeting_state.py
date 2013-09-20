@@ -22,7 +22,7 @@ class Targeting_State(object):
             self.highlighted_tile = Game_World.dungeon.get_neighbor_tile(self.highlighted_tile, event)
         elif event == 'select':
             self.selected_tile = self.highlighted_tile
-            self.game.change_state(self.game.map_state)
+            self.game.change_state(MAP_STATE)
 
     def updateScreen(self):
         self.game.map_state.updateScreen()

@@ -40,7 +40,7 @@ class Main_Menu_State(object):
             option = self.menu.highlighted_option
             if option == "NEW GAME":
                 self._init_game_run()
-                self.game.change_state(self.game.map_state)
+                self.game.change_state(MAP_STATE)
             elif option == "LOAD GAME":
                 pass
             elif option == "QUIT GAME":

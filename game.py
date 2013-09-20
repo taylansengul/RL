@@ -5,7 +5,6 @@ import states
 class Game(object):
     def __init__(self):
         self.is_in_loop = True
-        # initialize states
         self.main_menu_state = states.Main_Menu_State(self)
         self.map_state = states.Map_State(self)
         self.inventory_state = states.Inventory_State(self)
@@ -25,7 +24,7 @@ class Game(object):
             self.current_state.updateScreen()
 
     def change_state(self, new_state):
-
+        new_state = self._get_state_by_ID(new_state)
         self.current_state = new_state
         self.current_state.init()
 
