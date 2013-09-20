@@ -108,3 +108,8 @@ def render_turn(turn_info, screen):
 
 def update():
     pygame.display.flip()
+
+
+def target(screen, coordinates):
+    pygame.draw.rect(screen.surface, YELLOW, coordinates, 5)  # tile border
+    screen.render_to_main()

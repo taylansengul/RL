@@ -13,7 +13,7 @@ class Map_State(object):
             GAME_INFO_SCREEN: None,
             MESSAGES_SCREEN: None,
             ENEMY_SCREEN: None}
-        self.screen_updater = MapStateScreenUpdater(game, self.screens)
+        self.screen_updater = MapStateScreenUpdater(self.screens)
         self.logic_engine = MapStateLogicEngine(game)
 
     def init(self):

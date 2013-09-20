@@ -1,5 +1,4 @@
 from globals import *
-import pygame
 from entities.entity import Entity
 from systems.IO import IO
 from systems import draw
@@ -30,6 +29,5 @@ class Targeting_State(object):
         self.game.map_state.updateScreen()
         coordinates = self.highlighted_tile.screen_position
         screen = self.screens[MAP_SCREEN]
-        pygame.draw.rect(screen.surface, YELLOW, coordinates, 5)  # tile border
-        screen.render_to_main()
+        draw.target(screen, coordinates)
         draw.update()

@@ -6,8 +6,7 @@ from systems.time import Time
 
 
 class MapStateScreenUpdater():
-    def __init__(self, game, screens):
-        self.game = game
+    def __init__(self, screens):
         self.screens = screens
 
     def _draw_dungeon(self):
