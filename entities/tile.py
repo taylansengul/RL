@@ -1,28 +1,16 @@
 import pygame
-from globals import *
 from entity import Entity
 import settings
+from data import tiles
 
 
 class Tile(Entity):
-    # todo: walkable tiles.
-    floor_properties = 'tile, drawable, container'
-    wall_properties = 'tile, drawable, movement blocking, light blocking'
-    tiles = {'': {'icon': '', 'color': 'white'},
-             'wall': {'icon': '#', 'color': 'red', 'properties': wall_properties},
-             'entrance': {'icon': '>', 'color': 'yellow', 'properties': floor_properties},
-             'exit': {'icon': '<', 'color': 'yellow', 'properties': floor_properties},
-             'floor': {'icon': ' ', 'color': 'blue', 'properties': floor_properties, 'image': "floor_tile.png"},
-             'open door': {'icon': '-', 'color': 'red'},
-             'closed door': {'icon': '+', 'color': 'red'},
-             'dirt': {'icon': ' ', 'color': 'black', 'properties': wall_properties}}
-
     def __init__(self, coordinates=None, tip=''):
         kwargs = {'coordinates': coordinates,
-                  'icon': Tile.tiles[tip]['icon'],
-                  'color': Tile.tiles[tip]['color'],
-                  'properties': Tile.tiles[tip].get('properties', None),
-                  'image': Tile.tiles[tip].get('image', None),
+                  'icon': tiles.tiles[tip]['icon'],
+                  'color': tiles.tiles[tip]['color'],
+                  'properties': tiles.tiles[tip].get('properties', None),
+                  'image': tiles.tiles[tip].get('image', None),
                   'ID': tip}
         super(Tile, self).__init__(**kwargs)
         self.coordinates = coordinates
@@ -32,8 +20,8 @@ class Tile(Entity):
 
     def set_tip(self, tip):
         self.tip = tip
-        self.icon = Tile.tiles[tip]['icon']
-        self.color = Tile.tiles[tip]['color']
+        self.icon = tiles.tiles[tip]['icon']
+        self.color = tiles.tiles[tip]['color']
 
     def set_visibility(self, a_boolean):
         if a_boolean:
@@ -52,6 +40,3 @@ class Tile(Entity):
         c2 = settings.screen_settings.tile_length * (y - y1 + y2)  # top border coordinate
         c3 = settings.screen_settings.tile_length  # length and width
         return pygame.Rect(c1, c2, c3, c3)
-
-    def draw_tile_border(self, screen):
-        pygame.draw.rect(screen, WHITE, self.screen_position, 1)

@@ -16,6 +16,10 @@ def dungeon(player, screen):
         screen.render_to_main()
 
 
+def draw_tile_border(tile, screen):
+    pygame.draw.rect(screen, WHITE, tile.screen_position, 1)
+
+
 def entity(entity, screen):
     if entity.image:
         image_location = os.path.join('images', entity.image)
