@@ -17,6 +17,7 @@ class Dungeon(object):
         self.dungeon_height = kwargs['dungeon height']
         self.pre_map2D = [[None for _ in range(self.dungeon_height)] for _ in range(self.dungeon_width)]
         self.map2D = [[None for _ in range(self.dungeon_height)] for _ in range(self.dungeon_width)]
+        self.create_map()
 
     def _add_room(self, rectangle):
         """ 1. Make each coordinate of the pre map which coincide with those given in rectangle a floor tile

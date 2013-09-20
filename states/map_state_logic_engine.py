@@ -2,6 +2,7 @@ from entities.entity import Entity
 from systems.logger import Logger
 from systems.IO import IO
 from systems.time import Time
+from entities.game_world import Game_World
 
 DEFAULT_STATE = 'DEFAULT_STATE'
 DROP_ITEM_STATE = 'DROP_ITEM_STATE'
@@ -47,7 +48,6 @@ class MapStateLogicEngine(object):
         elif S == DEFAULT_STATE:
             self.event = IO.active_event
             if self.event:
-                self.game.event_log.append(self.event)
                 ticks, message = self.actions[self.event]()
 
         messages.append(message)
@@ -61,17 +61,17 @@ class MapStateLogicEngine(object):
             Logger.add_message(message)
 
     def _direction(self):
-        target_tile = self.game.game_world.get_neighbor_tile(Entity.player.tile, self.event)
+        target_tile = Game_World.dungeon.get_neighbor_tile(Entity.player.tile, self.event)
         if not target_tile or 'movement blocking' in target_tile.properties:
             return self._invalid_action()
-        elif self.game.event_log[-2] == 'close door':
-            return self._close_door(target_tile)
         elif target_tile.tip == 'closed door':
             return self._open_door(target_tile)
         elif target_tile.container.get(properties='NPC'):
             return self._attack(target_tile)
         else:
             return self._move(target_tile)
+
+        #todo: close door
 
     def _attack(self, target_tile):
         NPC = target_tile.container.get(properties='NPC')

@@ -1,6 +1,3 @@
-import random
-import pygame
-from graphics.screen import Screen
 from systems.IO import IO
 import states
 
@@ -8,15 +5,6 @@ import states
 class Game(object):
     def __init__(self):
         self.is_in_loop = True
-        # initializing systems
-        print 'Initializing Systems...',
-        pygame.init()
-        # Setup fonts
-        # done in graphics.fonts
-        print 'done.'
-        print 'initializing random seed'
-        seed_value = 0  # make this None to use the system time as a seed_value
-        random.seed(seed_value)
         # initialize states
         self.main_menu_state = states.Main_Menu_State(self)
         self.map_state = states.Map_State(self)
@@ -26,15 +14,6 @@ class Game(object):
         self.current_state = None
         self._states = [self.main_menu_state, self.map_state, self.inventory_state, self.game_over_screen_state,
                         self.targeting_state]
-
-        # initialize screen_dict
-        Screen.initialize_screens()
-        # initialized at main menu state:
-        self.event_log = [None]  # todo: clear this
-        self.game_world = None
-        self.ai = None
-        self.objects_handler = None
-        # also player is created
 
     def loop(self):
         while self.is_in_loop:

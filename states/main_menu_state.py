@@ -6,6 +6,7 @@ from systems.IO import IO
 from systems import draw
 import data
 from entities.dungeon import Dungeon
+from entities.game_world import Game_World
 
 
 class Main_Menu_State(object):
@@ -49,20 +50,15 @@ class Main_Menu_State(object):
     def _init_game_run(self):
         # initialize dungeon-run related things
 
-        self.game.event_log = [None]  # todo: clear
 
         kwargs = data.level_design.dungeon_level_1
 
-        self.game.game_world = Dungeon(kwargs)
-        self.game.game_world.create_map()
-
-        self.game.objects_handler = Objects_Handler(self.game)
+        Game_World.dungeon = Dungeon(kwargs)
 
         # entities
-        self.game.objects_handler.create_player()  # create player
-        # self.game.objects_handler.create_player_items()  # create player items
-        self.game.objects_handler.populate_game_items()  # populate game world with game items
-        self.game.objects_handler.populate_NPCs()  # populate game world with NPCs
+        Objects_Handler.create_player()  # create player
+        Objects_Handler.populate_game_items()  # populate game world with game items
+        Objects_Handler.populate_NPCs()  # populate game world with NPCs
 
         # todo: AI
 
