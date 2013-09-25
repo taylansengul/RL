@@ -1,8 +1,9 @@
 from globals import *
 from graphics.menu import Menu
 from entities.entity import Entity
-from systems.IO import IO
 from systems import draw
+import base_state
+
 
 DEFAULT_STATE = 'DEFAULT_STATE'
 CHOOSING_ITEM_FROM_MAP_STATE = 'CHOOSING_ITEM_FROM_MAP_STATE'
@@ -11,16 +12,41 @@ SHOWING_EDIBLE_ITEMS_STATE = 'SHOWING_EDIBLE_ITEMS_STATE'
 SHOWING_CONSUMABLE_ITEMS_STATE = 'SHOWING_CONSUMABLE_ITEMS_STATE'
 
 
-class Inventory_State(object):
+class Inventory_State(base_state.BaseState):
     """Inventory State of the game"""
-    def __init__(self, game):
+
+    def __init__(self):
+        super(Inventory_State, self).__init__(INVENTORY_STATE)
         self.current_state = DEFAULT_STATE
-        self.ID = INVENTORY_STATE
-        self.game = game
         self.inventory_objects_list = None
         self.selected_item = None
         self.key = ''
         self.menu = None
+        self.escape_pressed = False
+
+    def init(self):
+        self.inventory_objects_list = self._new_inventory_objects_list()
+        if len(self.inventory_objects_list) == 0:
+            self.current_state = EMPTY_STATE
+        self.selected_item = None
+        self.escape_pressed = False
+        self.menu = self._new_menu()
+        self.update_screen()
+
+    def determine_action(self):
+        super(Inventory_State, self).determine_action()
+        event = self.get_event()
+        self.process_event(event)
+        if self.selected_item or self.escape_pressed:
+            self.change_state()
+
+    def update_screen(self):
+        """render 1. inventory_objects_list menu, 2.description of
+        highlighted item, 3. update screen"""
+        # force a screen update
+        draw.inventory_menu(self.menu)
+        draw.inventory_description(self.highlighted_item)
+        draw.update()
 
     @property
     def highlighted_item(self):
@@ -29,15 +55,6 @@ class Inventory_State(object):
         else:
             index = self.menu.highlighted_option_index
             return self.inventory_objects_list[index]
-
-    def init(self):
-        self.inventory_objects_list = self._new_inventory_objects_list()
-        if len(self.inventory_objects_list) == 0:
-            self.current_state = EMPTY_STATE
-        self.selected_item = None
-        self.change_state_flag = False
-        self.menu = self._new_menu()
-        self.updateScreen()
 
     def process_event(self, user_input):
         choosing_actions = {
@@ -67,7 +84,7 @@ class Inventory_State(object):
 
     def change_state(self):
         if self.current_state == CHOOSING_ITEM_FROM_MAP_STATE:
-            self.game.change_state(MAP_STATE)
+            self.next_game_state = MAP_STATE
             self.key = ''
             self.current_state = DEFAULT_STATE
         elif self.current_state == SHOWING_EDIBLE_ITEMS_STATE:
@@ -83,30 +100,17 @@ class Inventory_State(object):
             self.current_state = DEFAULT_STATE
             self.init()
         elif self.current_state == DEFAULT_STATE:
-            self.game.change_state(MAP_STATE)
+            self.next_game_state = MAP_STATE
             self.key = ''
         elif self.current_state == EMPTY_STATE:
-            self.game.change_state(MAP_STATE)
+            self.next_game_state = MAP_STATE
             self.key = ''
             self.current_state = DEFAULT_STATE
-
-    def determineAction(self):
-        user_input = IO.active_event  # get user_input
-        self.process_event(user_input)
-        if self.selected_item or self.change_state_flag:
-            self.change_state()
-
-    def updateScreen(self):
-        """render 1. inventory_objects_list menu, 2.description of highlighted item, 3. update screen"""
-        # force a screen update
-        draw.inventory_menu(self.menu)
-        draw.inventory_description(self.highlighted_item)
-        draw.update()
 
     # PRIVATE METHODS
     # ---- ACTIONS ----
     def escape_state(self):
-        self.change_state_flag = True
+        self.escape_pressed = True
 
     def _down(self):
         self.menu.next()
@@ -135,7 +139,8 @@ class Inventory_State(object):
         Return:
         -- Menu object
         """
-        menu_options = [item.inventory_repr for item in self.inventory_objects_list]
+        menu_options = [item.inventory_repr
+                        for item in self.inventory_objects_list]
         return Menu(
             screen=INVENTORY_MENU_SCREEN,
             options=menu_options,

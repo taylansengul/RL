@@ -1,5 +1,5 @@
-import pygame.locals as pgl
-from globals import *
+from pygame import locals as pgl
+import globals
 import settings
 import pygame
 
@@ -10,7 +10,7 @@ class IO(object):
     click_coordinates = (-1, -1)
     hover_coordinates = (-1, -1)
     keyboard_commands_dictionary = {
-        MAP_STATE: {
+        globals.MAP_STATE: {
             pgl.K_i: 'show inventory',
             pgl.K_c: 'close door',
             pgl.K_e: 'eat item',
@@ -23,20 +23,20 @@ class IO(object):
             pgl.K_DOWN: 'down',
             pgl.K_UP: 'up',
             pgl.K_ESCAPE: 'quit'},
-        MAIN_MENU_STATE: {
+        globals.MAIN_MENU_STATE: {
             pgl.K_DOWN: 'down',
             pgl.K_UP: 'up',
             pgl.K_RETURN: 'select'},
-        GAME_OVER_STATE: {
+        globals.GAME_OVER_STATE: {
             pgl.K_SPACE: 'pass'},
-        INVENTORY_STATE: {
+        globals.INVENTORY_STATE: {
             pgl.K_DOWN: 'down',
             pgl.K_UP: 'up',
             pgl.K_RETURN: 'select',
             pgl.K_ESCAPE: 'quit',
             pgl.K_e: 'show edible items',
             pgl.K_u: 'show consumable items'},
-        TARGETING_STATE: {
+        globals.TARGETING_STATE: {
             pgl.K_RIGHT: 'right',
             pgl.K_LEFT: 'left',
             pgl.K_DOWN: 'down',
@@ -47,7 +47,8 @@ class IO(object):
     def compute_active_event(current_state_ID):
         """compute the active event"""
         # reset variables
-        IO.previous_event = IO.active_event  # previous event = previous active event
+        # previous event = previous active event
+        IO.previous_event = IO.active_event
         IO.click_coordinates = (-1, -1)
         IO.hover_coordinates = (-1, -1)
         # wait for input

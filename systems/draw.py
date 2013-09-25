@@ -66,8 +66,8 @@ def menu(menu_to_draw):
             color=color,
             font=menu_to_draw.font)
         t.render()
-
     Screen.dictionary[menu_to_draw.screen].render_to_main()
+
 
 
 def inventory_description(item):

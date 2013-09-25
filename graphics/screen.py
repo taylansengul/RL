@@ -6,7 +6,6 @@ from settings import screen_settings
 
 class Screen(object):
     dictionary = {}
-    print 'here'
     _MAIN_SURFACE = pygame.display.set_mode((screen_settings.width, screen_settings.height), 0, 32)
     _FILL_COLOR = BLACK
 

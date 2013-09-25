@@ -1,38 +1,32 @@
-from systems.IO import IO
 import states
+import globals
 
 
 class Game(object):
+
     def __init__(self):
         self.is_in_loop = True
-        self.main_menu_state = states.Main_Menu_State(self)
-        self.map_state = states.Map_State(self)
-        self.inventory_state = states.Inventory_State(self)
-        self.game_over_screen_state = states.Game_Over_Screen_State(self)
-        self.targeting_state = states.Targeting_State(self)
         self.current_state = None
-        self._states = [self.main_menu_state, self.map_state, self.inventory_state, self.game_over_screen_state,
-                        self.targeting_state]
+        self.states = {
+            globals.MAIN_MENU_STATE: states.Main_Menu_State(),
+            globals.MAP_STATE: states.Map_State(self),
+            globals.INVENTORY_STATE: states.Inventory_State(),
+            globals.GAME_OVER_STATE: states.Game_Over_Screen_State(),
+            globals.TARGETING_STATE: states.Targeting_State(self)}
 
     def loop(self):
+        prev_state_ID = None
         while self.is_in_loop:
-            # get input
-            IO.compute_active_event(self.current_state.ID)
-            # determine action
-            self.current_state.determineAction()
-            # update graphics
-            self.current_state.updateScreen()
-
-    def change_state(self, new_state):
-        new_state = self._get_state_by_ID(new_state)
-        self.current_state = new_state
-        self.current_state.init()
-
-    def _get_state_by_ID(self, ID):
-        for state in self._states:
-            if state.ID == ID:
-                return state
+            if not self.current_state.ID == prev_state_ID:
+                self.current_state.init()
+            prev_state_ID = self.current_state.ID
+            self.current_state.run()
+            next_state_ID = self.current_state.next_game_state
+            if self.current_state.next_game_state == "QUIT_STATE":
+                self.is_in_loop = False
+            else:
+                self.current_state = self.states[next_state_ID]
 
     def exit(self):
-        # delete game engines
-        print 'Exiting to OS.'
+        print("Exit to OS")
+        return
