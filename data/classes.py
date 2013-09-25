@@ -1,7 +1,10 @@
 # CONDITIONS
-food_needing = {'effects': 'hunger', 'change': [-1], 'type': 'permanent'}
-regeneration = {'effects': 'hp', 'change': [.1], 'type': 'permanent'}
-initial_poison = {'effects': 'hp', 'change': [-.3]*8, 'type': 'temporary'}
+food_needing = {
+    'resource': 'hunger',
+    'change': [-1],
+    'duration': 'every turn'}
+regeneration = {'resource': 'hp', 'change': [.1], 'duration': 'every turn'}
+initial_poison = {'resource': 'hp', 'change': [-.3]*8, 'duration': 'temporary'}
 
 # PROPERTIES
 common_player_properties = 'player, can open doors, container, movable, alive, has vision, needs food, drawable'

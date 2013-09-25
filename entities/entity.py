@@ -99,6 +99,18 @@ class Entity(object):
         message = 'You dropped %s' % item.ID
         return ticks, message
 
+    def equip(self, item):
+        ticks = 0
+        message = None
+        if 'equipable' in item.properties and not item.equipped:
+            for condition in item.effects:
+                self.add_condition(condition)
+            item.equipped = True
+            message = 'You put on %s.' % item.ID
+            ticks = 1
+        return ticks, message
+
+
     def pick(self, item):
         ticks = 1
         message = 'You picked up %s' % item.ID
@@ -119,7 +131,7 @@ class Entity(object):
 
     # CONDITIONS HANDLING
     def add_condition(self, condition):
-        getattr(self, condition['effects']).add_condition(condition)
+        getattr(self, condition['resource']).add_condition(condition)
 
     # MOVEMENT HANDLING
     #----- start ------

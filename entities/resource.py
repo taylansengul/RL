@@ -1,11 +1,11 @@
 import copy
 from systems.resource_manager import ResourceManager
+# from systems.time import Ticker
 
 
 class Resource(object):
     """
-    Pair object consists of two elements (current and maximum) where first element is the current status and the second
-    element is the maximum maximum.
+    A resource used to represent hitpoints, mana or similar attributes which have a minimum, current and maximum.
     """
     def __init__(self, minimum=0, current=None, maximum=0):
         self.minimum = minimum
@@ -15,6 +15,7 @@ class Resource(object):
             self.current = self.maximum
         else:
             self.current = current
+        assert self.minimum <= self.current <= self.maximum
 
     def change_current(self, amount):
         if amount >= 0:
@@ -26,6 +27,18 @@ class Resource(object):
         return self.current <= self.minimum
 
     def add_condition(self, condition):
+        # todo: wears off
+        """
+        condition has
+        -- duration: string
+            -- 'permanent': Permanent
+            -- 'instant': Instant
+            -- 'wears off': wears off in time
+        -- if 'permanent':
+            -- effect stays as long as not removed from a resource.
+        -- if 'instant':
+            -- effects at that instant and removed
+        """
         # need to make a deepcopy in order to not mutate the properties of a stackable game item
         condition_copy = copy.deepcopy(condition)
         self.current_conditions.append(condition_copy)
@@ -40,7 +53,7 @@ class Resource(object):
         total_change = 0
         for condition in self.current_conditions:
             total_change += condition['change'][0]
-            if condition['type'] != 'permanent':
+            if condition['duration'] != 'every turn':
                 condition['change'].pop(0)
         self.change_current(total_change)
 
