@@ -47,4 +47,4 @@ class Player(Entity):
             return
         else:
             target_tile.set_tip('closed door')
-            Logger.add_message('Door closed.')
+            Logger.add('Door closed.')

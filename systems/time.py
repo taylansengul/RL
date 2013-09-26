@@ -53,7 +53,8 @@ class Time(object):
         # update NPC status
         for NPC in Entity.all_NPCs:
             message, __ = NPC.update_status()
-            messages.append(message)
+            if message:
+                messages.append(message)
         # update player status
         game_over_message, game_over = Entity.player.update_status()
 

@@ -8,7 +8,7 @@ class GameOverScreenState(base_state.BaseState):
         super(GameOverScreenState, self).__init__(enums.GAME_OVER_STATE)
 
     def init(self):
-        super(MapState, self).init()
+        super(GameOverScreenState, self).init()
         self.update_screen()
 
     def determine_action(self):

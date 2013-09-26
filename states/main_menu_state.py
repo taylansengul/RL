@@ -16,6 +16,7 @@ class MainMenuState(base_state.BaseState):
         self.options = None
 
     def init(self):
+        super(MainMenuState, self).init()
         self.options = [
             "NEW GAME",
             "LOAD GAME",
@@ -61,4 +62,4 @@ class MainMenuState(base_state.BaseState):
         ObjectsHandler.populate_game_items()  # populate game world with game items
         ObjectsHandler.populate_NPCs()  # populate game world with NPCs
         # todo: AI
-        Logger.add_message('Welcome to the dungeons.')
+        Logger.add('Welcome to the dungeons.')

@@ -139,15 +139,15 @@ def highlighted_tile_border(coordinates):
 def messages_screen():
     #todo: refactor display_messages
     screen = MESSAGES_SCREEN
-    if not Logger._has_unhandled_messages():
+    if not Logger.has_unhandled_messages():
         return
     new_line_height = 12
     x, y = Screen.dictionary[screen].width, Screen.dictionary[screen].height
-    while Logger._has_unhandled_messages():
+    while Logger.has_unhandled_messages():
         Logger._handle_message()
 
     Screen.dictionary[screen].clear()
-    for co, message in enumerate(Logger.message_archive[-4:]):
+    for co, message in enumerate(Logger.archieve[-4:]):
         c = pygame.Rect(0, new_line_height*co, x, y)
         t = Text(screen=screen, font=CONSOLE_FONT, context=message, coordinates=c, color='white')
         t.render()
