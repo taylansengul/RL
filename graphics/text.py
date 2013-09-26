@@ -37,7 +37,7 @@ class Text(object):
 
     def render(self):
         """renders text to self.screen
-        Draw text with the given parameters on the given surface.
+        Draw text with the given incoming on the given surface.
 
         rectOrPosToDrawTo - Where to render the text at.  This can be a 2
         item tuple or a Rect.  If a position tuple is used, the align

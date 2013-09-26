@@ -3,7 +3,6 @@ import states
 
 
 class Game(object):
-
     def __init__(self):
         self.current_state = None
         self.states = {
@@ -17,15 +16,12 @@ class Game(object):
         parameters = {}
         state_changed = True
         while True:
-            next_state, parameters = self.current_state.run(state_changed, parameters)
-            if next_state == "QUIT_STATE":
+            print 'Game: ', self.current_state, parameters
+            next_state, parameters = self.states[self.current_state].run(state_changed, parameters)
+            if next_state == "QUIT GAME":
                 break
-            if self.current_state.ID == next_state:
+            if self.current_state == next_state:
                 state_changed = False
             else:
                 state_changed = True
-                self.current_state = self.states[next_state]
-
-    @staticmethod
-    def exit():
-        print("Exit to OS")
+                self.current_state = next_state

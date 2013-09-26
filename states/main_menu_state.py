@@ -49,7 +49,7 @@ class MainMenuState(base_state.BaseState):
         elif option == "LOAD GAME":
             pass
         elif option == "QUIT GAME":
-            self.next_game_state = "QUIT_STATE"
+            self.next_game_state = "QUIT GAME"
 
     @staticmethod
     def _init_game_run():

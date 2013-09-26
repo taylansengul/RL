@@ -13,6 +13,7 @@ class TargetingState(base_state.BaseState):
         self.current_state = None
 
     def init(self):
+        super(TargetingState, self).init()
         self.current_state = self.ID
         self.selected_tile = None
         self.highlighted_tile = Entity.player.tile

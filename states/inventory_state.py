@@ -17,6 +17,7 @@ class InventoryState(base_state.BaseState):
 
     def __init__(self):
         super(InventoryState, self).__init__(enums.INVENTORY_STATE)
+        self.incoming_keys = ['key', 'current_state']
         self.current_state = DEFAULT_STATE
         self.selected_item = None
         self.key = ''
@@ -34,8 +35,7 @@ class InventoryState(base_state.BaseState):
 
     def init(self):
         """create a new inventory state using self.key"""
-        self.key = self.parameters.get('inventory_key', None)
-        self.current_state = self.parameters.get('state', DEFAULT_STATE)
+        super(InventoryState, self).init()
         inventory = Entity.player.container
         self.items_list = inventory.get(properties=self.key, key='all')
         if len(self.items_list) == 0:
@@ -90,7 +90,7 @@ class InventoryState(base_state.BaseState):
     def _change_game_state(self):
         self.next_game_state = enums.MAP_STATE
         if self.selected_item:
-            self.next_game_state_parameters = dict(selected_item=self.selected_item)
+            self.outgoing = dict(selected_inventory_item=self.selected_item)
         self._reset()
 
     def _change_local_state(self):
