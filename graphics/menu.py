@@ -1,4 +1,4 @@
-from globals import *
+from enums import *
 
 
 class Menu(list):

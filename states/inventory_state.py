@@ -1,4 +1,4 @@
-from globals import *
+import enums
 from graphics.menu import Menu
 from entities.entity import Entity
 from systems import draw
@@ -12,21 +12,33 @@ SHOWING_EDIBLE_ITEMS_STATE = 'SHOWING_EDIBLE_ITEMS_STATE'
 SHOWING_CONSUMABLE_ITEMS_STATE = 'SHOWING_CONSUMABLE_ITEMS_STATE'
 
 
-class Inventory_State(base_state.BaseState):
+class InventoryState(base_state.BaseState):
     """Inventory State of the game"""
 
     def __init__(self):
-        super(Inventory_State, self).__init__(INVENTORY_STATE)
+        super(InventoryState, self).__init__(enums.INVENTORY_STATE)
         self.current_state = DEFAULT_STATE
-        self.inventory_objects_list = None
         self.selected_item = None
         self.key = ''
         self.menu = None
         self.escape_pressed = False
+        self.items_list = None
+
+    @property
+    def highlighted_item(self):
+        if len(self.items_list) == 0:
+            return None
+        else:
+            index = self.menu.highlighted_option_index
+            return self.items_list[index]
 
     def init(self):
-        self.inventory_objects_list = self._new_inventory_objects_list()
-        if len(self.inventory_objects_list) == 0:
+        """create a new inventory state using self.key"""
+        self.key = self.parameters.get('inventory_key', None)
+        self.current_state = self.parameters.get('state', DEFAULT_STATE)
+        inventory = Entity.player.container
+        self.items_list = inventory.get(properties=self.key, key='all')
+        if len(self.items_list) == 0:
             self.current_state = EMPTY_STATE
         self.selected_item = None
         self.escape_pressed = False
@@ -34,29 +46,8 @@ class Inventory_State(base_state.BaseState):
         self.update_screen()
 
     def determine_action(self):
-        super(Inventory_State, self).determine_action()
+        super(InventoryState, self).determine_action()
         event = self.get_event()
-        self.process_event(event)
-        if self.selected_item or self.escape_pressed:
-            self.change_state()
-
-    def update_screen(self):
-        """render 1. inventory_objects_list menu, 2.description of
-        highlighted item, 3. update screen"""
-        # force a screen update
-        draw.inventory_menu(self.menu)
-        draw.inventory_description(self.highlighted_item)
-        draw.update()
-
-    @property
-    def highlighted_item(self):
-        if len(self.inventory_objects_list) == 0:
-            return None
-        else:
-            index = self.menu.highlighted_option_index
-            return self.inventory_objects_list[index]
-
-    def process_event(self, user_input):
         choosing_actions = {
             'down': self._down,
             'up': self._up,
@@ -78,36 +69,49 @@ class Inventory_State(base_state.BaseState):
                 'quit': self.escape_state
             }
         }
-        if user_input in menu_actions[self.current_state]:
-            print user_input, menu_actions[self.current_state].keys()
-            menu_actions[self.current_state][user_input]()
+        if event in menu_actions[self.current_state]:
+            menu_actions[self.current_state][event]()
 
-    def change_state(self):
-        if self.current_state == CHOOSING_ITEM_FROM_MAP_STATE:
-            self.next_game_state = MAP_STATE
-            self.key = ''
-            self.current_state = DEFAULT_STATE
+        if self.selected_item or self.escape_pressed:
+            self._change_state()
+
+    def update_screen(self):
+        """render 1. items_list menu, 2.description of highlighted item,
+        3. update screen"""
+        draw.inventory_menu(self.menu)
+        draw.inventory_description(self.highlighted_item)
+        draw.update()
+
+    # ============PRIVATE METHODS============
+    def _reset(self):
+        self.key = ''
+        self.current_state = DEFAULT_STATE
+
+    def _change_game_state(self):
+        self.next_game_state = enums.MAP_STATE
+        if self.selected_item:
+            self.next_game_state_parameters = dict(selected_item=self.selected_item)
+        self._reset()
+
+    def _change_local_state(self):
+        self._reset()
+        self.init()
+
+    def _change_state(self):
+        # change game state
+        states1 = [CHOOSING_ITEM_FROM_MAP_STATE, DEFAULT_STATE, EMPTY_STATE]
+        if self.current_state in states1:
+            self._change_game_state()
+        # change local state
         elif self.current_state == SHOWING_EDIBLE_ITEMS_STATE:
             if self.selected_item:
                 Entity.player.consume(self.selected_item)
-            self.key = ''
-            self.current_state = DEFAULT_STATE
-            self.init()
+            self._change_local_state()
         elif self.current_state == SHOWING_CONSUMABLE_ITEMS_STATE:
             if self.selected_item:
                 Entity.player.consume(self.selected_item)
-            self.key = ''
-            self.current_state = DEFAULT_STATE
-            self.init()
-        elif self.current_state == DEFAULT_STATE:
-            self.next_game_state = MAP_STATE
-            self.key = ''
-        elif self.current_state == EMPTY_STATE:
-            self.next_game_state = MAP_STATE
-            self.key = ''
-            self.current_state = DEFAULT_STATE
+            self._change_local_state()
 
-    # PRIVATE METHODS
     # ---- ACTIONS ----
     def escape_state(self):
         self.escape_pressed = True
@@ -131,21 +135,16 @@ class Inventory_State(base_state.BaseState):
         self.current_state = SHOWING_CONSUMABLE_ITEMS_STATE
         self.init()
 
-    # ---------------------
-
     def _new_menu(self):
         """
-        Builds a menu object from self.inventory_objects_list and returns it
+        Builds a menu object from self.items_list and returns it
         Return:
         -- Menu object
         """
         menu_options = [item.inventory_repr
-                        for item in self.inventory_objects_list]
+                        for item in self.items_list]
         return Menu(
-            screen=INVENTORY_MENU_SCREEN,
+            screen=enums.INVENTORY_MENU_SCREEN,
             options=menu_options,
-            font=INVENTORY_FONT,
+            font=enums.INVENTORY_FONT,
             empty_menu_message='Empty Inventory')
-
-    def _new_inventory_objects_list(self):
-        return Entity.player.container.get(properties=self.key, key='all')

@@ -1,5 +1,5 @@
 from pygame import locals as pgl
-import globals
+import enums
 import settings
 import pygame
 
@@ -10,7 +10,7 @@ class IO(object):
     click_coordinates = (-1, -1)
     hover_coordinates = (-1, -1)
     keyboard_commands_dictionary = {
-        globals.MAP_STATE: {
+        enums.MAP_STATE: {
             pgl.K_i: 'show inventory',
             pgl.K_c: 'close door',
             pgl.K_e: 'eat item',
@@ -23,20 +23,20 @@ class IO(object):
             pgl.K_DOWN: 'down',
             pgl.K_UP: 'up',
             pgl.K_ESCAPE: 'quit'},
-        globals.MAIN_MENU_STATE: {
+        enums.MAIN_MENU_STATE: {
             pgl.K_DOWN: 'down',
             pgl.K_UP: 'up',
             pgl.K_RETURN: 'select'},
-        globals.GAME_OVER_STATE: {
+        enums.GAME_OVER_STATE: {
             pgl.K_SPACE: 'pass'},
-        globals.INVENTORY_STATE: {
+        enums.INVENTORY_STATE: {
             pgl.K_DOWN: 'down',
             pgl.K_UP: 'up',
             pgl.K_RETURN: 'select',
             pgl.K_ESCAPE: 'quit',
             pgl.K_e: 'show edible items',
             pgl.K_u: 'show consumable items'},
-        globals.TARGETING_STATE: {
+        enums.TARGETING_STATE: {
             pgl.K_RIGHT: 'right',
             pgl.K_LEFT: 'left',
             pgl.K_DOWN: 'down',

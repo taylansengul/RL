@@ -1,5 +1,5 @@
 import pygame
-from globals import *
+from enums import *
 import fonts
 from graphics.screen import Screen
 

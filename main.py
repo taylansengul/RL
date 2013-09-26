@@ -2,7 +2,7 @@
 from game import Game
 import random
 from graphics.screen import Screen
-import globals
+import enums
 
 __author__ = 'Taylan Sengul'
 
@@ -12,7 +12,7 @@ random.seed(seed_value)
 # initialize screen_dict
 Screen.initialize_screens()
 game = Game()
-game.current_state = game.states[globals.MAIN_MENU_STATE]
+game.current_state = game.states[enums.MAIN_MENU_STATE]
 game.loop()
 game.exit()
 del game

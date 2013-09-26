@@ -3,7 +3,7 @@ from systems.logger import Logger
 from systems.IO import IO
 from systems.time import Time
 from entities.game_world import Game_World
-from globals import *
+import enums
 
 DEFAULT_STATE = 'DEFAULT_STATE'
 DROP_ITEM_STATE = 'DROP_ITEM_STATE'
@@ -12,10 +12,10 @@ PICK_ITEM_STATE = 'PICK_ITEM_STATE'
 
 
 class MapStateLogicEngine(object):
-    def __init__(self, game, map_state):
-        self.game = game
+    def __init__(self, map_state):
         self.current_state = DEFAULT_STATE
         self.parent = map_state
+        self.event = None
         self.actions = {
             # DIRECTIONS
             'left': self._direction,
@@ -36,18 +36,18 @@ class MapStateLogicEngine(object):
         ticks = 0
         messages = []
         message = None
-        S = self.current_state
-        if S == DROP_ITEM_STATE:
-            item = self.game.states[INVENTORY_STATE].selected_item
+        s = self.current_state
+        if s == DROP_ITEM_STATE:
+            item = self.parent.parameters.get("selected_item", None)
             self.current_state = DEFAULT_STATE
             if item:
                 ticks, message = Entity.player.drop(item)
-        elif S == EAT_ITEM_STATE:
-            item = self.game.states[INVENTORY_STATE].selected_item
+        elif s == EAT_ITEM_STATE:
+            item = self.parent.parameters.get("selected_item", None)
             self.current_state = DEFAULT_STATE
             if item:
                 ticks, message = Entity.player.consume(item)
-        elif S == DEFAULT_STATE:
+        elif s == DEFAULT_STATE:
             self.event = self.parent.get_event()
             if self.event:
                 ticks, message = self.actions[self.event]()
@@ -58,7 +58,7 @@ class MapStateLogicEngine(object):
             messages.append(turn_messages)
             if game_over:
                 Logger.game_over_message = game_over_message
-                self.game.map_state.next_game_state = GAME_OVER_STATE
+                self.parent.next_game_state = enums.GAME_OVER_STATE
         if message:
             Logger.add_message(message)
 
@@ -67,37 +67,24 @@ class MapStateLogicEngine(object):
         if not target_tile or 'movement blocking' in target_tile.properties:
             return self._invalid_action()
         elif target_tile.tip == 'closed door':
-            return self._open_door(target_tile)
+            return Entity.player.open_door(target_tile)
         elif target_tile.container.get(properties='NPC'):
-            return self._attack(target_tile)
+            NPC = target_tile.container.get(properties='NPC')
+            return Entity.player.attack_to(NPC)
         else:
-            return self._move(target_tile)
+            return Entity.player.move(target_tile)
 
         #todo: close door
-
-    def _attack(self, target_tile):
-        NPC = target_tile.container.get(properties='NPC')
-        return Entity.player.attack_to(NPC)
-
-    def _move(self, target_tile):
-        return Entity.player.move(target_tile)
-
-    def _open_door(self, door_tile):
-        return Entity.player.open_door(door_tile)
-
-    def _close_door(self, door_tile):
-        return Entity.player.close_door(door_tile)
 
     def _descend(self):
         if Entity.player.tile.tip == 'exit':
             Logger.game_over_message = 'Congratulations. You found the way out.'
-            self.parent.next_game_state = GAME_OVER_STATE
+            self.parent.next_game_state = enums.GAME_OVER_STATE
         return 0, None
 
     def _show_inventory(self):
-        self.game.states[INVENTORY_STATE].key = ''
-        self.game.states[INVENTORY_STATE]
-        self.parent.next_game_state = INVENTORY_STATE
+        self.parent.next_game_parameters = dict(inventory_key='')
+        self.parent.next_game_state = enums.INVENTORY_STATE
         return 0, None
 
     def _pick_item(self):
@@ -127,11 +114,11 @@ class MapStateLogicEngine(object):
         return 0, None
 
     def _target(self):
-        self.parent.next_game_state = TARGETING_STATE
+        self.parent.next_game_state = enums.TARGETING_STATE
         return 0, None
 
     def _quit(self):
-        self.parent.next_game_state = MAIN_MENU_STATE
+        self.parent.next_game_state = enums.MAIN_MENU_STATE
         return 0, None
 
     def _invalid_action(self):
@@ -139,6 +126,6 @@ class MapStateLogicEngine(object):
         return 0, None
 
     def _choose_item_from_inventory(self, key):
-        self.game.states[INVENTORY_STATE].key = key
-        self.game.states[INVENTORY_STATE].current_state = 'CHOOSING_ITEM_FROM_MAP_STATE'
-        self.parent.next_game_state = INVENTORY_STATE
+        self.parent.next_game_state_parameters = dict(inventory_key=key,
+                                                      state='CHOOSING_ITEM_FROM_MAP_STATE')
+        self.parent.next_game_state = enums.INVENTORY_STATE

@@ -1,7 +1,7 @@
-from resource import Resource
-import container
 import copy
 
+import container
+from resource import Resource
 
 class Entity(object):
     all_NPCs = []

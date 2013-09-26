@@ -5,8 +5,7 @@ import data
 from entities.game_world import Game_World
 
 
-class Objects_Handler():
-
+class ObjectsHandler():
     @staticmethod
     def create_player():
         m, n = Game_World.dungeon.player_starting_coordinates

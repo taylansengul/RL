@@ -14,7 +14,7 @@
 #  H=Y1+Y2+Y3+Y4---------------------
 #
 """
-from globals import *
+from enums import *
 
 width = 1200
 height = 720

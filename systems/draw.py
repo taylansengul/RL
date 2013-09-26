@@ -4,7 +4,7 @@ __author__ = 'Taylan Sengul'
 import pygame
 import os
 from graphics.text import Text
-from globals import *
+from enums import *
 from logger import Logger
 
 
@@ -67,7 +67,6 @@ def menu(menu_to_draw):
             font=menu_to_draw.font)
         t.render()
     Screen.dictionary[menu_to_draw.screen].render_to_main()
-
 
 
 def inventory_description(item):

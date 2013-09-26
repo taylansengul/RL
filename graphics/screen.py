@@ -1,6 +1,6 @@
 import pygame
 
-from globals import *
+from enums import *
 from settings import screen_settings
 
 
