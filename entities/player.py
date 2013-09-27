@@ -1,6 +1,5 @@
 from entity import Entity
 from systems.utils import get_line
-from systems.logger import Logger
 from entities.game_world import Game_World
 
 
@@ -41,10 +40,3 @@ class Player(Entity):
         dungeon.set_all_tiles_non_visible()
         for tile in self.visible_tiles:
             tile.set_visibility(True)
-
-    def close_door(self, target_tile):
-        if target_tile.tip != 'open door':
-            return
-        else:
-            target_tile.set_tip('closed door')
-            Logger.add('Door closed.')

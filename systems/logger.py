@@ -1,39 +1,61 @@
 #todo: add message with color
+def flatten(*args):
+    """
+    convert args to a single list
+    :param args: a variable number of objects/nested lists
+    :return: list
+    """
+    return_list = []
+
+    def recursive_flatten(*inner_args):
+        for incoming in inner_args:
+            if isinstance(incoming, list):
+                for each in incoming:
+                    return recursive_flatten(each)
+            elif not isinstance(incoming, list) and incoming:
+                return_list.append(incoming)
+
+    recursive_flatten(*args)
+    return return_list
 
 
 class Logger(object):
-    message_archive = []
+    """
+    Used for collecting messages.
+    """
+    archieve = []
     unhandled_messages = []
     game_over_message = None
 
     @staticmethod
-    def add_message(message):
+    def add(*args):
         """
-        add a new message or messages to unhandled_messages.
-        :type message: str or list
+        Add a variable number of messages to Logger.unhandled_messages
+        while filtering messages which evalute to false
+        (such as '', None, false) under a truth check.
+        :param incoming:
+        :type incoming: str or list
         """
-        if message is None:
-            return
-        elif isinstance(message, list):
-            Logger.unhandled_messages.extend(message)
-        elif isinstance(message, str):
+        flattened_messages = flatten(*args)
+        for message in flattened_messages:
             Logger.unhandled_messages.append(message)
 
     @staticmethod
-    def _has_unhandled_messages():
+    def has_unhandled_messages():
         """
-        :return: True if there are unhandled messages, false otherwise.
+        :return: True if there are messages, false otherwise.
         """
         return len(Logger.unhandled_messages) > 0
 
     @staticmethod
-    def _handle_message():
+    def handle_message():
         """
-        Remove the LAST message from the unhandled_messages and return that message.
-        There must be unhandled_messages
-        :return: message is a string
+        Should only be called if there are unhandled messages.
+        Remove the LAST message from the messages, add it to archieve
+        and return that message.
+        :return: string
         """
-        assert Logger._has_unhandled_messages()
+        assert Logger.has_unhandled_messages()
         message = Logger.unhandled_messages.pop()
-        Logger.message_archive.append(message)
+        Logger.archieve.append(message)
         return message

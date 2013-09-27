@@ -144,7 +144,7 @@ def messages_screen():
     new_line_height = 12
     x, y = Screen.dictionary[screen].width, Screen.dictionary[screen].height
     while Logger.has_unhandled_messages():
-        Logger._handle_message()
+        Logger.handle_message()
 
     Screen.dictionary[screen].clear()
     for co, message in enumerate(Logger.archieve[-4:]):

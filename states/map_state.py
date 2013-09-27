@@ -54,7 +54,6 @@ class MapState(base_state.BaseState):
         self.current_state = DEFAULT_STATE
         self.selected_inventory_item = None
 
-        print 'map state determine action 1', message
         if message:
             messages.append(message)
         if ticks:
@@ -63,7 +62,6 @@ class MapState(base_state.BaseState):
             turn_messages, game_over, game_over_message = [], False, ""
 
         if turn_messages:
-            print 'map state determine action 2', turn_messages
             messages.append(turn_messages)
         if game_over:
             Logger.game_over_message = game_over_message
