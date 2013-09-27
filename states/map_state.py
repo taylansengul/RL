@@ -17,26 +17,9 @@ class MapState(base_state.BaseState):
 
     def __init__(self):
         super(MapState, self).__init__(enums.MAP_STATE)
-        self.actions = {
-            # DIRECTIONS
-            'left': self._direction,
-            'right': self._direction,
-            'up': self._direction,
-            'down': self._direction,
-            'descend': self._descend,
-            # CHOOSE
-            'drop item': self._choose_to_drop,
-            'eat item': self._choose_to_eat,
-            'show inventory': self._show_inventory,
-            'pick up item': self._pick_item,
-            'target': self._target,
-            'quit': self._quit,
-            None: lambda: (0, "")
-        }
         self.current_state = DEFAULT_STATE
         self.incoming_keys = ['selected_inventory_item']
         self.selected_inventory_item = None
-        self.event = None
 
     def init(self):
         super(MapState, self).init()
@@ -44,34 +27,23 @@ class MapState(base_state.BaseState):
 
     def determine_action(self):
         super(MapState, self).determine_action()
-        messages = []
-        if self.current_state != DEFAULT_STATE:
-            ticks, message = self.non_default_state_actions()
+        if self.current_state == DEFAULT_STATE:
+            ticks, message = self.default_state_actions()
         else:
-            self.event = self.get_event()
-            ticks, message = self.actions[self.event]()
+            ticks, message = self.non_default_state_actions()
 
         self.current_state = DEFAULT_STATE
         self.selected_inventory_item = None
 
-        if message:
-            messages.append(message)
+        turn_messages, game_over, game_over_message = [], False, ""
         if ticks:
-            turn_messages, game_over, game_over_message = self.process_ticks()
-        else:
-            turn_messages, game_over, game_over_message = [], False, ""
+            turn_messages, game_over, game_over_message = Time.new_turn()
 
-        if turn_messages:
-            messages.append(turn_messages)
+        Logger.add(message, turn_messages)
+
         if game_over:
             Logger.game_over_message = game_over_message
             self.next_game_state = enums.GAME_OVER_STATE
-        if messages:
-            Logger.add(messages)
-
-    @staticmethod
-    def process_ticks():
-        return Time.new_turn()
 
     def non_default_state_actions(self):
         ticks, message = 0, None
@@ -82,6 +54,33 @@ class MapState(base_state.BaseState):
             ticks, message = Entity.player.consume(item)
         return ticks, message
 
+    def default_state_actions(self):
+        actions = {
+            # DIRECTIONS
+            'left': [self._direction, 'left'],
+            'right': [self._direction, 'right'],
+            'up': [self._direction, 'up'],
+            'down': [self._direction, 'down'],
+            'descend': self._descend,
+            # CHOOSE
+            'drop item': self._choose_to_drop,
+            'eat item': self._choose_to_eat,
+            'show inventory': self._show_inventory,
+            'pick up item': self._pick_item,
+            'target': self._target,
+            'quit': self._quit,
+            None: lambda: (0, "")
+        }
+        event = self.get_event()
+        if isinstance(actions[event], list):
+            func = actions[event][0]
+            args = actions[event][1:]
+            ticks, message = func(*args)
+        else:
+            func = actions[event]
+            ticks, message = func()
+        return ticks, message
+
     def update_screen(self):
         draw.clear_all_screens()
         draw.dungeon(Entity.player, enums.MAP_SCREEN)
@@ -90,9 +89,9 @@ class MapState(base_state.BaseState):
         draw.render_turn(Time.turn, enums.GAME_INFO_SCREEN)
         draw.update()
 
-    def _direction(self):
+    def _direction(self, key):
         # todo: close door
-        target_tile = Game_World.dungeon.get_neighbor_tile(Entity.player.tile, self.event)
+        target_tile = Game_World.dungeon.get_neighbor_tile(Entity.player.tile, key)
         if not target_tile or 'movement blocking' in target_tile.properties:
             return self._invalid_action()
         elif target_tile.tip == 'closed door':
