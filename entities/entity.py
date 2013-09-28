@@ -2,6 +2,8 @@ import copy
 
 import container
 from resource import Resource
+from systems.fov import FOV
+
 
 class Entity(object):
     all_NPCs = []
@@ -57,6 +59,7 @@ class Entity(object):
             self.hunger = Resource(maximum=kwargs['hunger'])
         if 'has vision' in self.properties:
             self.visibility_radius = kwargs['visibility radius']
+            self.fov = FOV(self.tile, self.visibility_radius)
         if 'drawable' in self.properties:
             self.icon = kwargs.get('icon', '?')
             self.description = kwargs.get('description', '')
@@ -194,6 +197,9 @@ class Entity(object):
                 game_over = True
 
         return message, game_over
+
+    def update_vision(self):
+        self.fov.update(self.tile, self.visibility_radius)
 
     @property
     def inventory_repr(self):

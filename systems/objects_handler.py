@@ -1,4 +1,4 @@
-from entities.player import Player
+
 from entities.entity import Entity
 from random import randint
 import data
@@ -14,7 +14,7 @@ class ObjectsHandler():
         kwargs = data.classes.dictionary[key]
         kwargs.update(data.classes.player_settings)
         kwargs['tile'] = player_tile
-        player = Player(**kwargs)
+        player = Entity(**kwargs)
         for ID in kwargs.get('inventory', None):  # creating self.container from string list
             item_kwargs = data.game_items.dictionary[ID]
             new_item = Entity(tile=player.tile, **item_kwargs)

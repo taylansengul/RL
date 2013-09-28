@@ -32,9 +32,6 @@ class MapState(base_state.BaseState):
         else:
             ticks, message = self.non_default_state_actions()
 
-        self.current_state = DEFAULT_STATE
-        self.selected_inventory_item = None
-
         turn_messages, game_over, game_over_message = [], False, ""
         if ticks:
             turn_messages, game_over, game_over_message = Time.new_turn()
@@ -48,10 +45,14 @@ class MapState(base_state.BaseState):
     def non_default_state_actions(self):
         ticks, message = 0, None
         item = self.selected_inventory_item
+
         if self.current_state == DROP_ITEM_STATE and item:
             ticks, message = Entity.player.drop(item)
         elif self.current_state == EAT_ITEM_STATE and item:
             ticks, message = Entity.player.consume(item)
+
+        self.current_state = DEFAULT_STATE
+        self.selected_inventory_item = None
         return ticks, message
 
     def default_state_actions(self):
@@ -83,7 +84,9 @@ class MapState(base_state.BaseState):
 
     def update_screen(self):
         draw.clear_all_screens()
-        draw.dungeon(Entity.player, enums.MAP_SCREEN)
+        center, radius = Entity.player.tile, Entity.player.visibility_radius
+        tiles = Game_World.dungeon.get_neighboring_tiles(center, radius)
+        draw.tiles(tiles, enums.MAP_SCREEN)
         draw.messages_screen()
         draw.player_stats(Entity.player)
         draw.render_turn(Time.turn, enums.GAME_INFO_SCREEN)

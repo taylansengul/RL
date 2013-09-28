@@ -14,9 +14,6 @@ class BaseState(object):
         IO.compute_active_event(self.ID)
         return IO.active_event
 
-    def set_next_game_state(self, ID):
-        self.next_game_state = ID
-
     def unpack_incoming(self, incoming):
         for key, val in incoming.iteritems():
             assert key in self.incoming_keys, "No key as %s" % key

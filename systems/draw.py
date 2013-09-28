@@ -8,13 +8,13 @@ from enums import *
 from logger import Logger
 
 
-def dungeon(player, screen):
-    for tile in player.tiles_in_visibility_radius:
-        if tile.is_explored:
-            entity(tile, screen)
-            if 'container' in tile.properties:
-                for each in tile.container:
-                    entity(each, screen)
+def tiles(given_tiles, screen):
+    explored_tiles = [tile for tile in given_tiles if tile.is_explored]
+    for tile in explored_tiles:
+        entity(tile, screen)
+        if 'container' in tile.properties:
+            for each in tile.container:
+                entity(each, screen)
         Screen.dictionary[screen].render_to_main()
 
 
@@ -22,17 +22,17 @@ def draw_tile_border(tile, screen):
     pygame.draw.rect(screen, WHITE, tile.screen_position, 1)
 
 
-def entity(entity, screen):
-    if entity.image:
-        image_location = os.path.join('images', entity.image)
+def entity(given_entity, screen):
+    if given_entity.image:
+        image_location = os.path.join('images', given_entity.image)
         image = pygame.image.load(image_location).convert_alpha()
-        Screen.dictionary[screen].surface.blit(image, entity.tile.screen_position)
+        Screen.dictionary[screen].surface.blit(image, given_entity.tile.screen_position)
     else:
         t = Text(screen=screen,
                  font='map object',
-                 context=entity.icon,
-                 coordinates=entity.tile.screen_position,
-                 color=entity.color,
+                 context=given_entity.icon,
+                 coordinates=given_entity.tile.screen_position,
+                 color=given_entity.color,
                  horizontal_align='center',
                  vertical_align='center')
         t.render()
