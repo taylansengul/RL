@@ -1,6 +1,8 @@
+from systems.debuger import debuger
 from tile import Tile
 from random import randint, choice
 from rectangle import Rectangle
+
 
 
 class Dungeon(object):
@@ -20,7 +22,7 @@ class Dungeon(object):
                           for _ in range(self.dungeon_width)]
         self.map2D = [[None for _ in range(self.dungeon_height)]
                       for _ in range(self.dungeon_width)]
-        self.create_map()
+        self.player_starting_coordinates = (None, None)  # to be initialized later
 
     def _add_room(self, rectangle):
         """ 1. Make each coordinate of the pre map which coincide with those
@@ -139,17 +141,11 @@ class Dungeon(object):
         distance = Manhattan distance between these two coordinates
         """
         distance = float('inf')  # set the distance to infinity
-        # initialize
         X1, Y1, X2, Y2, closest_room = None, None, None, None, None
         for another_room in self.rooms:
             x1, y1, x2, y2, d = room.get_distance(another_room)
-            # print 'x1 =', x1, 'x2 =', x2, 'y1 =', y1, 'y2 =', y2
             if 0 < d < distance:  # ignore the room itself by ignoring d = 0
                 X1, Y1, X2, Y2, distance, closest_room = x1, y1, x2, y2, d, another_room
-
-        # print X1, Y1, X2, Y2, closest_room
-        # assert X1 is not None and Y1 is not None and X2 is not None and Y2 is not None and closest_room is not None
-
         return X1, Y1, X2, Y2, distance, closest_room
 
     def _set_map_from_pre_map(self):
@@ -234,25 +230,25 @@ class Dungeon(object):
         self.room_number = randint(self.min_room_number, self.max_room_number)
 
         # build rooms
-        print('building rooms...')
+        debuger.info('building rooms...')
         co = 0
         # build rooms until enough rooms or enough tries
         while len(self.rooms) < self.room_number and co < 10000:
             co += 1
             self._build_random_room()
         # connect the rooms by tunnels
-        print('connecting rooms...')
+        debuger.info('connecting rooms...')
         self._connect_rooms()
         # build walls: Convert dirt tiles neighboring floor tiles to wall tiles
-        print('building walls...')
+        debuger.info('building walls...')
         self._build_walls()
         # set the player starting coordinates
-        print('setting player starting coordinates...')
+        debuger.info('setting player starting coordinates...')
         m, n = self.rooms[0].get_random()
         self.pre_map2D[m][n] = 'entrance'
         self.player_starting_coordinates = (m, n)
         # set the exit coordinates
-        print('setting the dungeon exit coordinates...')
+        debuger.info('setting the dungeon exit coordinates...')
         m, n = self.player_starting_coordinates
         possible_exits = []
         # append all coordinates in all rooms in to possible_exits
@@ -265,9 +261,8 @@ class Dungeon(object):
         self.pre_map2D[m1][n1] = 'exit'
 
         # set tiles from tile tips
-        print('setting dungeon map...')
+        debuger.info('setting dungeon map...')
         self._set_map_from_pre_map()
-        print 'done.'
 
     def set_all_tiles_non_visible(self):
         """sets the visibility attribute of all tiles to False"""

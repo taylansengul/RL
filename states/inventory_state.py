@@ -78,8 +78,9 @@ class InventoryState(base_state.BaseState):
     def update_screen(self):
         """render 1. items_list menu, 2.description of highlighted item,
         3. update screen"""
-        draw.inventory_menu(self.menu)
-        draw.inventory_description(self.highlighted_item)
+        draw.draw_inventory_menu(self.menu)
+        if self.highlighted_item:
+            draw.draw_inventory_description(self.highlighted_item)
         draw.update()
 
     # ============PRIVATE METHODS============

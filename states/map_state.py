@@ -82,14 +82,27 @@ class MapState(base_state.BaseState):
             ticks, message = func()
         return ticks, message
 
-    def update_screen(self):
-        draw.clear_all_screens()
+    @staticmethod
+    def _update_map_screen():
         center, radius = Entity.player.tile, Entity.player.visibility_radius
         tiles = Game_World.dungeon.get_neighboring_tiles(center, radius)
-        draw.tiles(tiles, enums.MAP_SCREEN)
-        draw.messages_screen()
-        draw.player_stats(Entity.player)
-        draw.render_turn(Time.turn, enums.GAME_INFO_SCREEN)
+        explored_tiles = [tile for tile in tiles if tile.is_explored]
+        draw.draw_tiles(explored_tiles, enums.MAP_SCREEN)
+
+    @staticmethod
+    def _update_messages_screen():
+        MESSAGE_SCREEN_LINES = 4
+        if not Logger.has_unhandled_messages():
+            return
+        Logger.archieve_messages()
+        draw.messages_screen(Logger.archieve[:-MESSAGE_SCREEN_LINES-1:-1])
+
+    def update_screen(self):
+        draw.clear_all_screens()
+        self._update_map_screen()
+        self._update_messages_screen()
+        draw.draw_player_stats(Entity.player)
+        draw.draw_turn(Time.turn, enums.GAME_INFO_SCREEN)
         draw.update()
 
     def _direction(self, key):

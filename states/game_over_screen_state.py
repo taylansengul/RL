@@ -18,4 +18,4 @@ class GameOverScreenState(base_state.BaseState):
             self.next_game_state = enums.MAIN_MENU_STATE
 
     def update_screen(self):
-        draw.game_over_messages()
+        draw.draw_game_over_messages()

@@ -1,5 +1,7 @@
 import enums
 from graphics.menu import Menu
+from systems.debuger import debuger
+
 from systems.logger import Logger
 from systems.objects_handler import ObjectsHandler
 from systems import draw
@@ -28,7 +30,7 @@ class MainMenuState(base_state.BaseState):
                          )
 
     def update_screen(self):
-        draw.menu(self.menu)
+        draw.draw_menu(self.menu)
         draw.update()
 
     def determine_action(self):
@@ -57,6 +59,7 @@ class MainMenuState(base_state.BaseState):
         # initialize dungeon-run related things
         kwargs = data.level_design.dungeon_level_1
         Game_World.dungeon = Dungeon(kwargs)
+        Game_World.dungeon.create_map()
         # entities
         ObjectsHandler.create_player()  # create player
         ObjectsHandler.populate_game_items()  # populate game world with game items

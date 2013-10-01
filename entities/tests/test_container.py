@@ -43,7 +43,6 @@ class TestContainer(TestCase):
         container = self.new_container()
         container.add(apple1)
         container.add(apple2)
-        # print container.get({'ID': 'apple'})
         self.assertEquals(container.get(key='all', ID='apple'), [apple1, apple2])
 
     def test_get_1_add_2_same(self):

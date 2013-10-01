@@ -16,8 +16,8 @@ class Game(object):
         parameters = {}
         state_changed = True
         while True:
-            # DEBUG: print 'Game: ', self.current_state, parameters
-            next_state, parameters = self.states[self.current_state].run(state_changed, parameters)
+            state = self.states[self.current_state]
+            next_state, parameters = state.run(state_changed, parameters)
             if next_state == "QUIT GAME":
                 break
             if self.current_state == next_state:

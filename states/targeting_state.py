@@ -33,5 +33,5 @@ class TargetingState(base_state.BaseState):
         #todo
         self.game.map_state.updateScreen()
         coordinates = self.highlighted_tile.screen_position
-        draw.highlighted_tile_border(coordinates)
+        draw.highlight_tile_border(coordinates)
         draw.update()

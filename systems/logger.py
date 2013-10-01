@@ -59,3 +59,8 @@ class Logger(object):
         message = Logger.unhandled_messages.pop()
         Logger.archieve.append(message)
         return message
+
+    @staticmethod
+    def archieve_messages():
+        while Logger.has_unhandled_messages():
+            Logger.handle_message()
